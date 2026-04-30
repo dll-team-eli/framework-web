@@ -118,12 +118,11 @@
   #floormap {
     position: relative;
     width: 100%;
-    height: 0;
-    padding-bottom: 62%;
+    aspect-ratio: 100 / 62;
     border-radius: 10px;
     border: 1px solid #9aaabf;
     overflow: hidden;
-    background: #2a3848;
+    background: #c2cedf;
   }
   #floormap-img {
     position: absolute; inset: 0;
@@ -185,14 +184,20 @@
     display: flex;
     flex-direction: row;
     align-items: stretch;
+    height: calc(100vh - 90px);
+    overflow: hidden;
   }
 
   /* ─── ROOM LEFT COLUMN ─── */
   #room-left {
     flex: 1;
+    flex-shrink: 0;
     min-width: 0;
+    position: relative;
     display: flex;
     flex-direction: column;
+    height: calc(100vh - 90px);
+    overflow: hidden;
   }
 
   /* ─── ROOM TOPBAR ─── */
@@ -220,13 +225,17 @@
   }
 
   /* ─── PHOTO CAROUSEL ─── */
-  #carousel {
+  #carousel-wrap {
     flex: 1;
-    background: #f0f3f8;
     position: relative;
+    min-height: 0;
     overflow: hidden;
-    height: 600px;
-    min-height: 600px;
+    background: #1a2535;
+  }
+  #carousel {
+    position: absolute;
+    inset: 0;
+    background: #1a2535;
   }
   #carousel-img {
     position: absolute;
@@ -243,22 +252,31 @@
     position: absolute; inset: 0;
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
-    gap: 12px;
-    color: rgba(60,80,110,0.45);
+    gap: 8px;
+    z-index: 1;
   }
-  .carousel-placeholder svg { opacity: 0.4; }
-  .carousel-placeholder-label { font-size: 11px; letter-spacing: 0.04em; }
+  .carousel-placeholder-label {
+    font-size: 13px; font-weight: 500;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.03em;
+    text-align: center;
+  }
   .carousel-arrow {
-    position: absolute; top: 50%; transform: translateY(-50%);
+    -webkit-appearance: none;
+    appearance: none;
+    position: absolute;
+    top: 50%; transform: translateY(-50%);
     width: 40px; height: 40px; border-radius: 50%;
-    background: rgba(0,0,0,0.45); border: 1px solid rgba(255,255,255,0.3);
+    background: rgba(0,0,0,0.45);
+    border: 1px solid rgba(255,255,255,0.3);
     display: flex; align-items: center; justify-content: center;
-    cursor: pointer; z-index: 10;
+    cursor: pointer;
+    z-index: 30;
+    padding: 0;
     transition: background 0.15s;
-    flex-shrink: 0;
   }
   .carousel-arrow:hover { background: rgba(0,0,0,0.65); }
-  .carousel-arrow.hidden { display: none; }
+  .carousel-arrow.hidden { display: none !important; }
   #arrow-prev { left: 12px; }
   #arrow-next { right: 12px; }
   .carousel-counter {
@@ -286,6 +304,7 @@
     border-left: 1px solid #b0bcd0;
     display: flex;
     flex-direction: column;
+    height: calc(100vh - 90px);
     overflow: hidden;
   }
   #panel-header {
@@ -315,8 +334,8 @@
     padding: 9px 11px;
     margin-bottom: 5px;
   }
-  .hazard-title { font-size: 12px; font-weight: 500; color: #0c1a28; margin-bottom: 4px; }
-  .hazard-desc { font-size: 11px; color: #385070; line-height: 1.5; margin-bottom: 7px; }
+  .hazard-title { font-size: 13px; font-weight: 500; color: #0c1a28; margin-bottom: 4px; }
+  .hazard-desc { font-size: 12px; color: #385070; line-height: 1.5; margin-bottom: 7px; }
   .hazard-solution {
     background: #c8e4d0;
     border-left: 3px solid #145838;
@@ -324,6 +343,149 @@
     padding: 7px 9px;
     font-size: 11px; color: #082818; line-height: 1.5;
   }
+  .hazard-price {
+    font-size: 11px; color: #8090a4; margin-top: 6px; line-height: 1.4;
+  }
+  .hazard-links { margin-top: 6px; display: flex; flex-direction: column; gap: 4px; }
+  .hazard-link {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 11px; color: #2070b8; text-decoration: none;
+  }
+  .hazard-link:hover { text-decoration: underline; }
+
+  /* ─── PHOTO ICON LAYER ─── */
+  #photo-icon-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 6;
+  }
+  .hazard-icon {
+    position: absolute;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+    display: flex; align-items: center; justify-content: center;
+    transform: translate(-50%, -50%);
+    pointer-events: all;
+    cursor: pointer;
+    padding: 0;
+    transition: transform 0.12s, box-shadow 0.12s;
+  }
+  .hazard-icon:hover {
+    transform: translate(-50%, -50%) scale(1.18);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.45);
+  }
+  .hazard-icon.active {
+    transform: translate(-50%, -50%) scale(1.2) !important;
+    box-shadow: 0 0 0 3px rgba(255,255,255,0.8) !important;
+    border-width: 3px !important;
+    z-index: 10;
+  }
+
+  /* ─── ACCORDION ─── */
+  .accordion-card {
+    border: 1px solid #d0d8e8;
+    border-radius: 7px;
+    margin-bottom: 5px;
+    overflow: hidden;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  /* Category-specific focus states */
+  .accordion-card[data-cat="danger"].focused {
+    border-color: #e87098;
+    box-shadow: 0 0 0 2px rgba(232,112,152,0.15);
+  }
+  .accordion-card[data-cat="danger"].focused .accordion-header {
+    background: #fbeaf0;
+  }
+  .accordion-card[data-cat="challenge"].focused {
+    border-color: #5888c0;
+    box-shadow: 0 0 0 2px rgba(88,136,192,0.15);
+  }
+  .accordion-card[data-cat="challenge"].focused .accordion-header {
+    background: #e8f1fb;
+  }
+  .accordion-card[data-cat="frustration"].focused {
+    border-color: #d89830;
+    box-shadow: 0 0 0 2px rgba(216,152,48,0.15);
+  }
+  .accordion-card[data-cat="frustration"].focused .accordion-header {
+    background: #faeeda;
+  }
+  .accordion-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 11px;
+    cursor: pointer;
+    background: #f8fafc;
+    user-select: none;
+    -webkit-user-select: none;
+    transition: background 0.12s;
+  }
+  .accordion-header:hover { background: #eaeef6; }
+  .accordion-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .accordion-title {
+    font-size: 11px; font-weight: 500;
+    color: #0c1a28; flex: 1;
+    line-height: 1.35;
+  }
+  .accordion-chevron {
+    width: 14px; height: 14px;
+    flex-shrink: 0;
+    transition: transform 0.2s;
+    color: #8090a4;
+  }
+  .accordion-card.open .accordion-chevron { transform: rotate(180deg); }
+  .accordion-body {
+    display: none;
+    padding: 0 11px 10px;
+    background: #fff;
+  }
+  .accordion-card.open .accordion-body { display: block; }
+  .accordion-desc {
+    font-size: 11px; color: #5a6f88;
+    line-height: 1.5;
+    padding-top: 8px;
+    margin-bottom: 7px;
+  }
+  .accordion-solution {
+    background: #cce4d4;
+    border-left: 3px solid #145838;
+    border-radius: 0 5px 5px 0;
+    padding: 7px 9px;
+    font-size: 11px; color: #082818; line-height: 1.5;
+  }
+  .accordion-price {
+    font-size: 11px; color: #8090a4;
+    margin-top: 6px; line-height: 1.4;
+  }
+  .accordion-links { margin-top: 6px; display: flex; flex-direction: column; gap: 4px; }
+  .accordion-link {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 11px; color: #2070b8; text-decoration: none;
+  }
+  .accordion-link:hover { text-decoration: underline; }
+
+  /* ─── PANEL LEGEND ─── */
+  #panel-legend {
+    padding: 10px 15px;
+    border-top: 1px solid #c8d0e0;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-shrink: 0;
+    background: #f8f9fc;
+  }
+  .panel-legend-item { display: flex; align-items: center; gap: 5px; }
+  .panel-legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .panel-legend-label { font-size: 10px; color: #5a6f88; }
 
   /* ─── OVERVIEW STATE ─── */
   #overview { display: flex; flex-direction: column; flex: 1; }
@@ -356,27 +518,18 @@
       <span class="key-label">Key</span>
       <div class="legend-items">
         <div class="legend-item">
-          <div class="legend-dot" style="background:#d85858"></div>
-          <span class="legend-label">High risk (4+)</span>
-        </div>
-        <div class="legend-item">
-          <div class="legend-dot" style="background:#cc8c28"></div>
-          <span class="legend-label">Moderate risk (3)</span>
+          <div class="legend-dot" style="background:#e87098"></div>
+          <span class="legend-label">Danger</span>
         </div>
         <div class="legend-item">
           <div class="legend-dot" style="background:#5888c0"></div>
-          <span class="legend-label">Lower risk (1–2)</span>
+          <span class="legend-label">Challenge</span>
         </div>
         <div class="legend-item">
-          <div class="legend-dot" style="background:#c06888"></div>
-          <span class="legend-label">Access / security</span>
+          <div class="legend-dot" style="background:#d89830"></div>
+          <span class="legend-label">Frustration</span>
         </div>
       </div>
-    </div>
-    <div class="keybar-right">
-      <span class="cat-tag cat-danger">Danger</span>
-      <span class="cat-tag cat-challenge">Challenge</span>
-      <span class="cat-tag cat-frustration">Frustration</span>
     </div>
   </div>
 
@@ -393,7 +546,7 @@
   <div id="overview">
     <div id="mapwrap">
       <div id="floormap">
-        <img id="floormap-img" src="images/Team_Eli.jpg" alt="Floor 1 birdseye view">
+        <img id="floormap-img" src="Team_Eli.jpg" alt="" onerror="this.style.display='none'">
         <!-- Zones injected by JS -->
       </div>
     </div>
@@ -413,15 +566,15 @@
         <span id="room-name-label"></span>
         <span class="floor-tag" id="room-floor-tag"></span>
       </div>
-      <div id="carousel">
-        <img id="carousel-img" alt="">
-        <div class="carousel-placeholder" id="carousel-placeholder">
-          <svg width="72" height="52" viewBox="0 0 72 52" fill="none" stroke="rgba(60,80,110,0.4)" stroke-width="1.5">
-            <rect x="2" y="2" width="68" height="48" rx="5" stroke-dasharray="6 4"/>
-            <circle cx="22" cy="20" r="6"/>
-            <polyline points="2,38 20,22 32,34 44,24 70,42"/>
-          </svg>
-          <span class="carousel-placeholder-label" id="carousel-label">Inzoi photo — angle 1 of 1</span>
+      <div id="carousel-wrap">
+        <div id="carousel">
+          <img id="carousel-img" alt="">
+          <div id="photo-icon-layer"></div>
+          <div class="carousel-placeholder" id="carousel-placeholder">
+            <span class="carousel-placeholder-label" id="carousel-label">Photo 1 of 1</span>
+          </div>
+          <div class="carousel-counter" id="carousel-counter">1 / 1</div>
+          <div class="carousel-dots" id="carousel-dots"></div>
         </div>
         <button class="carousel-arrow" id="arrow-prev">
           <svg width="10" height="16" viewBox="0 0 10 16" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="8,2 2,8 8,14"/></svg>
@@ -429,8 +582,6 @@
         <button class="carousel-arrow" id="arrow-next">
           <svg width="10" height="16" viewBox="0 0 10 16" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,2 8,8 2,14"/></svg>
         </button>
-        <div class="carousel-counter" id="carousel-counter">1 / 1</div>
-        <div class="carousel-dots" id="carousel-dots"></div>
       </div>
     </div>
     <div id="detail-panel">
@@ -439,6 +590,20 @@
         <div id="panel-risk-meta"></div>
       </div>
       <div id="panel-hazards"></div>
+      <div id="panel-legend">
+        <div class="panel-legend-item">
+          <div class="panel-legend-dot" style="background:#e87098"></div>
+          <span class="panel-legend-label">Danger</span>
+        </div>
+        <div class="panel-legend-item">
+          <div class="panel-legend-dot" style="background:#5888c0"></div>
+          <span class="panel-legend-label">Challenge</span>
+        </div>
+        <div class="panel-legend-item">
+          <div class="panel-legend-dot" style="background:#d89830"></div>
+          <span class="panel-legend-label">Frustration</span>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -449,68 +614,68 @@
 
 const FLOORS = {
   1: {
-    image: 'images/Team_Eli.jpg',
+    image: 'Team_Eli.jpg',
     hint: 'Downstairs — entrance, living room, kitchen, dining / laundry / pantry, patio',
     zones: [
       {
         id: 'living-room', name: 'Living Room', floor: 1,
-        style: { left:'3%', top:'3%', width:'49.5%', height:'84.6%' },
+        style: { left:'3%', top:'3%', width:'49%', height:'87%' },
         badge: { color:'#cc8c28', count:3 }, zIndex: 1,
-        photos: ['images/living_room_1.jpg','images/living_room_2.jpg','images/living_room_3.jpg']
+        photos: ['living_room_1.jpg','living_room_2.jpg','living_room_3.jpg']
       },
       {
         id: 'entrance', name: 'Entrance', floor: 1,
-        style: { left:'3%', top:'3%', width:'14.4%', height:'16.2%' },
+        style: { left:'3%', top:'3%', width:'14%', height:'16%' },
         badge: { color:'#c06888', count:3 }, zIndex: 3,
-        photos: ['images/entrance_1.jpg','images/entrance_2.jpg']
+        photos: ['entrance_1.jpg','entrance_2.jpg']
       },
       {
         id: 'patio', name: 'Patio', floor: 1,
-        style: { left:'3%', top:'80%', width:'16.2%', height:'15.3%' },
+        style: { left:'3%', top:'78%', width:'16%', height:'12%' },
         badge: { color:'#cc8c28', count:3 }, zIndex: 3,
-        photos: ['images/patio_1.jpg','images/patio_2.jpg']
+        photos: ['patio_1.jpg','patio_2.jpg']
       },
       {
         id: 'dining', name: 'Dining / Laundry / Pantry', floor: 1,
-        style: { left:'60%', top:'3%', width:'33.3%', height:'39.6%' },
+        style: { left:'59%', top:'3%', width:'32%', height:'39%' },
         badge: { color:'#5888c0', count:2 }, zIndex: 2,
-        photos: ['images/dining_1.jpg','images/dining_2.jpg','images/dining_3.jpg']
+        photos: ['dining_1.jpg','dining_2.jpg','dining_3.jpg']
       },
       {
         id: 'kitchen', name: 'Kitchen', floor: 1,
-        style: { left:'60%', top:'49%', width:'33.3%', height:'43.2%' },
+        style: { left:'59%', top:'48%', width:'32%', height:'42%' },
         badge: { color:'#d85858', count:5 }, zIndex: 2,
-        photos: ['images/kitchen_1.jpg','images/kitchen_2.jpg','images/kitchen_3.jpg']
+        photos: ['kitchen_1.jpg','kitchen_2.jpg','kitchen_3.jpg']
       }
     ]
   },
   2: {
-    image: 'images/upstairs.jpg',
+    image: 'upstairs.jpg',
     hint: 'Upstairs — Eli\'s bedroom, bedroom 2, bathroom, stairs',
     zones: [
       {
         id: 'bedroom2', name: 'Bedroom 2', floor: 2,
-        style: { left:'3%', top:'5%', width:'25.2%', height:'79.2%' },
+        style: { left:'3%', top:'5%', width:'25%', height:'79%' },
         badge: { color:'#5888c0', count:2 }, zIndex: 1,
-        photos: ['images/bedroom2_1.jpg','images/bedroom2_2.jpg']
+        photos: ['bedroom2_1.jpg','bedroom2_2.jpg']
       },
       {
         id: 'stairs', name: 'Stairs', floor: 2,
-        style: { left:'33%', top:'5%', width:'27%', height:'37.8%' },
+        style: { left:'33%', top:'5%', width:'26%', height:'37%' },
         badge: { color:'#5888c0', count:2 }, zIndex: 1,
-        photos: ['images/stairs_1.jpg','images/stairs_2.jpg']
+        photos: ['stairs_1.jpg','stairs_2.jpg']
       },
       {
         id: 'bathroom', name: 'Bathroom', floor: 2,
-        style: { left:'33%', top:'49%', width:'27%', height:'39.6%' },
+        style: { left:'33%', top:'48%', width:'26%', height:'39%' },
         badge: { color:'#d85858', count:4 }, zIndex: 1,
-        photos: ['images/bathroom_1.jpg','images/bathroom_2.jpg','images/bathroom_3.jpg']
+        photos: ['bathroom_1.jpg','bathroom_2.jpg','bathroom_3.jpg']
       },
       {
         id: 'elis-bedroom', name: "Eli's Bedroom", floor: 2,
-        style: { left:'65%', top:'5%', width:'28.8%', height:'79.2%' },
+        style: { left:'64%', top:'5%', width:'28%', height:'79%' },
         badge: { color:'#cc8c28', count:3 }, zIndex: 1,
-        photos: ['images/elis_bedroom_1.jpg','images/elis_bedroom_2.jpg','images/elis_bedroom_3.jpg']
+        photos: ['elis_bedroom_1.jpg','elis_bedroom_2.jpg','elis_bedroom_3.jpg']
       }
     ]
   }
@@ -519,7 +684,7 @@ const FLOORS = {
 const ROOM_DATA = {
   'kitchen': {
     name: 'Kitchen', floor: 1,
-    riskLevel: 'High risk', hazardCount: 6,
+    riskLevel: 'High risk', hazardCount: 9,
     categories: [
       {
         name: 'Danger', cls: 'cat-danger',
@@ -527,22 +692,43 @@ const ROOM_DATA = {
           {
             title: 'Electric stove — unsupervised access',
             desc: 'The kitchen has an electric range. If no caregiver is present, all cooking appliances should be disabled.',
-            solution: 'Kasa Smart Plugs on microwave and small appliance outlets. For the hardwired electric range, use the Aeotec Heavy Duty Smart Switch ZW078, a Z-Wave device rated for 240V/40A that wires directly into the range circuit and lets Home Assistant cut power remotely when the caregiver leaves the geofence. Requires electrician installation. Approximate cost: Kasa smart plug $10–20, Aeotec Heavy Duty Switch $90–100.'
+            solution: 'Kasa Smart Plugs on microwave and small appliance outlets. For the hardwired electric range, use the Aeotec Heavy Duty Smart Switch ZW078, a Z-Wave device rated for 240V/40A that wires directly into the range circuit and lets Home Assistant cut power remotely when the caregiver leaves the geofence. Requires electrician installation.',
+            price: 'Approximate cost: Kasa smart plug $10–20, Aeotec Heavy Duty Switch $90–100',
+            links: [{ text: 'View Aeotec Heavy Duty Switch ZW078', url: 'https://store.aeotec.com/products/heavy-duty-smart-switch-gen5-zw078' }]
           },
           {
-            title: 'Open burner hazard',
-            desc: 'Electric coil and glass-top burners stay hot invisibly after turning off. Eli won\'t know the surface is still dangerous.',
-            solution: 'Add a Kasa KP115 Smart Plug with energy monitoring to detect when the range is drawing power and alert the caregiver. Consider upgrading to a portable induction cooktop insert — the surface only heats via pan contact and never gets independently hot. Approximate cost: Kasa KP115 $10–20, portable induction cooktop $50–150.'
-          },
-          {
-            title: 'Metal in the microwave',
-            desc: 'Eli does not understand the danger and uses whatever is available.',
-            solution: 'Supply only microwave-safe cookware including silicone, ceramic, and glass. Label cabinets clearly. Add a Kasa Smart Plug to the microwave outlet for remote disable when unsupervised. Approximate cost: microwave-safe cookware set $40–100, smart plug $10–20.'
+            title: 'Cooking appliance access and hazards',
+            desc: 'Electric burners stay dangerously hot after turning off with no visible warning. Eli does not recognize the danger of metal in the microwave and uses whatever is available.',
+            solution: 'Add a Kasa KP115 Smart Plug with energy monitoring to each cooking appliance outlet — this detects when the range is drawing power, alerts the caregiver, and allows remote disable of the microwave when Eli is unsupervised. Supply only microwave-safe cookware including silicone, ceramic, and glass, and label cabinets clearly.',
+            price: 'Approx. $10–20 per Kasa KP115 plug, microwave-safe cookware set $40–100',
+            links: [{ text: 'View Kasa KP115 Smart Plug on Amazon', url: 'https://www.amazon.com/Kasa-Energy-Monitoring-Smart-Plug/dp/B08LN3C7WK' }]
           },
           {
             title: 'Flooding — kitchen sink',
             desc: 'He leaves water running or may intentionally flood the sink.',
-            solution: 'Zooz Z-Wave Water Leak Sensor ZSE42 under the sink triggers the Zooz Titan Water Valve Actuator ZAC36 to automatically cut water at threshold. Approximate cost: sensor $25–40, valve actuator $200.'
+            solution: 'Zooz Z-Wave Water Leak Sensor ZSE42 under the sink triggers the Zooz Titan Water Valve Actuator ZAC36 to automatically cut water at threshold.',
+            price: 'Approximate cost: sensor $25–40, valve actuator $200',
+            links: [
+              { text: 'View Zooz ZSE42 Water Leak Sensor on Amazon', url: 'https://www.amazon.com/Prevention-Required-Separately-Compatible-SmartThings/dp/B09JKJNFMX' },
+              { text: 'View Zooz Titan Valve Actuator ZAC36 on Amazon', url: 'https://www.amazon.com/Z-Wave-Titan-Actuator-Compatible-SmartThings/dp/B09G82YM3B' }
+            ]
+          },
+          {
+            title: 'Garbage disposal injury risk',
+            desc: 'Hands or objects entering the disposal is a confirmed physical danger that has not yet happened but is a known risk.',
+            solution: 'Install a disposal cover guard requiring two handed simultaneous press to activate, making accidental or intentional hand entry impossible during operation. Wire the disposal to a Kasa Smart Plug so it can be disabled remotely when Eli is unsupervised.',
+            price: 'Approx. $15 to $25 for cover guard, $10 to $20 for smart plug.',
+            links: [
+              { text: 'View disposal cover guards on Amazon', url: 'https://www.amazon.com/s?k=garbage+disposal+safety+cover+guard' },
+              { text: 'View Kasa Smart Plug on Amazon', url: 'https://www.amazon.com/Kasa-Energy-Monitoring-Smart-Plug/dp/B08LN3C7WK' }
+            ]
+          },
+          {
+            title: 'Fridge shelves pulled out and used as weapons',
+            desc: 'Plastic fridge shelves are easily pulled out, snapped, and the broken pieces become sharp hazards or throwing objects.',
+            solution: 'Remove all non-essential fridge shelves entirely to reduce the number of removable parts. Replace any remaining shelves with solid polycarbonate inserts which are virtually unbreakable and produce no fragments. Long term, include the fridge in the scheduled lock system so access is limited to meal times only, the same approach used for the pantry.',
+            price: 'Approx. $40 to $80 for polycarbonate sheet cut to size. Measure existing shelf dimensions before ordering.',
+            links: [{ text: 'View polycarbonate sheets on Amazon', url: 'https://www.amazon.com/s?k=clear+polycarbonate+sheet+cut+to+size' }]
           }
         ]
       },
@@ -552,7 +738,16 @@ const ROOM_DATA = {
           {
             title: 'Allowing microwave use safely when alone',
             desc: 'Heating a Trader Joe\'s meal independently is a major independence goal.',
-            solution: 'Wall-mounted tablet displays step-by-step recipe prompts. Home Assistant pushes timed reminders to the screen such as check the stove and turn off the burner. Approximate cost: tablet $100–230, mount and dock $30.'
+            solution: 'Wall-mounted tablet displays step-by-step recipe prompts. Home Assistant pushes timed reminders to the screen such as check the stove and turn off the burner.',
+            price: 'Approximate cost: tablet $100–230, mount and dock $30',
+            links: []
+          },
+          {
+            title: 'Food hygiene during cooking',
+            desc: 'Eli may not wash his hands or prepare food safely before handling ingredients, creating a health risk.',
+            solution: 'Hand-washing prompt built into the cooking routine screen sequence. Before any recipe step begins the tablet displays a mandatory hand-washing step with a 20 second countdown timer that must complete before the recipe advances. Motion sensor detects when Eli enters the kitchen and triggers the hygiene prompt automatically.',
+            price: 'No additional cost, built into existing Home Assistant routine.',
+            links: []
           }
         ]
       },
@@ -562,12 +757,16 @@ const ROOM_DATA = {
           {
             title: 'Pantry raiding and throwing canned goods',
             desc: 'Eli is a short sleeper and could access the pantry late at night. Canned goods double as projectiles.',
-            solution: 'Yale Smart Cabinet Lock with Bluetooth mounts inside the pantry door, time-scheduled to lock during overnight hours with caregiver remote override via app. Approximate cost: $80–130.'
+            solution: 'Yale Smart Cabinet Lock with Bluetooth mounts inside the pantry door, time-scheduled to lock during overnight hours with caregiver remote override via app.',
+            price: 'Approximate cost: $80–130',
+            links: [{ text: 'View Yale Smart Cabinet Lock on Amazon', url: 'https://www.amazon.com/Yale-Security-YRCB-490-BLE-WSP-Cabinet-Bluetooth/dp/B0861ZQZ3N' }]
           },
           {
             title: 'Task sequencing while cooking',
             desc: 'He forgets mid-task why he started. Multi-step cooking fails without prompts.',
-            solution: 'Wall-mounted tablet with Home Assistant displays step-by-step recipe prompts and pushes timed reminders to the screen. Approximate cost: tablet $100–230, mount and dock $30.'
+            solution: 'Wall-mounted tablet with Home Assistant displays step-by-step recipe prompts and pushes timed reminders to the screen.',
+            price: 'Approximate cost: tablet $100–230, mount and dock $30',
+            links: []
           }
         ]
       }
@@ -575,30 +774,45 @@ const ROOM_DATA = {
   },
   'living-room': {
     name: 'Living Room', floor: 1,
-    riskLevel: 'Moderate risk', hazardCount: 6,
+    riskLevel: 'Moderate risk', hazardCount: 9,
     categories: [
       {
         name: 'Danger', cls: 'cat-danger',
         hazards: [
           {
-            title: 'No TV yet — Option A: TV with physical protection',
+            title: 'Option A: Wall-mounted TV with physical protection',
             desc: 'Breakable screens and reachable hardware are the core risks.',
-            solution: 'Mount TV high on the wall in a recessed enclosure with a plexiglass screen protector secured over it. Physically inaccessible if mounted high enough and flush to the wall. Pair with a Kasa Smart Plug for scheduled on/off via Home Assistant. Approximate cost: TV $200–400, plexiglass cover $200.'
+            solution: 'Mount TV high on the wall in a recessed enclosure with a plexiglass screen protector secured over it. Physically inaccessible if mounted high enough and flush to the wall. Pair with a Kasa Smart Plug for scheduled on/off via Home Assistant.',
+            price: 'Approximate cost: TV $200–400, plexiglass cover $200',
+            links: [{ text: 'View Kasa Smart Plug 4-pack on Amazon', url: 'https://www.amazon.com/Kasa-Energy-Monitoring-Smart-Plug/dp/B08LN3C7WK' }]
           },
           {
-            title: 'No TV yet — Option B: Short-throw projector mounted out of reach',
+            title: 'Option B: Short-throw projector mounted out of reach',
             desc: 'No screen to smash, no reachable hardware — eliminates the destruction risk entirely.',
-            solution: 'Mount a short-throw projector high on the wall at 7 to 8 feet using a wall arm mount and project onto a painted white wall or fixed screen below. Add a locking projector cage around the unit to prevent tampering. Pair with a Kasa Smart Plug for scheduled on/off. Approximate cost: projector $200–500, wall mount $30, locking cage $500.'
+            solution: 'Mount a short-throw projector high on the wall at 7 to 8 feet using a wall arm mount and project onto a painted white wall or fixed screen below. Add a locking projector cage around the unit to prevent tampering. Pair with a Kasa Smart Plug for scheduled on/off.',
+            price: 'Approximate cost: projector $200–500, wall mount $30, locking cage $500',
+            links: [{ text: 'View Kasa Smart Plug 4-pack on Amazon', url: 'https://www.amazon.com/Kasa-Energy-Monitoring-Smart-Plug/dp/B08LN3C7WK' }]
           },
           {
             title: 'Windows — breakable glass',
             desc: 'Standard windows are breakable and a confirmed safety hazard.',
-            solution: 'Replace with polycarbonate or laminated safety glass panels. As an interim, apply window security film which holds glass together on impact. Approximate cost: security film $10–30 per window DIY.'
+            solution: 'Replace with polycarbonate or laminated safety glass panels. As an interim, apply window security film which holds glass together on impact.',
+            price: 'Approximate cost: security film $10–30 per window DIY',
+            links: []
           },
           {
             title: 'Outlets as improvised weapons',
             desc: 'Standard outlet covers can be popped off and shattered into sharp pieces.',
-            solution: 'Replace all outlets with Leviton Tamper-Resistant TR outlets — flush-mounted and screw-secured. Approximate cost: $10–20 per outlet, requires licensed electrician.'
+            solution: 'Replace all outlets with Leviton Tamper-Resistant TR outlets — flush-mounted and screw-secured.',
+            price: 'Approximate cost: $10–20 per outlet, requires licensed electrician',
+            links: []
+          },
+          {
+            title: 'Pulling blinds off the wall',
+            desc: 'Blinds and curtain rails are regularly pulled down and become projectiles. Rated as a regular problem by caregiver Jeff Pinsker.',
+            solution: 'Remove all blinds and curtain rods entirely. Replace with frosted window film applied directly to the glass with no hardware to pull down and no rails to rip off. Film also adds a layer of shatter resistance to the window.',
+            price: 'Approx. $15 to $30 per window.',
+            links: [{ text: 'View Rabbitgoo frosted window film on Amazon', url: 'https://www.amazon.com/rabbitgoo-Protection-Adhesive-Reducing-Removable/dp/B00RDVE2L2' }]
           }
         ]
       },
@@ -608,12 +822,23 @@ const ROOM_DATA = {
           {
             title: 'TV and entertainment access control',
             desc: 'TV should only be on during scheduled hours. Unsupervised screen time can escalate behavior.',
-            solution: 'Kasa Smart Plug 4-pack HS103 on the TV power outlet — scheduled on/off by time of day with caregiver override via app. Approximate cost: $30 for a 4-pack.'
+            solution: 'Kasa Smart Plug 4-pack HS103 on the TV power outlet — scheduled on/off by time of day with caregiver override via app.',
+            price: 'Approximate cost: $30 for a 4-pack',
+            links: [{ text: 'View Kasa Smart Plug 4-pack on Amazon', url: 'https://www.amazon.com/Kasa-Energy-Monitoring-Smart-Plug/dp/B08LN3C7WK' }]
           },
           {
             title: 'No effective behavioral cue system',
             desc: 'The environment must do the behavioral work through lighting and visual transitions.',
-            solution: 'Smart bulbs and switches on scheduled scenes — dim lights signal wind down, color changes signal activity time. Wall panel tablet with large buttons for calling mom and showing schedule. Approximate cost: smart bulbs $20–30 each, switches $20–50 each.'
+            solution: 'Smart bulbs and switches on scheduled scenes — dim lights signal wind down, color changes signal activity time. Wall panel tablet with large buttons for calling mom and showing schedule.',
+            price: 'Approximate cost: smart bulbs $20–30 each, switches $20–50 each',
+            links: []
+          },
+          {
+            title: 'Difficulty using TV and devices independently',
+            desc: 'Eli cannot reliably navigate entertainment on his own. Rated as a regular problem by caregiver Jeff Pinsker.',
+            solution: 'Replace the standard remote with a simplified large button remote with only on/off, volume, and channel controls. Home Assistant also automates turning on preferred content at scheduled times so Eli does not need to navigate at all.',
+            price: 'Approx. $40.',
+            links: [{ text: 'View Flipper Big Button Remote on Amazon', url: 'https://www.amazon.com/Flipper-Button-Universal-Seniors-Dementia/dp/B0CR5S1BCN' }]
           }
         ]
       },
@@ -623,7 +848,9 @@ const ROOM_DATA = {
           {
             title: 'Communication panel for emergencies',
             desc: 'Eli needs a simple always-on way to reach family from the living room.',
-            solution: 'Wall-mounted tablet with charging dock running Home Assistant companion app. Large buttons for calling family or alerting caregiver, always on and charged. Approximate cost: tablet $100–230, mount and dock $30.'
+            solution: 'Wall-mounted tablet with charging dock running Home Assistant companion app. Large buttons for calling family or alerting caregiver, always on and charged.',
+            price: 'Approximate cost: tablet $100–230, mount and dock $30',
+            links: []
           }
         ]
       }
@@ -639,12 +866,18 @@ const ROOM_DATA = {
           {
             title: 'Unauthorized exit',
             desc: 'Eli leaves quickly at high speed and can enter unsafe environments or get lost and encounter strangers.',
-            solution: 'Smart lock plus Bluetooth and NFC wearable bracelet. The Lockly or SwitchBot smart lock operates independently from the house automation system. Eli wears an RFID or NFC bracelet, the door has a reader installed, and the system works locally with no internet needed. Approximate cost: Lockly $349, SwitchBot lock varies, Fobster Key Fob Bracelet $15–97.'
+            solution: 'Smart lock plus Bluetooth and NFC wearable bracelet. The Lockly or SwitchBot smart lock operates independently from the house automation system. Eli wears an RFID or NFC bracelet, the door has a reader installed, and the system works locally with no internet needed.',
+            price: 'Approximate cost: Lockly $349, SwitchBot lock varies, Fobster Key Fob Bracelet $15–97',
+            links: [
+              { text: 'View Lockly Secure Plus Smart Lock', url: 'https://lockly.com/products/lockly-secure-plus' },
+              { text: 'View Lockly Secure Plus on Amazon', url: 'https://www.amazon.com/Bluetooth-Patented-Fingerprint-Compatible-SatinNickel/dp/B07M66THML' }
+            ]
           },
           {
             title: 'Opening door to strangers',
             desc: 'Eli will open the door to anyone and cannot distinguish between safe and unsafe visitors.',
-            solution: 'Camera monitors and behavioral sensors detect door activity and automatically alert the caregiver to intervene before the door opens.'
+            solution: 'Camera monitors and behavioral sensors detect door activity and automatically alert the caregiver to intervene before the door opens.',
+            links: []
           }
         ]
       },
@@ -654,12 +887,14 @@ const ROOM_DATA = {
           {
             title: 'Emergency situations',
             desc: 'During fires and emergency evacuations the lock system must not trap Eli inside.',
-            solution: 'Smart alarms that escalate to caregiver alerts if Eli does not respond within a set window. Alarm-triggered auto-unlock on all exits tested in a monthly drill routine.'
+            solution: 'Smart alarms that escalate to caregiver alerts if Eli does not respond within a set window. Alarm-triggered auto-unlock on all exits tested in a monthly drill routine.',
+            links: []
           },
           {
             title: 'Engagement when bored near the entrance',
             desc: 'Eli may fixate on the front door when understimulated.',
-            solution: 'LUMOplay interactive wall games projected near the entrance using the existing projector. Free software, only the projector hardware is needed. Medium feasibility, integrates with Home Assistant.'
+            solution: 'LUMOplay interactive wall games projected near the entrance using the existing projector. Free software, only the projector hardware is needed.',
+            links: [{ text: 'View LUMOplay interactive wall games', url: 'https://www.lumoplay.com' }]
           }
         ]
       }
@@ -675,7 +910,9 @@ const ROOM_DATA = {
           {
             title: 'Scalable fence — escape to public space',
             desc: 'The current fence can be easily climbed. A tall smooth-sided fence is required before Eli can access the patio unsupervised.',
-            solution: 'Install an 8-foot fence with a smooth surface that provides no footholds. Approximate cost: $2,000–3,500 for 100 feet. Standard residential modification with no tech dependency.'
+            solution: 'Install an 8-foot fence with a smooth surface that provides no footholds.',
+            price: 'Approximate cost: $2,000–3,500 for 100 feet',
+            links: []
           }
         ]
       },
@@ -685,7 +922,9 @@ const ROOM_DATA = {
           {
             title: 'Designing a safe outdoor space he will actually use',
             desc: 'Eli is a homebody and dislikes heat. The patio is only valuable if it is enclosed, climate-controlled, and enriching.',
-            solution: 'Smart thermostat plus a physical enclosure. Approximate cost: thermostat $130. Note that a full enclosure would cost significantly more and should only be pursued after supervised trials confirm Eli would actually use the space.'
+            solution: 'Smart thermostat plus a physical enclosure. Note that a full enclosure would cost significantly more and should only be pursued after supervised trials confirm Eli would actually use the space.',
+            price: 'Approximate cost: thermostat $130',
+            links: []
           }
         ]
       },
@@ -695,7 +934,9 @@ const ROOM_DATA = {
           {
             title: 'Heat sensitivity and overheating outdoors',
             desc: 'Texas heat triggers physiological dysregulation. Outdoor access must be limited to cooler hours.',
-            solution: 'Schedule-based restriction on outdoor access during peak heat hours via Home Assistant automation, plus a misting fan. Approximate cost: misting fan $14, automation is free. A phase-change cooling vest is also an option at approximately $170 though consistent use is uncertain given Eli\'s history with wearables.'
+            solution: 'Schedule-based restriction on outdoor access during peak heat hours via Home Assistant automation, plus a misting fan. A phase-change cooling vest is also an option though consistent use is uncertain given Eli\'s history with wearables.',
+            price: 'Approximate cost: misting fan $14, automation is free, cooling vest approximately $170',
+            links: []
           }
         ]
       }
@@ -711,17 +952,21 @@ const ROOM_DATA = {
           {
             title: 'Task completion and routine issues',
             desc: 'Eli may forget to eat, start eating and not finish, or not follow structured meal routines.',
-            solution: 'Voice-activated reminders from Home Assistant to an Alexa device prompt Eli through meal routines. Medium feasibility — requires integration between Home Assistant and Alexa.'
+            solution: 'Voice-activated reminders from Home Assistant to an Alexa device prompt Eli through meal routines.',
+            links: []
           },
           {
             title: 'Food safety and cleanliness',
             desc: 'Eli washes dishes incompletely and may refuse to reuse items he considers not clean.',
-            solution: 'Voice-activated system reminds Eli to eat slowly, wash dishes, and clean up after eating. Caregiver is alerted when cleanup has not happened within a set window.'
+            solution: 'Voice-activated system reminds Eli to eat slowly, wash dishes, and clean up after eating. Caregiver is alerted when cleanup has not happened within a set window.',
+            links: []
           },
           {
             title: 'Lint trap fire hazard',
             desc: 'A standard household risk from a clogged dryer filter. Eli is unlikely to clean it himself.',
-            solution: 'Home Assistant sends a recurring reminder to Eli or the caregiver to clean the lint trap once or twice a week. Approximate cost: $0. Very high feasibility — purely routine-based with no special hardware needed.'
+            solution: 'Home Assistant sends a recurring reminder to Eli or the caregiver to clean the lint trap once or twice a week.',
+            price: 'Approximate cost: $0',
+            links: []
           }
         ]
       },
@@ -731,7 +976,9 @@ const ROOM_DATA = {
           {
             title: 'Pantry raiding at night',
             desc: 'Eli is a short sleeper and could access the pantry late at night including canned goods that double as projectiles.',
-            solution: 'Bluetooth refrigerator and cabinet lock with timer and schedule mode. Approximate cost: $86. High feasibility — mounts with no wiring, integrates with a time schedule. A smart fridge is a future upgrade option at approximately $4,000.'
+            solution: 'Bluetooth refrigerator and cabinet lock with timer and schedule mode.',
+            price: 'Approximate cost: $86',
+            links: [{ text: 'View Bluetooth cabinet lock with timer on Amazon', url: 'https://www.amazon.com/s?k=bluetooth+cabinet+lock+timer' }]
           }
         ]
       }
@@ -747,22 +994,30 @@ const ROOM_DATA = {
           {
             title: 'Mirror as a breakable weapon surface',
             desc: 'A standard mirror can be shattered and the shards used as weapons.',
-            solution: 'Replace the standard glass mirror with a polycarbonate or acrylic mirror — these flex rather than shatter. Shatterproof safety film on the existing mirror is a lower-cost interim fix. Approximate cost: polycarbonate mirror $40–120. High feasibility, easy to remove and replace.'
+            solution: 'Replace the standard glass mirror with a polycarbonate or acrylic mirror — these flex rather than shatter. Shatterproof safety film on the existing mirror is a lower-cost interim fix.',
+            price: 'Approximate cost: polycarbonate mirror $40–120',
+            links: [{ text: 'View polycarbonate mirror options on Amazon', url: 'https://www.amazon.com/s?k=polycarbonate+mirror' }]
           },
           {
             title: 'Intentional bathtub and toilet overflow',
             desc: 'Eli will clog the toilet with toilet paper and flood it, and loves to overfill the bathtub.',
-            solution: 'Install a Saniflo Saniplus macerator toilet which uses an impeller rather than gravity flush and is extremely difficult to clog with paper. Home Assistant water shutoff automation triggers on floor sensor alert. Approximate cost: macerator toilet $700–1,000 plus plumber installation.'
+            solution: 'Install a Saniflo Saniplus macerator toilet which uses an impeller rather than gravity flush and is extremely difficult to clog with paper. Home Assistant water shutoff automation triggers on floor sensor alert.',
+            price: 'Approximate cost: macerator toilet $700–1,000 plus plumber installation',
+            links: [{ text: 'View Saniflo Saniplus macerator toilet', url: 'https://www.saniflo.com/us/installing-a-toilet/73-saniplus.html' }]
           },
           {
             title: 'Exposed light bulb fixtures',
             desc: 'Standard bulbs can be shattered. All lighting must be recessed, covered, and LED with no accessible bulb sockets anywhere.',
-            solution: 'Replace all exposed lightbulbs with recessed LED downlights installed flush in the ceiling. Approximate cost: $30 per fixture. High feasibility.'
+            solution: 'Replace all exposed lightbulbs with recessed LED downlights installed flush in the ceiling.',
+            price: 'Approximate cost: $30 per fixture',
+            links: []
           },
           {
             title: 'Blocking the door from the inside',
             desc: 'He pulls out the bathroom drawer to barricade the door as an avoidance mechanism.',
-            solution: 'Convert the bathroom door to an outward-swinging configuration so it cannot be barricaded from inside using furniture. If a full door rehang is not feasible, remove the bathroom drawer and replace with a fixed shelf. Install an Aqara Door and Window Sensor so Home Assistant detects if the door has been closed for an extended period and alerts Brandy. Approximate cost: door rehang $200–600, Aqara sensor $42.'
+            solution: 'Convert the bathroom door to an outward-swinging configuration so it cannot be barricaded from inside using furniture. If a full door rehang is not feasible, remove the bathroom drawer and replace with a fixed shelf. Install an Aqara Door and Window Sensor so Home Assistant detects if the door has been closed for an extended period and alerts Brandy.',
+            price: 'Approximate cost: door rehang $200–600, Aqara sensor $42',
+            links: [{ text: 'View Aqara Door and Window Sensor on Amazon', url: 'https://www.amazon.com/Aqara-Automation-3rd-Party-Connection-Compatible/dp/B07D37VDM3' }]
           }
         ]
       },
@@ -772,12 +1027,16 @@ const ROOM_DATA = {
           {
             title: 'Medication management without live supervision',
             desc: 'Pills are taken three times a day, often near the bathroom. There is no reliable confirmation he has taken them.',
-            solution: 'Install a Hero Smart Pill Dispenser or Amazon Pill Dispenser which releases only the correct dose at the correct time and logs confirmation. Pair with a Wyze Cam pointing at Eli taking medication for visual confirmation. Approximate cost: Hero dispenser $99 upfront plus $45 per month subscription. Wyze has a native Home Assistant integration.'
+            solution: 'Install a Hero Smart Pill Dispenser or Amazon Pill Dispenser which releases only the correct dose at the correct time and logs confirmation. Pair with a Wyze Cam pointing at Eli taking medication for visual confirmation.',
+            price: 'Approximate cost: Hero dispenser $99 upfront plus $45 per month subscription',
+            links: [{ text: 'View Hero Smart Pill Dispenser', url: 'https://herohealth.com/our-product/' }]
           },
           {
             title: 'Washing without actually cleaning',
             desc: 'He will take a bath but not wash his hair or body thoroughly.',
-            solution: 'Install a waterproof smart display or waterproof Bluetooth speaker near the bathroom. Home Assistant triggers a step-by-step verbal routine at bath time with timed audio cues. A visual schedule board or laminated checklist mounted at eye level supplements this. Approximate cost: waterproof smart display $400, waterproof Bluetooth speaker $20–60.'
+            solution: 'Step-by-step verbal and visual hygiene routine delivered via an Echo Show 8 mounted near the bathroom. Home Assistant triggers morning and evening sequences with timed audio cues for each step including wet hair, add shampoo, scrub for 30 seconds, and rinse. A laminated checklist mounted at eye level supplements the audio prompts.',
+            price: 'Approx. $180 for Echo Show 8 with waterproof mount.',
+            links: [{ text: 'View Echo Show 8 on Amazon', url: 'https://www.amazon.com/All-New-Echo-Show-8/dp/B0BLS3Y632' }]
           }
         ]
       }
@@ -785,7 +1044,7 @@ const ROOM_DATA = {
   },
   'elis-bedroom': {
     name: "Eli's Bedroom", floor: 2,
-    riskLevel: 'Moderate risk', hazardCount: 3,
+    riskLevel: 'Moderate risk', hazardCount: 5,
     categories: [
       {
         name: 'Danger', cls: 'cat-danger',
@@ -793,7 +1052,16 @@ const ROOM_DATA = {
           {
             title: 'Ceiling fan blades',
             desc: 'Rotating blades are a low-probability hazard if he throws something into them.',
-            solution: 'Remove the ceiling fan entirely and replace with a bladeless ceiling fan or a flush-mount light fixture. A floor fan serves the same purpose with no exposed moving parts. Approximate cost: bladeless ceiling fan $80–200, floor fan $30–300. High feasibility — fan removal requires only basic electrical knowledge.'
+            solution: 'Remove the ceiling fan entirely and replace with a bladeless ceiling fan or a flush-mount light fixture. A floor fan serves the same purpose with no exposed moving parts.',
+            price: 'Approximate cost: bladeless ceiling fan $80–200, floor fan $30–300',
+            links: [{ text: 'View bladeless ceiling fan options on Amazon', url: 'https://www.amazon.com/s?k=bladeless+ceiling+fan' }]
+          },
+          {
+            title: 'Staying up all night',
+            desc: 'Eli remains active through the night which compounds pantry raiding, stair wandering, and next-day dysregulation.',
+            solution: 'Smart bulb shifts to warm dim red at scheduled sleep time as an environmental wind-down cue. Bed occupancy sensor monitors whether Eli is in bed after a set time and alerts Brandy if not. Pantry and stair locks activate automatically at sleep schedule time regardless of whether Eli sleeps.',
+            price: 'Approx. $20 to $40 per bulb.',
+            links: [{ text: 'View Philips Hue bulbs on Amazon', url: 'https://www.amazon.com/s?k=philips+hue+white+ambiance+bulb' }]
           }
         ]
       },
@@ -803,12 +1071,26 @@ const ROOM_DATA = {
           {
             title: 'Unpredictable anxiety and dysregulation days',
             desc: 'Some mornings Eli cannot function — he stims, paces, and is unreachable.',
-            solution: 'Physiological monitors such as the Empatica Embrace Plus or Garmin HRV sensor can detect elevated heart rate and skin conductance. Paired with Home Assistant these trigger automatic caregiver alerts when readings exceed a threshold. A camera-based motion pattern sensor detecting repetitive pacing is a secondary option. Approximate cost: approximately $400. Low feasibility — Eli does not typically tolerate wearables and must be wearing it all day for this to work.'
+            solution: 'Physiological monitors such as the Empatica Embrace Plus or Garmin HRV sensor can detect elevated heart rate and skin conductance. Paired with Home Assistant these trigger automatic caregiver alerts when readings exceed a threshold. A camera-based motion pattern sensor detecting repetitive pacing is a secondary option.',
+            price: 'Approximate cost: approximately $400',
+            links: []
           },
           {
             title: 'Waking up without a caregiver present',
             desc: 'Sleep medication makes him very hard to wake. Smart alarms are critical.',
-            solution: 'Smart alarm system using a Hatch Alarm Clock paired with a bed occupancy sensor such as the Withings Sleep Mat or a pressure mat sensor under the mattress. Home Assistant monitors whether Eli has gotten out of bed within a set window after alarm trigger. If not, it escalates to a push notification or phone call to Brandy. A door sensor on the bedroom door confirms he has exited the room. Approximate cost: Withings Sleep Mat $200, Hatch Alarm $160, pressure mat sensor $200. High feasibility — bed sensors are completely invisible to Eli.'
+            solution: 'Smart alarm system using a Hatch Alarm Clock paired with a bed occupancy sensor such as the Withings Sleep Mat or a pressure mat sensor under the mattress. Home Assistant monitors whether Eli has gotten out of bed within a set window after alarm trigger. If not, it escalates to a push notification or phone call to Brandy. A door sensor on the bedroom door confirms he has exited the room.',
+            price: 'Approximate cost: Withings Sleep Mat $200, Hatch Alarm $160, pressure mat sensor $200',
+            links: [
+              { text: 'View Withings Sleep Mat on Amazon', url: 'https://www.amazon.com/Withings-Nokia-Sleep-Temperature-Compatible/dp/B078Z1B34S' },
+              { text: 'View Hatch Restore 3 alarm clock on Amazon', url: 'https://www.amazon.com/Hatch-Restore-Sunrise-Alarm-Machine/dp/B0DLLSCVZW' }
+            ]
+          },
+          {
+            title: 'End of day routine and wind-down gate',
+            desc: 'Eli does not place clothes in the hamper or complete basic end of day tasks without a direct prompt. A physical solution alone does not change the behavior.',
+            solution: 'End of day completion gate built into Home Assistant. At a set time each evening the tablet displays a wind-down checklist including clothes in hamper, lights off in bathroom, shoes put away, and iPad charging. Each item is a large tap to confirm button. Once all items are checked off Home Assistant triggers the wind-down scene, dims the lights, enables TV or preferred evening content, and logs completion for Brandy to review. Eli cannot access the wind-down state without completing the checklist.',
+            price: 'No additional cost, built into existing Home Assistant routine.',
+            links: []
           }
         ]
       }
@@ -824,7 +1106,8 @@ const ROOM_DATA = {
           {
             title: 'Narrow activity range leading to boredom',
             desc: 'Long stretches alone with only an iPad can lead to restlessness and escalation.',
-            solution: 'Scheduled activity prompts and a structured wind-down routine delivered via screen. Home Assistant pushes timed reminders to rotate between activities.'
+            solution: 'Scheduled activity prompts and a structured wind-down routine delivered via screen. Home Assistant pushes timed reminders to rotate between activities.',
+            links: []
           }
         ]
       },
@@ -834,7 +1117,8 @@ const ROOM_DATA = {
           {
             title: 'Gaming the reward system',
             desc: 'Eli understands behavioral incentives intellectually and turns them into a game to exploit.',
-            solution: 'Incentive structure built into the daily screen routine with caregiver override capabilities so the system cannot be gamed without Brandy\'s awareness.'
+            solution: 'Incentive structure built into the daily screen routine with caregiver override capabilities so the system cannot be gamed without Brandy\'s awareness.',
+            links: []
           }
         ]
       }
@@ -850,7 +1134,8 @@ const ROOM_DATA = {
           {
             title: 'Fall risk during dysregulation',
             desc: 'Stairs become a hazard during behavioral episodes or disorientation at night.',
-            solution: 'Motion sensor on the staircase triggers a caregiver alert if accessed between 10pm and 7am. Home Assistant logs all staircase activity overnight.'
+            solution: 'Motion sensor on the staircase triggers a caregiver alert if accessed between 10pm and 7am. Home Assistant logs all staircase activity overnight.',
+            links: []
           }
         ]
       },
@@ -860,12 +1145,85 @@ const ROOM_DATA = {
           {
             title: 'Nighttime wandering',
             desc: 'Eli is a short sleeper and may access the stairs unsupervised at night.',
-            solution: 'Smart door at the stair entry locks during designated sleep hours with caregiver override. Home Assistant automation manages the schedule with no manual intervention needed.'
+            solution: 'Smart door at the stair entry locks during designated sleep hours with caregiver override. Home Assistant automation manages the schedule with no manual intervention needed.',
+            links: []
           }
         ]
       }
     ]
   }
+};
+
+// ─── CATEGORY COLORS ────────────────────────────────────────────────────────
+
+const CAT_COLORS = {
+  'Danger':      '#e87098',
+  'Challenge':   '#5888c0',
+  'Frustration': '#d89830'
+};
+
+// ─── ICON SVGS ───────────────────────────────────────────────────────────────
+
+const ICON_SVGS = {
+  flame:    `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2s-4 5.5-4 9.5a4 4 0 008 0C16 7.5 12 2 12 2z"/><path d="M10 14.5c.5-1.5 2-2 2-2s1.5.5 2 2"/></svg>`,
+  water:    `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C12 2 5 11 5 15a7 7 0 0014 0C19 11 12 2 12 2z"/></svg>`,
+  lock:     `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>`,
+  lines:    `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="15" y2="17"/></svg>`,
+  pill:     `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3L3 9a5 5 0 007.1 7.1L16 10A5 5 0 009 3z"/><line x1="7.5" y1="10.5" x2="13" y2="5.5"/></svg>`,
+  lightbulb:`<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 2a7 7 0 017 7 7 7 0 01-4 6.3V17H9v-1.7A7 7 0 015 9a7 7 0 017-7z"/></svg>`,
+  person:   `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="4"/><path d="M4 21v-1a8 8 0 0116 0v1"/></svg>`,
+  warning:  `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.6L2.5 18a1.5 1.5 0 001.3 2.2h16.4a1.5 1.5 0 001.3-2.2L13.7 3.6a1.6 1.6 0 00-3.4 0z"/><line x1="12" y1="9" x2="12" y2="13"/><circle cx="12" cy="17" r="1" fill="#fff" stroke="none"/></svg>`
+};
+
+// ─── HAZARD ICON POSITIONS ───────────────────────────────────────────────────
+
+const HAZARD_META = {
+  // Kitchen
+  'kitchen_0_0': { icon: 'flame',    top: '45%', left: '35%' },
+  'kitchen_0_1': { icon: 'warning',  top: '30%', left: '62%' },
+  'kitchen_0_2': { icon: 'water',    top: '60%', left: '18%' },
+  'kitchen_1_0': { icon: 'lines',    top: '70%', left: '58%' },
+  'kitchen_2_0': { icon: 'lock',     top: '18%', left: '70%' },
+  'kitchen_2_1': { icon: 'warning',  top: '75%', left: '40%' },
+  // Living Room
+  'living-room_0_0': { icon: 'warning',    top: '25%', left: '40%' },
+  'living-room_0_1': { icon: 'warning',    top: '25%', left: '60%' },
+  'living-room_0_2': { icon: 'warning',    top: '30%', left: '20%' },
+  'living-room_0_3': { icon: 'lightbulb',  top: '55%', left: '15%' },
+  'living-room_1_0': { icon: 'lock',       top: '40%', left: '50%' },
+  'living-room_1_1': { icon: 'lines',      top: '65%', left: '35%' },
+  'living-room_2_0': { icon: 'lines',      top: '50%', left: '70%' },
+  // Entrance
+  'entrance_0_0': { icon: 'lock',    top: '35%', left: '30%' },
+  'entrance_0_1': { icon: 'warning', top: '50%', left: '50%' },
+  'entrance_1_0': { icon: 'warning', top: '60%', left: '40%' },
+  'entrance_1_1': { icon: 'lines',   top: '25%', left: '65%' },
+  // Patio
+  'patio_0_0': { icon: 'warning', top: '30%', left: '25%' },
+  'patio_1_0': { icon: 'lines',   top: '50%', left: '55%' },
+  'patio_2_0': { icon: 'warning', top: '65%', left: '40%' },
+  // Dining / Laundry / Pantry
+  'dining_0_0': { icon: 'lines',   top: '30%', left: '35%' },
+  'dining_0_1': { icon: 'warning', top: '50%', left: '55%' },
+  'dining_0_2': { icon: 'warning', top: '40%', left: '70%' },
+  'dining_1_0': { icon: 'lock',    top: '65%', left: '30%' },
+  // Bathroom
+  'bathroom_0_0': { icon: 'warning',    top: '25%', left: '30%' },
+  'bathroom_0_1': { icon: 'water',      top: '55%', left: '45%' },
+  'bathroom_0_2': { icon: 'lightbulb',  top: '20%', left: '65%' },
+  'bathroom_0_3': { icon: 'lock',       top: '60%', left: '20%' },
+  'bathroom_1_0': { icon: 'pill',       top: '35%', left: '60%' },
+  'bathroom_1_1': { icon: 'lines',      top: '70%', left: '55%' },
+  // Eli's Bedroom
+  'elis-bedroom_0_0': { icon: 'warning', top: '20%', left: '50%' },
+  'elis-bedroom_1_0': { icon: 'person',  top: '45%', left: '30%' },
+  'elis-bedroom_1_1': { icon: 'warning', top: '65%', left: '60%' },
+  // Bedroom 2
+  'bedroom2_0_0': { icon: 'lines',   top: '40%', left: '40%' },
+  'bedroom2_1_0': { icon: 'warning', top: '60%', left: '60%' },
+  // Stairs
+  'stairs_0_0': { icon: 'person', top: '40%', left: '45%' },
+  'stairs_1_0': { icon: 'person', top: '65%', left: '35%' }
 };
 
 // ─── STATE ───────────────────────────────────────────────────────────────────
@@ -922,12 +1280,6 @@ function renderFloor(floor) {
     Object.assign(el.style, zone.style);
     el.style.zIndex = zone.zIndex || 1;
 
-    const badge = document.createElement('div');
-    badge.className = 'zone-badge';
-    badge.style.background = zone.badge.color;
-    badge.textContent = zone.badge.count;
-    el.appendChild(badge);
-
     const label = document.createElement('div');
     label.className = 'zone-label';
     label.textContent = zone.name;
@@ -952,7 +1304,7 @@ function openRoom(roomId) {
   const zoneData = FLOORS[currentFloor].zones.find(z => z.id === roomId);
   if (!zoneData) return;
 
-  const roomInfo = ROOM_DATA[roomId] || PLACEHOLDER_DATA[roomId];
+  const roomInfo = ROOM_DATA[roomId];
   if (!roomInfo) return;
 
   currentRoom = roomId;
@@ -967,8 +1319,11 @@ function openRoom(roomId) {
   panelRoomName.textContent = roomInfo.name;
   panelRiskMeta.textContent = `${roomInfo.riskLevel} · ${roomInfo.hazardCount} hazard${roomInfo.hazardCount !== 1 ? 's' : ''}`;
 
-  // Render hazard cards
-  renderHazards(roomInfo);
+  // Render hazard accordion cards
+  renderHazards(roomId, roomInfo);
+
+  // Render hazard icons (will become visible once photo loads)
+  renderHazardIcons(roomId, roomInfo);
 
   // Setup carousel
   setupCarousel(roomId, carouselPhotos);
@@ -987,11 +1342,15 @@ function closeRoom() {
   carouselImg.classList.remove('visible');
   carouselImg.src = '';
   carouselImagesLoaded = {};
+  const iconLayer = document.getElementById('photo-icon-layer');
+  if (iconLayer) iconLayer.innerHTML = '';
 }
 
 // ─── HAZARD PANEL ────────────────────────────────────────────────────────────
 
-function renderHazards(roomInfo) {
+const LINK_ICON = `<svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2H2a1 1 0 00-1 1v5a1 1 0 001 1h5a1 1 0 001-1V6"/><path d="M6.5 1h2.5v2.5M5 5L9 1"/></svg>`;
+
+function renderHazards(roomId, roomInfo) {
   panelHazards.innerHTML = '';
 
   if (!roomInfo.categories || roomInfo.categories.length === 0) {
@@ -1002,23 +1361,117 @@ function renderHazards(roomInfo) {
     return;
   }
 
-  roomInfo.categories.forEach(cat => {
-    const labelEl = document.createElement('div');
-    labelEl.className = `hazard-section-label ${cat.cls}`;
-    labelEl.textContent = cat.name;
-    panelHazards.appendChild(labelEl);
+  roomInfo.categories.forEach((cat, catIdx) => {
+    const color = CAT_COLORS[cat.name] || '#888';
 
-    cat.hazards.forEach(hazard => {
+    cat.hazards.forEach((hazard, hazardIdx) => {
+      const hazardId = `${roomId}_${catIdx}_${hazardIdx}`;
+
       const card = document.createElement('div');
-      card.className = 'hazard-card';
+      card.className = 'accordion-card';
+      card.dataset.hazardId = hazardId;
+      card.dataset.cat = cat.name.toLowerCase();
+
+      const priceHTML = hazard.price
+        ? `<div class="accordion-price">${hazard.price}</div>` : '';
+      const linksHTML = (hazard.links && hazard.links.length)
+        ? `<div class="accordion-links">${hazard.links.map(l =>
+            `<a href="${l.url}" target="_blank" rel="noopener" class="accordion-link">${l.text}${LINK_ICON}</a>`
+          ).join('')}</div>` : '';
+
       card.innerHTML = `
-        <div class="hazard-title">${hazard.title}</div>
-        <div class="hazard-desc">${hazard.desc}</div>
-        <div class="hazard-solution">${hazard.solution}</div>
+        <div class="accordion-header">
+          <div class="accordion-dot" style="background:${color}"></div>
+          <div class="accordion-title">${hazard.title}</div>
+          <svg class="accordion-chevron" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,4 7,9 12,4"/></svg>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-desc">${hazard.desc}</div>
+          <div class="accordion-solution">${hazard.solution}</div>
+          ${priceHTML}${linksHTML}
+        </div>
       `;
+
+      card.querySelector('.accordion-header').addEventListener('click', () => {
+        toggleAccordionCard(hazardId);
+      });
+
       panelHazards.appendChild(card);
     });
   });
+}
+
+function renderHazardIcons(roomId, roomInfo) {
+  const layer = document.getElementById('photo-icon-layer');
+  layer.innerHTML = '';
+
+  roomInfo.categories.forEach((cat, catIdx) => {
+    const color = CAT_COLORS[cat.name] || '#888';
+    cat.hazards.forEach((hazard, hazardIdx) => {
+      const key = `${roomId}_${catIdx}_${hazardIdx}`;
+      const meta = HAZARD_META[key];
+      if (!meta) return;
+
+      const btn = document.createElement('button');
+      btn.className = 'hazard-icon';
+      btn.dataset.hazardId = key;
+      btn.style.background = color;
+      btn.style.top = meta.top;
+      btn.style.left = meta.left;
+      btn.innerHTML = ICON_SVGS[meta.icon] || ICON_SVGS.warning;
+      btn.title = hazard.title;
+      btn.addEventListener('click', () => focusHazardCard(key));
+      layer.appendChild(btn);
+    });
+  });
+}
+
+function setActiveIcon(hazardId) {
+  const layer = document.getElementById('photo-icon-layer');
+  if (!layer) return;
+  layer.querySelectorAll('.hazard-icon').forEach(icon => {
+    icon.classList.toggle('active', hazardId != null && icon.dataset.hazardId === hazardId);
+  });
+}
+
+function toggleAccordionCard(hazardId, forceOpen) {
+  const card = panelHazards.querySelector(`[data-hazard-id="${hazardId}"]`);
+  if (!card) return;
+
+  const isOpen = card.classList.contains('open');
+
+  // Close all open cards
+  panelHazards.querySelectorAll('.accordion-card.open').forEach(c => {
+    if (c !== card) c.classList.remove('open');
+  });
+
+  if (forceOpen === true || (forceOpen === undefined && !isOpen)) {
+    card.classList.add('open');
+    setActiveIcon(hazardId);
+  } else if (forceOpen !== true) {
+    card.classList.remove('open');
+    setActiveIcon(null);
+  }
+}
+
+function focusHazardCard(hazardId) {
+  // Ensure card is open
+  toggleAccordionCard(hazardId, true);
+
+  const card = panelHazards.querySelector(`[data-hazard-id="${hazardId}"]`);
+  if (!card) return;
+
+  // Remove any existing focus highlight
+  panelHazards.querySelectorAll('.accordion-card.focused').forEach(c => c.classList.remove('focused'));
+
+  // Apply focus highlight
+  card.classList.add('focused');
+
+  // Scroll into view
+  card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+  // Auto-remove highlight after 2s
+  setTimeout(() => card.classList.remove('focused'), 2000);
 }
 
 // ─── CAROUSEL ────────────────────────────────────────────────────────────────
@@ -1050,7 +1503,10 @@ function updateCarouselDisplay() {
   const total = carouselPhotos.length;
   const src   = carouselPhotos[carouselIndex];
 
-  carouselLabel.textContent   = `Inzoi photo — angle ${carouselIndex + 1} of ${total}`;
+  const roomInfo = ROOM_DATA[currentRoom];
+  const roomName = roomInfo ? roomInfo.name : '';
+  const labelText = roomName ? `${roomName} — Photo ${carouselIndex + 1} of ${total}` : `Photo ${carouselIndex + 1} of ${total}`;
+  carouselLabel.textContent   = labelText;
   carouselCounter.textContent = `${carouselIndex + 1} / ${total}`;
 
   if (carouselImagesLoaded[carouselIndex] === true) {
