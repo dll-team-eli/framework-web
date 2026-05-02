@@ -8,7 +8,7 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    background: #d8e0ec;
+    background: #FAF8F5;
     font-family: system-ui, 'Inter', sans-serif;
     min-height: 100vh;
     display: flex;
@@ -21,18 +21,19 @@
     width: 100%;
     max-width: 1100px;
     background: #fff;
-    border: 1px solid #b0bcd0;
-    border-radius: 14px;
+    border: 1px solid #E7E5E4;
+    border-radius: 16px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     min-height: 750px;
+    box-shadow: 0 1px 2px rgba(28, 25, 23, 0.04), 0 4px 16px rgba(28, 25, 23, 0.04);
   }
 
   /* ─── TOPBAR ─── */
   #topbar {
     background: #fff;
-    border-bottom: 1px solid #b0bcd0;
+    border-bottom: 1px solid #E7E5E4;
     padding: 10px 18px;
     display: flex;
     align-items: center;
@@ -41,26 +42,34 @@
   }
   .topbar-left { display: flex; align-items: center; gap: 10px; }
   .house-icon {
-    width: 32px; height: 32px;
-    background: #dbeaf8;
-    border-radius: 8px;
+    width: 34px; height: 34px;
+    background: #EEF2FF;
+    border-radius: 12px;
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
   }
   .house-icon svg { width: 18px; height: 18px; }
   .topbar-titles { display: flex; flex-direction: column; gap: 1px; }
-  .topbar-title { font-size: 13px; font-weight: 500; color: #0c1a28; }
-  .topbar-sub { font-size: 11px; color: #5a6f88; }
+  .topbar-title { font-size: 15px; font-weight: 600; color: #1C1917; letter-spacing: -0.01em; }
+  .topbar-sub { font-size: 13px; color: #78716C; }
   .status-pill {
-    font-size: 11px; font-weight: 500;
-    background: #cce8d8; color: #155230; border: 1px solid #88c8a4;
-    border-radius: 20px; padding: 4px 10px;
+    font-size: 13px; font-weight: 500;
+    background: #D1FAE5; color: #047857; border: 1px solid #A7F3D0;
+    border-radius: 999px; padding: 5px 12px 5px 10px;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .status-pill::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #10B981;
+    flex-shrink: 0;
   }
 
   /* ─── KEY BAR ─── */
   #keybar {
-    background: #eaeff7;
-    border-bottom: 1px solid #b0bcd0;
+    background: #F5F5F4;
+    border-bottom: 1px solid #E7E5E4;
     padding: 7px 18px;
     display: flex;
     align-items: center;
@@ -71,25 +80,25 @@
   }
   .keybar-left { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
   .key-label {
-    font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
-    text-transform: uppercase; color: #5a6f88;
+    font-size: 12px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; color: #57534E;
   }
   .legend-items { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-  .legend-item { display: flex; align-items: center; gap: 5px; }
-  .legend-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
-  .legend-label { font-size: 10px; color: #38526a; }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .legend-label { font-size: 12px; color: #44403C; }
   .keybar-right { display: flex; align-items: center; gap: 6px; }
   .cat-tag {
     font-size: 10px; border-radius: 4px; padding: 2px 7px; font-weight: 500;
   }
-  .cat-danger { background: #ecc0d0; color: #580e28; }
-  .cat-challenge { background: #b8d0ec; color: #063860; }
-  .cat-frustration { background: #eccca0; color: #502800; }
+  .cat-danger { background: #FFE4E6; color: #9F1239; }
+  .cat-challenge { background: #E0E7FF; color: #3730A3; }
+  .cat-frustration { background: #FEF3C7; color: #92400E; }
 
   /* ─── FLOOR TOGGLE BAR ─── */
   #floortoggle {
     background: #fff;
-    border-bottom: 1px solid #b0bcd0;
+    border-bottom: 1px solid #E7E5E4;
     padding: 0 18px;
     display: flex;
     align-items: stretch;
@@ -98,17 +107,17 @@
   }
   .floor-tabs { display: flex; align-items: stretch; gap: 0; }
   .floor-tab {
-    font-size: 12px; font-weight: 500;
-    color: #5a6f88;
-    padding: 10px 16px;
+    font-size: 14px; font-weight: 500;
+    color: #57534E;
+    padding: 12px 18px;
     border: none; background: none; cursor: pointer;
     border-bottom: 2px solid transparent;
     transition: color 0.15s, border-color 0.15s;
     white-space: nowrap;
   }
-  .floor-tab.active { color: #2070b8; border-bottom-color: #2070b8; }
-  .floor-tab:hover:not(.active) { color: #2070b8; }
-  .floor-hint { font-size: 10px; color: #8090a4; align-self: center; }
+  .floor-tab.active { color: #4F46E5; border-bottom-color: #4F46E5; }
+  .floor-tab:hover:not(.active) { color: #4F46E5; }
+  .floor-hint { font-size: 12px; color: #78716C; align-self: center; }
 
   /* ─── FLOOR MAP ─── */
   #mapwrap {
@@ -119,22 +128,22 @@
     position: relative;
     width: 100%;
     aspect-ratio: 100 / 62;
-    border-radius: 10px;
-    border: 1px solid #9aaabf;
+    border-radius: 16px;
+    border: 1px solid #D6D3D1;
     overflow: hidden;
-    background: #c2cedf;
+    background: #FAFAF9;
   }
   #floormap-img {
     position: absolute; inset: 0;
     width: 100%; height: 100%;
     object-fit: cover;
-    border-radius: 10px;
+    border-radius: 16px;
     z-index: 0;
   }
   .floor-hint-below {
     text-align: center;
     font-size: 11px;
-    color: #5a6f88;
+    color: #57534E;
     margin-top: 8px;
   }
 
@@ -149,7 +158,7 @@
     z-index: 1;
   }
   .room-zone:hover {
-    border-color: #2070b8;
+    border-color: #4F46E5;
     background: rgba(255,255,255,0.22);
   }
   .zone-label {
@@ -203,7 +212,7 @@
   /* ─── ROOM TOPBAR ─── */
   #room-topbar {
     background: #fff;
-    border-bottom: 1px solid #b0bcd0;
+    border-bottom: 1px solid #E7E5E4;
     padding: 10px 16px;
     display: flex;
     align-items: center;
@@ -211,17 +220,20 @@
     flex-shrink: 0;
   }
   #back-btn {
-    display: flex; align-items: center; gap: 5px;
-    background: #e8f1fb; border: 1px solid #a8ccf0;
-    border-radius: 6px; padding: 5px 10px;
-    font-size: 11px; font-weight: 500; color: #2070b8;
+    display: flex; align-items: center; gap: 7px;
+    background: #fff; border: 1px solid #D6D3D1;
+    border-radius: 8px; padding: 9px 14px;
+    font-size: 14px; font-weight: 500; color: #44403C;
     cursor: pointer; white-space: nowrap;
+    transition: background 0.15s ease, border-color 0.15s ease;
   }
-  #back-btn:hover { background: #d0e4f8; }
-  #room-name-label { font-size: 13px; font-weight: 500; color: #0c1a28; }
+  #back-btn:hover { background: #FAFAF9; border-color: #A8A29E; }
+  #back-btn svg { color: #4F46E5; }
+  #room-name-label { font-size: 17px; font-weight: 600; color: #1C1917; letter-spacing: -0.01em; }
   .floor-tag {
-    font-size: 10px; background: #cce0f5; color: #08406c;
-    border-radius: 4px; padding: 2px 7px; font-weight: 500;
+    font-size: 12px; background: #EEF2FF; color: #4338CA;
+    border-radius: 999px; padding: 4px 11px; font-weight: 600;
+    letter-spacing: 0.02em;
   }
 
   /* ─── PHOTO CAROUSEL ─── */
@@ -230,12 +242,12 @@
     position: relative;
     min-height: 0;
     overflow: hidden;
-    background: #1a2535;
+    background: #1C1917;
   }
   #carousel {
     position: absolute;
     inset: 0;
-    background: #1a2535;
+    background: #1C1917;
   }
   #carousel-img {
     position: absolute;
@@ -301,7 +313,7 @@
     width: 290px;
     flex-shrink: 0;
     background: #fff;
-    border-left: 1px solid #b0bcd0;
+    border-left: 1px solid #E7E5E4;
     display: flex;
     flex-direction: column;
     height: calc(100vh - 90px);
@@ -309,11 +321,11 @@
   }
   #panel-header {
     padding: 14px 15px;
-    border-bottom: 1px solid #c8d0e0;
+    border-bottom: 1px solid #E7E5E4;
     flex-shrink: 0;
   }
-  #panel-room-name { font-size: 15px; font-weight: 500; color: #0c1a28; margin-bottom: 3px; }
-  #panel-risk-meta { font-size: 11px; color: #5a6f88; }
+  #panel-room-name { font-size: 18px; font-weight: 600; color: #1C1917; margin-bottom: 4px; letter-spacing: -0.01em; }
+  #panel-risk-meta { font-size: 13px; color: #57534E; }
   #panel-hazards {
     flex: 1;
     overflow-y: auto;
@@ -321,35 +333,35 @@
   }
   .hazard-section-label {
     display: inline-block;
-    font-size: 10px; font-weight: 600;
+    font-size: 12px; font-weight: 600;
     letter-spacing: 0.07em; text-transform: uppercase;
-    border-radius: 4px; padding: 2px 7px;
-    margin-bottom: 6px; margin-top: 10px;
+    border-radius: 4px; padding: 3px 9px;
+    margin-bottom: 8px; margin-top: 12px;
   }
   .hazard-section-label:first-child { margin-top: 0; }
   .hazard-card {
-    background: #e8edf5;
-    border: 0.5px solid #b0bcd0;
-    border-radius: 7px;
-    padding: 9px 11px;
-    margin-bottom: 5px;
+    background: #fff;
+    border: 1px solid #E7E5E4;
+    border-radius: 12px;
+    padding: 13px 14px;
+    margin-bottom: 7px;
   }
-  .hazard-title { font-size: 13px; font-weight: 500; color: #0c1a28; margin-bottom: 4px; }
-  .hazard-desc { font-size: 12px; color: #385070; line-height: 1.5; margin-bottom: 7px; }
+  .hazard-title { font-size: 15px; font-weight: 600; color: #1C1917; margin-bottom: 5px; letter-spacing: -0.005em; }
+  .hazard-desc { font-size: 14px; color: #44403C; line-height: 1.55; margin-bottom: 8px; }
   .hazard-solution {
-    background: #c8e4d0;
-    border-left: 3px solid #145838;
+    background: #D1FAE5;
+    border-left: 3px solid #047857;
     border-radius: 0 5px 5px 0;
-    padding: 7px 9px;
-    font-size: 11px; color: #082818; line-height: 1.5;
+    padding: 9px 11px;
+    font-size: 13px; color: #064E3B; line-height: 1.55;
   }
   .hazard-price {
-    font-size: 11px; color: #8090a4; margin-top: 6px; line-height: 1.4;
+    font-size: 13px; color: #78716C; margin-top: 7px; line-height: 1.45;
   }
-  .hazard-links { margin-top: 6px; display: flex; flex-direction: column; gap: 4px; }
+  .hazard-links { margin-top: 7px; display: flex; flex-direction: column; gap: 5px; }
   .hazard-link {
-    display: inline-flex; align-items: center; gap: 4px;
-    font-size: 11px; color: #2070b8; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 13px; color: #4F46E5; text-decoration: none;
   }
   .hazard-link:hover { text-decoration: underline; }
 
@@ -362,20 +374,20 @@
   }
   .hazard-icon {
     position: absolute;
-    width: 28px; height: 28px;
+    width: 30px; height: 30px;
     border-radius: 50%;
-    border: 2px solid #fff;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+    border: 2.5px solid #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.35), 0 0 0 1px rgba(28, 25, 23, 0.06);
     display: flex; align-items: center; justify-content: center;
     transform: translate(-50%, -50%);
     pointer-events: all;
     cursor: pointer;
     padding: 0;
-    transition: transform 0.12s, box-shadow 0.12s;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
   }
   .hazard-icon:hover {
     transform: translate(-50%, -50%) scale(1.18);
-    box-shadow: 0 3px 10px rgba(0,0,0,0.45);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.45), 0 0 0 1px rgba(28, 25, 23, 0.1);
   }
   .hazard-icon.active {
     transform: translate(-50%, -50%) scale(1.2) !important;
@@ -386,33 +398,35 @@
 
   /* ─── ACCORDION ─── */
   .accordion-card {
-    border: 1px solid #d0d8e8;
-    border-radius: 7px;
-    margin-bottom: 5px;
+    border: 1px solid #E7E5E4;
+    border-radius: 12px;
+    margin-bottom: 6px;
     overflow: hidden;
-    transition: border-color 0.15s, box-shadow 0.15s;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    background: #fff;
   }
+  .accordion-card:hover { background: #FAFAF9; }
   /* Category-specific focus states */
   .accordion-card[data-cat="danger"].focused {
-    border-color: #e87098;
-    box-shadow: 0 0 0 2px rgba(232,112,152,0.15);
+    border-color: #F43F5E;
+    box-shadow: 0 0 0 2px rgba(244, 63, 94,0.15);
   }
   .accordion-card[data-cat="danger"].focused .accordion-header {
-    background: #fbeaf0;
+    background: #FFF1F2;
   }
   .accordion-card[data-cat="challenge"].focused {
-    border-color: #5888c0;
-    box-shadow: 0 0 0 2px rgba(88,136,192,0.15);
+    border-color: #6366F1;
+    box-shadow: 0 0 0 2px rgba(99, 102, 241,0.15);
   }
   .accordion-card[data-cat="challenge"].focused .accordion-header {
-    background: #e8f1fb;
+    background: #EEF2FF;
   }
   .accordion-card[data-cat="frustration"].focused {
-    border-color: #d89830;
-    box-shadow: 0 0 0 2px rgba(216,152,48,0.15);
+    border-color: #F59E0B;
+    box-shadow: 0 0 0 2px rgba(245, 158, 11,0.15);
   }
   .accordion-card[data-cat="frustration"].focused .accordion-header {
-    background: #faeeda;
+    background: #FEF3C7;
   }
   .accordion-header {
     display: flex;
@@ -420,27 +434,27 @@
     gap: 8px;
     padding: 9px 11px;
     cursor: pointer;
-    background: #f8fafc;
+    background: #FAFAF9;
     user-select: none;
     -webkit-user-select: none;
     transition: background 0.12s;
   }
-  .accordion-header:hover { background: #eaeef6; }
+  .accordion-header:hover { background: #F5F5F4; }
   .accordion-dot {
     width: 8px; height: 8px;
     border-radius: 50%;
     flex-shrink: 0;
   }
   .accordion-title {
-    font-size: 11px; font-weight: 500;
-    color: #0c1a28; flex: 1;
-    line-height: 1.35;
+    font-size: 13.5px; font-weight: 500;
+    color: #1C1917; flex: 1;
+    line-height: 1.4;
   }
   .accordion-chevron {
     width: 14px; height: 14px;
     flex-shrink: 0;
     transition: transform 0.2s;
-    color: #8090a4;
+    color: #78716C;
   }
   .accordion-card.open .accordion-chevron { transform: rotate(180deg); }
   .accordion-body {
@@ -450,48 +464,1764 @@
   }
   .accordion-card.open .accordion-body { display: block; }
   .accordion-desc {
-    font-size: 11px; color: #5a6f88;
-    line-height: 1.5;
+    font-size: 13px; color: #57534E;
+    line-height: 1.55;
     padding-top: 8px;
-    margin-bottom: 7px;
+    margin-bottom: 8px;
   }
   .accordion-solution {
-    background: #cce4d4;
-    border-left: 3px solid #145838;
+    background: #D1FAE5;
+    border-left: 3px solid #047857;
     border-radius: 0 5px 5px 0;
-    padding: 7px 9px;
-    font-size: 11px; color: #082818; line-height: 1.5;
+    padding: 9px 11px;
+    font-size: 13px; color: #064E3B; line-height: 1.55;
   }
   .accordion-price {
-    font-size: 11px; color: #8090a4;
-    margin-top: 6px; line-height: 1.4;
+    font-size: 13px; color: #78716C;
+    margin-top: 7px; line-height: 1.45;
   }
-  .accordion-links { margin-top: 6px; display: flex; flex-direction: column; gap: 4px; }
+  .accordion-links { margin-top: 7px; display: flex; flex-direction: column; gap: 5px; }
   .accordion-link {
-    display: inline-flex; align-items: center; gap: 4px;
-    font-size: 11px; color: #2070b8; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 13px; color: #4F46E5; text-decoration: none;
   }
   .accordion-link:hover { text-decoration: underline; }
 
   /* ─── PANEL LEGEND ─── */
   #panel-legend {
     padding: 10px 15px;
-    border-top: 1px solid #c8d0e0;
+    border-top: 1px solid #E7E5E4;
     display: flex;
     align-items: center;
     gap: 14px;
     flex-shrink: 0;
-    background: #f8f9fc;
+    background: #FAFAF9;
   }
-  .panel-legend-item { display: flex; align-items: center; gap: 5px; }
-  .panel-legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-  .panel-legend-label { font-size: 10px; color: #5a6f88; }
+  .panel-legend-item { display: flex; align-items: center; gap: 6px; }
+  .panel-legend-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+  .panel-legend-label { font-size: 12px; color: #57534E; }
 
   /* ─── OVERVIEW STATE ─── */
   #overview { display: flex; flex-direction: column; flex: 1; }
   #overview.hidden { display: none; }
+
+  /* ─── MAIN TAB BAR ─── */
+  #maintabs {
+    background: #fff;
+    border-bottom: 1px solid #E7E5E4;
+    padding: 0 18px;
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    flex-shrink: 0;
+  }
+  .main-tab {
+    font-size: 14px; font-weight: 500;
+    color: #57534E;
+    padding: 14px 18px;
+    border: none; background: none; cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+    white-space: nowrap;
+    display: flex; align-items: center; gap: 7px;
+    border-radius: 8px 8px 0 0;
+  }
+  .main-tab.active { color: #1C1917; border-bottom-color: #4F46E5; font-weight: 600; }
+  .main-tab.active svg { color: #4F46E5; }
+  .main-tab:hover:not(.active) { color: #1C1917; background: #FAFAF9; }
+  .main-tab:focus-visible { outline: 2px solid #6366F1; outline-offset: -2px; }
+  .main-tab svg { width: 13px; height: 13px; }
+
+  /* ─── APARTMENT / ROADMAP / HOME / SETUP VIEW WRAPPERS ─── */
+  #apartment-view, #roadmap-view, #home-view, #setup-view {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+  }
+  #apartment-view.hidden, #roadmap-view.hidden, #home-view.hidden, #setup-view.hidden { display: none; }
+
+  /* ─── ROADMAP VIEW ─── */
+  #roadmap-view {
+    background: #fff;
+  }
+  #roadmap-header {
+    padding: 16px 22px 10px;
+    border-bottom: 1px solid #E7E5E4;
+    flex-shrink: 0;
+  }
+  .roadmap-title {
+    font-size: 26px; font-weight: 700;
+    color: #1C1917; margin-bottom: 12px;
+    letter-spacing: -0.02em;
+    line-height: 1.18;
+  }
+  .roadmap-legend {
+    display: flex; align-items: center;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .roadmap-legend-item {
+    display: flex; align-items: center; gap: 6px;
+  }
+  .roadmap-legend-dot {
+    width: 11px; height: 11px; border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .roadmap-legend-label {
+    font-size: 13px; color: #44403C;
+  }
+
+  #roadmap-board {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  #roadmap-scroll {
+    flex: 1;
+    overflow-x: auto;
+    overflow-y: auto;
+    padding: 18px 22px 26px;
+    background: #FAF8F5;
+  }
+  .roadmap-nav-btn {
+    display: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #fff;
+    border: 1px solid #E7E5E4;
+    box-shadow: 0 4px 12px rgba(28, 25, 23, 0.12), 0 1px 2px rgba(28, 25, 23, 0.06);
+    align-items: center;
+    justify-content: center;
+    color: #4F46E5;
+    cursor: pointer;
+    z-index: 5;
+    padding: 0;
+    font: inherit;
+    opacity: 1;
+    transition: opacity 0.2s ease, background 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  }
+  .roadmap-nav-btn:hover {
+    background: #FAFAF9;
+    box-shadow: 0 8px 20px rgba(28, 25, 23, 0.16), 0 2px 4px rgba(28, 25, 23, 0.08);
+  }
+  .roadmap-nav-btn:focus-visible {
+    outline: 2px solid #6366F1;
+    outline-offset: 2px;
+  }
+  .roadmap-nav-btn svg { width: 20px; height: 20px; }
+  .roadmap-nav-btn.left { left: 14px; }
+  .roadmap-nav-btn.right { right: 14px; }
+  .roadmap-nav-btn.hidden { opacity: 0; pointer-events: none; }
+  @media (min-width: 640px) {
+    .roadmap-nav-btn { display: flex; }
+  }
+  @media (max-width: 639px) {
+    #roadmap-grid {
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 8px;
+      min-width: 0;
+    }
+    #roadmap-scroll {
+      overflow-x: hidden;
+      padding: 14px 14px 22px;
+    }
+    .phase-col, .phase-stack-col {
+      width: 100%;
+    }
+    .phase-stack-col { gap: 12px; }
+  }
+  #roadmap-grid {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    min-width: min-content;
+    margin-top: 8px;
+  }
+  .phase-col {
+    width: 280px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .phase-card {
+    background: #fff;
+    border: 1px solid #E7E5E4;
+    border-radius: 16px;
+    padding: 14px 14px;
+    box-shadow: 0 1px 2px rgba(28, 25, 23, 0.04);
+  }
+  .phase-tag {
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: #4F46E5; margin-bottom: 6px;
+  }
+  .phase-title {
+    font-size: 18px; font-weight: 700;
+    color: #1C1917; line-height: 1.25; margin-bottom: 4px;
+    letter-spacing: -0.012em;
+  }
+  .phase-period {
+    font-size: 13px; color: #78716C;
+  }
+  .phase-items {
+    display: flex; flex-direction: column;
+    gap: 7px;
+  }
+  .phase-item {
+    font-size: 18px;
+    border-radius: 8px;
+    padding: 16px 16px;
+    line-height: 1.5;
+    border: 1px solid transparent;
+    font-weight: 500;
+  }
+  .phase-item.research {
+    background: #E0F2FE; color: #0369A1; border-color: #BAE6FD;
+  }
+  .phase-item.hardware {
+    background: #FEF3C7; color: #92400E; border-color: #FDE68A;
+  }
+  .phase-item.ai {
+    background: #FAE8FF; color: #A21CAF; border-color: #F5D0FE;
+  }
+  .phase-item.stakeholder {
+    background: #D1FAE5; color: #047857; border-color: #A7F3D0;
+  }
+  .phase-deliverable {
+    background: #FEF9C3;
+    border: 1px solid #FDE047;
+    border-left: 3px solid #FDE047;
+    border-radius: 12px;
+    padding: 16px 16px;
+  }
+  .phase-deliverable-tag {
+    font-size: 14px; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: #854D0E; margin-bottom: 6px;
+  }
+  .phase-deliverable-text {
+    font-size: 18px; color: #1C1917;
+    line-height: 1.5; font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .phase-question {
+    background: #F5F5F4;
+    border: 1px solid #E7E5E4;
+    border-radius: 12px;
+    padding: 16px 16px;
+  }
+  .phase-question-tag {
+    font-size: 14px; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: #78716C; margin-bottom: 6px;
+  }
+  .phase-question-text {
+    font-size: 18px; color: #44403C;
+    line-height: 1.5; font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  /* ─── HOME VIEW ─── */
+  #home-view { background: #FAFAF9; }
+  #home-scroll {
+    flex: 1;
+    overflow-y: auto;
+    padding: 28px 24px 0;
+  }
+  .home-section { margin-bottom: 28px; }
+  .section-eyebrow {
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: #57534E; margin-bottom: 10px;
+  }
+  .section-title {
+    font-size: 17px; font-weight: 600;
+    color: #1C1917; margin-bottom: 14px;
+    letter-spacing: -0.005em;
+  }
+
+  /* Hero */
+  .home-hero {
+    display: grid;
+    grid-template-columns: 1.35fr 1fr;
+    gap: 32px;
+    align-items: center;
+    background: linear-gradient(135deg, #EEF2FF 0%, #FFFFFF 65%, #FFFFFF 100%);
+    border: 1px solid #E7E5E4;
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 1px 2px rgba(28, 25, 23, 0.04), 0 4px 24px rgba(28, 25, 23, 0.04);
+  }
+  .home-eyebrow {
+    font-size: 13px; font-weight: 600;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: #4F46E5; margin-bottom: 16px;
+  }
+  .home-headline {
+    font-size: 60px; font-weight: 700;
+    color: #1C1917; line-height: 1.04;
+    margin-bottom: 22px; letter-spacing: -0.028em;
+  }
+  .home-headline-accent { color: #4F46E5; }
+  .home-lede {
+    font-size: 18px; color: #57534E;
+    line-height: 1.65; margin-bottom: 30px;
+    max-width: 56ch;
+  }
+  .home-cta-row {
+    display: flex; gap: 12px; flex-wrap: wrap;
+  }
+  .home-btn-primary, .home-btn-outline {
+    font-size: 16px; font-weight: 500;
+    padding: 14px 22px; border-radius: 12px;
+    cursor: pointer; border: 1px solid transparent;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+    font-family: inherit;
+    display: inline-flex; align-items: center; gap: 8px;
+    min-height: 48px;
+  }
+  .home-btn-primary {
+    background: #4F46E5; color: #fff; border-color: #4F46E5;
+    box-shadow: 0 1px 2px rgba(28, 25, 23, 0.06), 0 4px 10px rgba(79, 70, 229, 0.18);
+  }
+  .home-btn-primary:hover {
+    background: #4338CA; border-color: #4338CA;
+    box-shadow: 0 2px 4px rgba(28, 25, 23, 0.08), 0 6px 14px rgba(79, 70, 229, 0.24);
+  }
+  .home-btn-outline {
+    background: #fff; color: #1C1917; border-color: #D6D3D1;
+  }
+  .home-btn-outline:hover { background: #FAFAF9; border-color: #A8A29E; }
+  .home-btn-primary:focus-visible, .home-btn-outline:focus-visible {
+    outline: 2px solid #6366F1; outline-offset: 2px;
+  }
+  .home-btn-primary svg, .home-btn-outline svg {
+    width: 14px; height: 14px;
+  }
+
+  .home-hero-visual {
+    width: 100%;
+    aspect-ratio: 5/4;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #EEF2FF 0%, #FFFFFF 50%, #F5F5F4 100%);
+    position: relative; overflow: hidden;
+    border: 1px solid #E7E5E4;
+  }
+  .home-hero-visual svg {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+  }
+
+  /* Stat grid */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+  .stat-card {
+    background: #fff;
+    border: 1px solid #E7E5E4;
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .stat-icon {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: #EEF2FF;
+    color: #4F46E5;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .stat-icon svg { width: 16px; height: 16px; }
+  .stat-num {
+    font-size: 17px; font-weight: 600;
+    color: #1C1917; line-height: 1.2;
+  }
+  .stat-desc {
+    font-size: 11px; color: #57534E; line-height: 1.45;
+  }
+
+  /* What grid */
+  .what-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 26px;
+    background: #fff;
+    border: 1px solid #E7E5E4;
+    border-radius: 14px;
+    padding: 24px;
+  }
+  .what-text {
+    font-size: 13px; color: #44403C;
+    line-height: 1.7;
+  }
+  .principle-list {
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .principle-row {
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .principle-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%; flex-shrink: 0;
+    margin-top: 5px;
+  }
+  .principle-label {
+    font-size: 12.5px; color: #1C1917;
+    line-height: 1.45; font-weight: 500;
+  }
+
+  /* Path cards */
+  .paths-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .path-card {
+    background: #fff;
+    border: 1px solid #E7E5E4;
+    border-radius: 14px;
+    padding: 22px;
+    cursor: pointer;
+    display: flex; flex-direction: column; gap: 12px;
+    text-align: left;
+    font-family: inherit;
+    transition: transform 0.18s, box-shadow 0.18s, border-color 0.15s;
+  }
+  .path-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(28, 25, 23,0.08);
+    border-color: #C7D2FE;
+  }
+  .path-card:focus-visible {
+    outline: 2px solid #4F46E5; outline-offset: 2px;
+  }
+  .path-card-head {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .path-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    background: #EEF2FF;
+    color: #4F46E5;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .path-icon svg { width: 19px; height: 19px; }
+  .path-title {
+    font-size: 15px; font-weight: 600;
+    color: #1C1917; flex: 1;
+  }
+  .path-arrow { color: #57534E; flex-shrink: 0; }
+  .path-desc {
+    font-size: 12.5px; color: #44403C;
+    line-height: 1.6;
+  }
+
+  /* Stakeholder grid */
+  .stakeholder-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+  .stakeholder-card {
+    background: #fff;
+    border: 1px solid #E7E5E4;
+    border-radius: 10px;
+    padding: 14px;
+  }
+  .stakeholder-name {
+    font-size: 12px; font-weight: 600;
+    color: #1C1917; margin-bottom: 5px;
+  }
+  .stakeholder-text {
+    font-size: 11px; color: #57534E; line-height: 1.5;
+  }
+
+  /* Footer */
+  .home-footer {
+    border-top: 1px solid #E7E5E4;
+    margin-top: 16px;
+    padding: 20px 0 24px;
+    text-align: center;
+  }
+  .home-footer-line {
+    font-size: 11px; color: #57534E;
+    margin-bottom: 5px; font-weight: 500;
+  }
+  .home-footer-meta {
+    font-size: 10px; color: #78716C;
+    line-height: 1.5;
+  }
+
+  /* ─── MOBILE ─── */
+  @media (max-width: 720px) {
+    body { padding: 12px 8px; }
+    #app { border-radius: 11px; min-height: 600px; }
+
+    /* Topbar */
+    #topbar {
+      padding: 9px 12px;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .house-icon { width: 28px; height: 28px; }
+    .house-icon svg { width: 16px; height: 16px; }
+    .topbar-title { font-size: 12px; line-height: 1.3; }
+    .topbar-sub { font-size: 10px; }
+    .status-pill {
+      font-size: 10px;
+      padding: 3px 8px;
+      flex-shrink: 0;
+    }
+
+    /* Main tabs — keep horizontal, allow scroll within tab bar only */
+    #maintabs {
+      padding: 0 8px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    #maintabs::-webkit-scrollbar { display: none; }
+    .main-tab {
+      padding: 12px 12px;
+      font-size: 11.5px;
+      min-height: 44px;
+      flex-shrink: 0;
+    }
+    .main-tab svg { width: 12px; height: 12px; }
+
+    /* Keybar */
+    #keybar { padding: 7px 12px; gap: 8px; }
+    .keybar-left { gap: 8px; }
+    .legend-items { gap: 10px; }
+
+    /* Floor toggle */
+    #floortoggle { padding: 0 12px; flex-wrap: wrap; }
+    .floor-tab {
+      padding: 12px 14px;
+      font-size: 12px;
+      min-height: 44px;
+    }
+    .floor-hint { display: none; }
+
+    /* Floor map */
+    #mapwrap { padding: 8px; }
+    .zone-label { font-size: 8px; padding: 1px 4px; }
+    .zone-badge { width: 14px; height: 14px; font-size: 9px; border-width: 1.5px; }
+    .floor-hint-below { font-size: 10px; padding: 0 8px; }
+
+    /* Room view — stack vertically */
+    #roomview.active {
+      flex-direction: column;
+      height: auto;
+      overflow-y: auto;
+    }
+    #room-left {
+      height: auto;
+      flex: none;
+      width: 100%;
+    }
+    #room-topbar {
+      padding: 9px 12px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    #back-btn {
+      padding: 9px 12px;
+      font-size: 11px;
+      min-height: 36px;
+    }
+    #room-name-label { font-size: 12px; }
+    #carousel-wrap {
+      flex: none;
+      height: 320px;
+      min-height: 320px;
+    }
+    #carousel-img { top: 12px; left: 12px; right: 12px; bottom: 12px; }
+    .carousel-arrow { width: 36px; height: 36px; }
+    #arrow-prev { left: 8px; }
+    #arrow-next { right: 8px; }
+
+    /* Detail panel — full width below carousel */
+    #detail-panel {
+      width: 100%;
+      height: auto;
+      border-left: none;
+      border-top: 1px solid #E7E5E4;
+    }
+    #panel-header { padding: 12px 14px; }
+    #panel-room-name { font-size: 14px; }
+    #panel-hazards { padding: 12px; }
+    #panel-legend { padding: 9px 12px; gap: 10px; flex-wrap: wrap; }
+
+    /* Hazard icons stay tappable */
+    .hazard-icon { width: 32px; height: 32px; }
+
+    /* Roadmap */
+    #roadmap-header { padding: 14px 14px 10px; }
+    .roadmap-title { font-size: 14px; }
+    .roadmap-legend { gap: 10px; }
+    #roadmap-scroll { padding: 12px 14px 18px; }
+    .phase-col, .phase-stack-col { width: 240px; }
+    .phase-item { font-size: 16px; padding: 14px 14px; }
+    .phase-deliverable, .phase-question { padding: 14px 14px; }
+    .phase-deliverable-text, .phase-question-text { font-size: 16px; }
+    .phase-deliverable-tag, .phase-question-tag { font-size: 13px; }
+
+    /* Home — hero stack, full-width stacked CTAs */
+    #home-scroll { padding: 20px 14px 24px; }
+    .home-hero {
+      grid-template-columns: 1fr;
+      padding: 24px;
+      gap: 20px;
+      border-radius: 20px;
+    }
+    .home-eyebrow { font-size: 12px; letter-spacing: 0.18em; }
+    .home-headline { font-size: 36px; line-height: 1.08; letter-spacing: -0.022em; }
+    .home-lede { font-size: 16px; line-height: 1.6; }
+    .home-cta-row { flex-direction: column; gap: 10px; }
+    .home-btn-primary, .home-btn-outline {
+      width: 100%;
+      justify-content: center;
+      padding: 15px 18px;
+      min-height: 52px;
+      font-size: 16px;
+    }
+    .home-hero-visual { aspect-ratio: 16/10; max-height: 220px; }
+  }
+
+  @media (max-width: 420px) {
+    body { padding: 8px 6px; }
+    #topbar { padding: 8px 10px; }
+    .main-tab { padding: 13px 12px; font-size: 13px; }
+    .home-headline { font-size: 32px; }
+    .home-hero { padding: 20px; border-radius: 18px; }
+    #home-scroll { padding: 16px 10px 20px; }
+    .home-hero-visual { display: none; }
+  }
+
+  /* ─── ROADMAP INTERACTIVE ─── */
+  .visually-hidden {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .phase-col,
+  .phase-stack-col {
+    width: 280px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    transition: opacity 0.2s ease-out;
+  }
+  .phase-col { gap: 8px; }
+  .phase-stack-col { gap: 12px; }
+  @media (max-width: 720px) {
+    .phase-col, .phase-stack-col { width: 240px; }
+  }
+
+  .phase-header-btn {
+    width: 100%;
+    text-align: left;
+    font: inherit;
+    color: inherit;
+    background: #fff;
+    border: 1px solid #E7E5E4;
+    border-radius: 16px;
+    padding: 14px 14px;
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+    box-shadow: 0 1px 2px rgba(28, 25, 23, 0.04);
+  }
+  .phase-header-btn:hover {
+    background: #fff; border-color: #D6D3D1;
+    box-shadow: 0 4px 12px rgba(28, 25, 23, 0.06);
+  }
+  .phase-header-btn:focus-visible { outline: 2px solid #6366F1; outline-offset: 2px; }
+  .phase-header-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .phase-header-titles { flex: 1; min-width: 0; }
+  .phase-chevron {
+    width: 16px; height: 16px;
+    flex-shrink: 0;
+    color: #57534E;
+    margin-top: 2px;
+  }
+  /* Horizontal collapsed strip (desktop + mobile) */
+  .phase-collapsed-strip {
+    width: 100%;
+    background: #fff;
+    border: 1px solid #E7E5E4;
+    border-radius: 16px;
+    padding: 18px 16px;
+    cursor: pointer;
+    font: inherit;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-align: left;
+    transition: background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+    box-shadow: 0 1px 2px rgba(28, 25, 23, 0.04);
+  }
+  .phase-collapsed-strip:hover {
+    background: #FAFAF9;
+    border-color: #D6D3D1;
+    box-shadow: 0 4px 12px rgba(28, 25, 23, 0.06);
+  }
+  .phase-collapsed-strip:hover .phase-chevron { color: #4F46E5; }
+  .phase-collapsed-strip:focus-visible {
+    outline: 2px solid #6366F1; outline-offset: 2px;
+  }
+  .phase-strip-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+  }
+  .phase-collapsed-strip .phase-chevron {
+    color: #A8A29E;
+    flex-shrink: 0;
+    margin-top: 0;
+    transition: color 0.15s ease;
+  }
+  .phase-tag-strip {
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: #4F46E5;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .phase-title-strip {
+    display: block;
+    font-size: 17px;
+    font-weight: 700;
+    color: #1C1917;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  .phase-count-strip {
+    margin-left: auto;
+    font-size: 13px;
+    color: #78716C;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  @media (max-width: 720px) {
+    .phase-collapsed-strip { padding: 16px 14px; gap: 6px; }
+    .phase-tag-strip { font-size: 11.5px; }
+    .phase-title-strip { font-size: 16px; }
+    .phase-count-strip { font-size: 12.5px; }
+  }
+
+  .phase-body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  /* Cards become interactive */
+  .phase-item {
+    position: relative;
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    transition: filter 0.15s, transform 0.1s;
+    min-height: 44px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .phase-item:hover { filter: brightness(0.97); }
+  .phase-item:active { transform: scale(0.98); }
+  .phase-item:focus-visible { outline: 2px solid #4F46E5; outline-offset: 2px; }
+  .phase-deliverable, .phase-question {
+    cursor: pointer;
+    transition: filter 0.15s, transform 0.1s;
+  }
+  .phase-deliverable:hover, .phase-question:hover { filter: brightness(0.98); }
+  .phase-deliverable:focus-visible, .phase-question:focus-visible {
+    outline: 2px solid #4F46E5; outline-offset: 2px;
+  }
+
+  /* ─── CARD PANEL ─── */
+  #card-panel {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+  }
+  #card-panel.hidden { display: none; }
+  #card-panel-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(28, 25, 23, 0.42);
+  }
+  #card-panel-sheet {
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    width: 440px;
+    max-width: 100%;
+    background: #fff;
+    border-left: 1px solid #E7E5E4;
+    display: flex;
+    flex-direction: column;
+    box-shadow: -8px 0 24px rgba(28, 25, 23,0.12);
+  }
+  #card-panel-handle { display: none; }
+  #card-panel-titlebar {
+    padding: 16px 18px;
+    border-bottom: 1px solid #E7E5E4;
+    flex-shrink: 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  #card-panel-title-wrap { flex: 1; min-width: 0; }
+  .panel-title {
+    font-size: 22px; font-weight: 700;
+    color: #1C1917; line-height: 1.25;
+    margin-bottom: 10px;
+    letter-spacing: -0.015em;
+  }
+  .panel-meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+  }
+  .panel-category-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    background: #FAFAF9;
+    border: 1px solid #E7E5E4;
+    border-radius: 999px;
+    padding: 4px 10px;
+    color: #44403C;
+  }
+  .panel-cat-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .panel-phase-label {
+    font-size: 13px;
+    color: #57534E;
+    line-height: 1.45;
+  }
+  #card-panel-close {
+    width: 36px; height: 36px;
+    border: 1px solid #E7E5E4;
+    border-radius: 12px;
+    background: #fff;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    color: #57534E;
+    flex-shrink: 0;
+    transition: background 0.15s, color 0.15s;
+    padding: 0;
+  }
+  #card-panel-close:hover { background: #FAFAF9; color: #1C1917; }
+  #card-panel-close:focus-visible { outline: 2px solid #4F46E5; outline-offset: 2px; }
+  #card-panel-close svg { width: 16px; height: 16px; }
+
+  #card-panel-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 18px;
+  }
+  .panel-section { margin-bottom: 22px; }
+  .panel-section:last-child { margin-bottom: 0; }
+  .panel-section-label {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #57534E;
+    margin-bottom: 8px;
+  }
+  .panel-section-text {
+    font-size: 16px;
+    color: #44403C;
+    line-height: 1.65;
+  }
+  .panel-deps {
+    list-style: none;
+    margin: 0; padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .panel-deps li {
+    font-size: 15px;
+    color: #44403C;
+    padding: 9px 12px;
+    background: #FAFAF9;
+    border: 1px solid #E7E5E4;
+    border-radius: 8px;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 720px) {
+    #card-panel-sheet {
+      top: auto;
+      width: 100%;
+      height: 88vh;
+      max-height: 88vh;
+      border-radius: 16px 16px 0 0;
+      border-left: none;
+      border-top: 1px solid #E7E5E4;
+      box-shadow: 0 -8px 24px rgba(28, 25, 23,0.18);
+      transition: transform 0.25s ease;
+    }
+    #card-panel-handle {
+      display: block;
+      width: 42px; height: 4px;
+      background: #E7E5E4;
+      border-radius: 2px;
+      margin: 8px auto 0;
+      flex-shrink: 0;
+    }
+    #card-panel-titlebar { padding: 12px 16px 14px; }
+    .panel-title { font-size: 16px; }
+    #card-panel-content { padding: 16px; }
+    #card-panel-close { width: 40px; height: 40px; }
+  }
+
+  /* ─── SETUP GUIDE VIEW ─── */
+  #setup-view { background: #FAF8F5; }
+  .setup-view-header {
+    margin-bottom: 4px;
+  }
+  .setup-view-heading {
+    font-size: 36px;
+    font-weight: 700;
+    color: #1C1917;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    margin: 0 0 8px;
+  }
+  .setup-view-subtitle {
+    font-size: 16px;
+    color: #78716C;
+    line-height: 1.6;
+    margin: 0;
+    max-width: 56ch;
+  }
+  @media (max-width: 720px) {
+    .setup-view-heading { font-size: 28px; }
+    .setup-view-subtitle { font-size: 15px; }
+  }
+  #setup-scroll {
+    flex: 1;
+    overflow-y: auto;
+    padding: 28px 24px 32px;
+  }
+  #setup-content {
+    max-width: 720px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  .setup-progress-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .setup-progress-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .setup-step-counter {
+    font-size: 13px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: #78716C;
+    flex-shrink: 0;
+  }
+  .setup-step-title {
+    font-size: 15px; font-weight: 600;
+    color: #1C1917;
+    letter-spacing: -0.005em;
+    text-align: right;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+  }
+  .setup-progress-bar {
+    height: 8px;
+    background: #E7E5E4;
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .setup-progress-fill {
+    height: 100%;
+    width: 10%;
+    background: #4F46E5;
+    border-radius: 999px;
+    transition: width 0.3s ease-out;
+  }
+
+  .setup-card {
+    background: #fff;
+    border: 1px solid #E7E5E4;
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 1px 2px rgba(28, 25, 23, 0.04);
+    transition: opacity 0.2s ease;
+  }
+  .setup-screen-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #1C1917;
+    line-height: 1.15;
+    margin-bottom: 16px;
+    letter-spacing: -0.022em;
+  }
+  .setup-screen-intro {
+    font-size: 17px;
+    color: #57534E;
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+  .setup-section-label {
+    font-size: 13px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: #78716C;
+    margin-bottom: 12px;
+    margin-top: 26px;
+  }
+  .setup-section-label:first-child { margin-top: 0; }
+  .setup-monitor-list,
+  .setup-alert-list,
+  .setup-grouped-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .setup-monitor-item {
+    background: #FAFAF9;
+    border: 1px solid #E7E5E4;
+    border-radius: 12px;
+    padding: 16px 18px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .setup-monitor-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 7px;
+  }
+  .setup-monitor-text { flex: 1; min-width: 0; }
+  .setup-monitor-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1C1917;
+    margin-bottom: 5px;
+    letter-spacing: -0.005em;
+  }
+  .setup-monitor-desc {
+    font-size: 15px;
+    color: #57534E;
+    line-height: 1.6;
+  }
+  .setup-alert-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 7px 2px;
+  }
+  .setup-alert-circle {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 3px;
+    box-shadow: 0 0 0 1px rgba(28, 25, 23, 0.05);
+  }
+  .setup-alert-text {
+    font-size: 15px;
+    color: #57534E;
+    line-height: 1.6;
+    flex: 1;
+  }
+  .setup-alert-label {
+    font-weight: 600;
+    color: #1C1917;
+  }
+  .setup-closing {
+    font-size: 15px;
+    color: #57534E;
+    line-height: 1.7;
+    margin-top: 24px;
+    padding: 16px 18px;
+    background: #FAFAF9;
+    border: 1px solid #E7E5E4;
+    border-radius: 12px;
+  }
+
+  .setup-step-list {
+    list-style: none;
+    margin: 0; padding: 0;
+    counter-reset: step-counter;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 6px;
+  }
+  .setup-step-list li {
+    counter-increment: step-counter;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    font-size: 17px;
+    color: #44403C;
+    line-height: 1.6;
+  }
+  .setup-step-list li::before {
+    content: counter(step-counter);
+    flex-shrink: 0;
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: #EEF2FF;
+    color: #4338CA;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .setup-grouped-item {
+    background: #FAFAF9;
+    border: 1px solid #E7E5E4;
+    border-radius: 12px;
+    padding: 16px 18px;
+  }
+  .setup-grouped-label {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1C1917;
+    margin-bottom: 6px;
+    letter-spacing: -0.005em;
+  }
+  .setup-grouped-text {
+    font-size: 15px;
+    color: #57534E;
+    line-height: 1.6;
+  }
+
+  .setup-image-placeholder {
+    background: #F5F5F4;
+    border: 2px dashed #D6D3D1;
+    border-radius: 12px;
+    aspect-ratio: 16 / 9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    margin-top: 24px;
+  }
+  .setup-image-placeholder-text {
+    font-size: 14px;
+    color: #78716C;
+    text-align: center;
+    line-height: 1.55;
+    max-width: 480px;
+  }
+
+  /* Reference card */
+  .setup-card.reference {
+    background: #EEF2FF;
+    border-color: #E7E5E4;
+  }
+  .setup-reference-eyebrow {
+    font-size: 13px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: #78716C;
+    margin-bottom: 12px;
+  }
+  .setup-reference-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: #1C1917;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+    line-height: 1.18;
+  }
+  .setup-reference-bullets {
+    list-style: none;
+    margin: 0 0 24px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .setup-reference-bullets li {
+    font-size: 16px;
+    color: #44403C;
+    line-height: 1.65;
+    padding-left: 20px;
+    position: relative;
+  }
+  .setup-reference-bullets li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 9px;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: #4F46E5;
+  }
+  .setup-print-btn {
+    font: inherit;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 12px 18px;
+    background: #fff;
+    border: 1px solid #D6D3D1;
+    border-radius: 12px;
+    color: #44403C;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    min-height: 48px;
+    transition: background 0.15s ease, border-color 0.15s ease;
+  }
+  .setup-print-btn:hover { background: #FAFAF9; border-color: #A8A29E; }
+  .setup-print-btn:focus-visible { outline: 2px solid #6366F1; outline-offset: 2px; }
+  .setup-print-btn svg { width: 14px; height: 14px; }
+
+  .setup-help-card {
+    background: #fff;
+    border: 1px solid #E7E5E4;
+    border-radius: 12px;
+    padding: 20px 22px;
+    color: #44403C;
+  }
+  .setup-help-card strong {
+    display: block;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1C1917;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+  .setup-help-card p {
+    font-size: 16px;
+    color: #44403C;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .setup-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 4px;
+  }
+  .setup-btn-prev,
+  .setup-btn-next {
+    font: inherit;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 14px 22px;
+    border-radius: 12px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    min-height: 48px;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .setup-btn-prev {
+    background: #fff;
+    border-color: #D6D3D1;
+    color: #44403C;
+  }
+  .setup-btn-prev:hover:not(:disabled) {
+    background: #FAFAF9;
+    border-color: #A8A29E;
+  }
+  .setup-btn-prev:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  .setup-btn-next {
+    background: #4F46E5;
+    border-color: #4F46E5;
+    color: #fff;
+    box-shadow: 0 1px 2px rgba(28, 25, 23, 0.06), 0 4px 10px rgba(79, 70, 229, 0.18);
+  }
+  .setup-btn-next:hover {
+    background: #4338CA;
+    border-color: #4338CA;
+    box-shadow: 0 2px 4px rgba(28, 25, 23, 0.08), 0 6px 14px rgba(79, 70, 229, 0.24);
+  }
+  .setup-btn-prev:focus-visible,
+  .setup-btn-next:focus-visible {
+    outline: 2px solid #6366F1; outline-offset: 2px;
+  }
+  .setup-btn-prev svg, .setup-btn-next svg {
+    width: 14px; height: 14px;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 720px) {
+    #setup-scroll { padding: 18px 14px 24px; }
+    #setup-content { gap: 18px; }
+    .setup-card { padding: 22px; border-radius: 14px; }
+    .setup-screen-title { font-size: 26px; line-height: 1.18; margin-bottom: 14px; letter-spacing: -0.02em; }
+    .setup-screen-intro { font-size: 16px; }
+    .setup-reference-card, .setup-card.reference { padding: 22px; }
+    .setup-reference-title { font-size: 22px; }
+    .setup-reference-bullets li { font-size: 15px; }
+    .setup-image-placeholder { padding: 14px; }
+    .setup-step-list li { font-size: 15.5px; }
+    .setup-grouped-text, .setup-monitor-desc, .setup-alert-text { font-size: 14.5px; }
+    .setup-callout-text { font-size: 14.5px; }
+    .setup-monitor-name, .setup-grouped-label { font-size: 15.5px; }
+    .setup-closing { font-size: 14.5px; }
+    .setup-help-card strong { font-size: 17px; }
+    .setup-help-card p { font-size: 15px; }
+    .setup-step-counter { font-size: 12px; }
+    .setup-step-title { font-size: 14px; }
+    .setup-before-title { font-size: 28px; }
+    .setup-before-icon { width: 28px; height: 28px; }
+    .setup-before-card { padding: 22px; }
+    .setup-before-card p { font-size: 15px; }
+    .setup-lead, .setup-body { font-size: 15px; }
+    .setup-step-subheading { font-size: 16px; }
+    .setup-note { font-size: 14.5px; }
+    .setup-image-placeholder-text { font-size: 13px; }
+    .setup-nav { gap: 10px; }
+    .setup-btn-prev, .setup-btn-next {
+      flex: 1;
+      justify-content: center;
+      padding: 14px 16px;
+      min-height: 52px;
+      font-size: 16px;
+    }
+  }
+
+  @media (max-width: 380px) {
+    .setup-nav { flex-direction: column-reverse; align-items: stretch; }
+    .setup-btn-prev, .setup-btn-next { width: 100%; }
+  }
+
+  /* "Before you start" intro screen */
+  .setup-before-eyebrow {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #047857; /* emerald-700 */
+    margin-bottom: 10px;
+  }
+  .setup-before-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 22px;
+  }
+  .setup-before-icon {
+    color: #059669; /* emerald-600 */
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+  }
+  .setup-before-title {
+    font-size: 36px;
+    font-weight: 700;
+    color: #1C1917;
+    letter-spacing: -0.028em;
+    line-height: 1.08;
+    margin: 0;
+  }
+  .setup-before-card {
+    background: #ECFDF5; /* emerald-50 */
+    border: 1px solid #E7E5E4;
+    border-radius: 16px;
+    padding: 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .setup-before-card p {
+    font-size: 16px;
+    color: #44403C;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  /* Lead paragraph and subheading inside step screens */
+  .setup-lead {
+    font-size: 16px;
+    color: #44403C;
+    line-height: 1.7;
+    margin-bottom: 6px;
+  }
+  .setup-step-subheading {
+    font-size: 17px;
+    font-weight: 600;
+    color: #1C1917;
+    letter-spacing: -0.01em;
+    margin-top: 24px;
+    margin-bottom: 14px;
+  }
+  .setup-body {
+    font-size: 16px;
+    color: #44403C;
+    line-height: 1.7;
+    margin: 0 0 4px;
+  }
+  .setup-note {
+    font-size: 15px;
+    color: #57534E;
+    line-height: 1.6;
+    margin-top: 20px;
+    margin-bottom: 0;
+  }
+  .setup-mail-link {
+    color: #4F46E5;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+    font-weight: 500;
+    transition: color 0.15s ease;
+    word-break: break-word;
+  }
+  .setup-mail-link:hover { color: #4338CA; }
+  .setup-mail-link:focus-visible {
+    outline: 2px solid #6366F1;
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  /* Callouts (info / important) */
+  .setup-callout {
+    border: 1px solid #E7E5E4;
+    border-left-width: 4px;
+    border-radius: 0 12px 12px 0;
+    padding: 16px;
+    margin-top: 16px;
+  }
+  .setup-callout.info {
+    background: #EEF2FF; /* indigo-50 */
+    border-left-color: #6366F1; /* indigo-500 */
+  }
+  .setup-callout.important {
+    background: #FFF1F2; /* rose-50 */
+    border-left-color: #F43F5E; /* rose-500 */
+    padding: 20px;
+    margin-top: 24px;
+  }
+  .setup-callout-eyebrow {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .setup-callout.important .setup-callout-eyebrow {
+    color: #BE123C; /* rose-700 */
+  }
+  .setup-callout-text {
+    font-size: 15.5px;
+    color: #292524; /* stone-800 */
+    line-height: 1.65;
+    margin: 0;
+  }
+  .setup-callout-text + .setup-callout-text {
+    margin-top: 14px;
+  }
+
+  @media (max-width: 720px) {
+    .setup-before-title { font-size: 24px; }
+    .setup-before-icon { width: 24px; height: 24px; }
+    .setup-before-card { padding: 20px; }
+    .setup-callout { padding: 14px; }
+    .setup-callout.important { padding: 16px; }
+    .setup-callout-text { font-size: 13px; }
+    .setup-step-subheading { font-size: 14.5px; }
+    .setup-lead { font-size: 13.5px; }
+  }
+
+  /* "How the system learns" section on intro screen */
+  .setup-learn-card {
+    margin-top: 32px;
+    background: #EEF2FF;
+    border: 1px solid #E7E5E4;
+    border-radius: 16px;
+    padding: 24px;
+  }
+  .setup-learn-eyebrow {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #4338CA;
+    margin-bottom: 12px;
+  }
+  .setup-learn-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1C1917;
+    letter-spacing: -0.022em;
+    line-height: 1.15;
+    margin-bottom: 18px;
+  }
+  .setup-learn-body {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 0;
+  }
+  .setup-learn-body p {
+    font-size: 16px;
+    color: #44403C;
+    line-height: 1.7;
+    margin: 0;
+  }
+  .setup-learn-svg-wrap {
+    margin-top: 24px;
+    background: #fff;
+    border: 1px solid #E7E5E4;
+    border-radius: 12px;
+    padding: 16px;
+  }
+  .setup-learn-svg-wrap svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .setup-learn-caption {
+    font-size: 13px;
+    font-style: italic;
+    text-align: center;
+    color: #78716C;
+    margin-top: 12px;
+    line-height: 1.55;
+  }
+
+  @media (max-width: 720px) {
+    .setup-learn-card { padding: 22px; margin-top: 24px; }
+    .setup-learn-title { font-size: 24px; }
+    .setup-learn-body p { font-size: 15px; }
+    .setup-learn-svg-wrap { padding: 12px; margin-top: 20px; }
+    .setup-learn-caption { font-size: 12.5px; }
+  }
+
+  /* Print: only the reference card on Step 9 */
+  @media print {
+    body { background: #fff; padding: 0; }
+    #app {
+      border: none;
+      box-shadow: none;
+      border-radius: 0;
+      min-height: 0;
+      max-width: none;
+    }
+    #topbar, #maintabs, .setup-progress-wrap, .setup-nav, .setup-help-card, .setup-print-btn { display: none !important; }
+    #setup-view { background: #fff; }
+    #setup-scroll { padding: 0; overflow: visible; }
+    .setup-card.reference {
+      background: #fff !important;
+      border: none !important;
+      box-shadow: none !important;
+      padding: 16px !important;
+      page-break-inside: avoid;
+    }
+    .setup-reference-bullets li { page-break-inside: avoid; }
+  }
+  /* ═══════ CHATBOT ═══════ */
+  #eli-fab {
+    position: fixed; bottom: 24px; right: 24px; z-index: 1000;
+    width: 52px; height: 52px; border-radius: 999px;
+    background: #4F46E5; border: none;
+    box-shadow: 0 1px 2px rgba(28,25,23,.08), 0 4px 16px rgba(79,70,229,.32);
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background .15s, transform .15s, box-shadow .15s;
+  }
+  #eli-fab:hover { background: #4338CA; transform: scale(1.06); box-shadow: 0 2px 4px rgba(28,25,23,.1), 0 6px 20px rgba(79,70,229,.38); }
+  #eli-fab:focus-visible { outline: 2px solid #6366F1; outline-offset: 3px; }
+
+  #eli-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(28,25,23,.18); z-index: 1001;
+    backdrop-filter: blur(1px);
+  }
+  #eli-overlay.open { display: block; }
+
+  #eli-panel {
+    position: fixed; top: 0; right: 0; bottom: 0;
+    width: 380px; max-width: 100vw;
+    background: #fff; border-left: 1px solid #E7E5E4;
+    z-index: 1002; display: flex; flex-direction: column;
+    transform: translateX(100%);
+    transition: transform .25s cubic-bezier(.4,0,.2,1);
+    box-shadow: -4px 0 32px rgba(28,25,23,.08);
+  }
+  #eli-panel.open { transform: translateX(0); }
+
+  #eli-header {
+    background: #fff; border-bottom: 1px solid #E7E5E4;
+    padding: 12px 16px; display: flex; align-items: center; gap: 10px; flex-shrink: 0;
+  }
+  .eli-hicon {
+    width: 34px; height: 34px; background: #EEF2FF; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .eli-htitles { flex: 1; }
+  .eli-htitle { font-size: 14px; font-weight: 600; color: #1C1917; letter-spacing: -0.01em; }
+  .eli-hsub { font-size: 12px; color: #78716C; }
+  #eli-close {
+    width: 32px; height: 32px; background: #F5F5F4; border: 1px solid #E7E5E4;
+    border-radius: 8px; cursor: pointer; color: #57534E;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; transition: background .12s; flex-shrink: 0;
+  }
+  #eli-close:hover { background: #EEEDEC; color: #1C1917; }
+  #eli-close:focus-visible { outline: 2px solid #6366F1; outline-offset: 2px; }
+
+  #eli-modes {
+    padding: 10px 14px; display: flex; gap: 6px;
+    border-bottom: 1px solid #E7E5E4; flex-shrink: 0;
+  }
+  .eli-mode {
+    flex: 1; background: #F5F5F4; border: 1px solid #E7E5E4;
+    border-radius: 8px; padding: 7px 4px; font-size: 11px; font-weight: 600;
+    color: #57534E; cursor: pointer; text-align: center; min-height: 44px;
+    line-height: 1.35; font-family: inherit; transition: all .15s;
+  }
+  .eli-mode-icon { font-size: 14px; display: block; margin-bottom: 2px; }
+  .eli-mode:hover { background: #EEF2FF; border-color: #C7D2FE; color: #4F46E5; }
+  .eli-mode:focus-visible { outline: 2px solid #6366F1; outline-offset: 2px; }
+  .eli-mode.active { background: #4F46E5; border-color: #4338CA; color: #fff; }
+  .eli-mode[data-m="dangers"].active  { background: #E11D48; border-color: #BE123C; }
+  .eli-mode[data-m="solutions"].active{ background: #D97706; border-color: #B45309; }
+
+  #eli-msgs {
+    flex: 1; overflow-y: auto; padding: 14px;
+    display: flex; flex-direction: column; gap: 12px;
+    background: #FAF8F5; scroll-behavior: smooth;
+  }
+  #eli-msgs::-webkit-scrollbar { width: 5px; }
+  #eli-msgs::-webkit-scrollbar-track { background: #F5F5F4; }
+  #eli-msgs::-webkit-scrollbar-thumb { background: #D6D3D1; border-radius: 3px; }
+
+  .emsg { display: flex; flex-direction: column; max-width: 90%; }
+  .emsg.user { align-self: flex-end; align-items: flex-end; }
+  .emsg.bot  { align-self: flex-start; align-items: flex-start; }
+  .esender {
+    font-size: 10px; font-weight: 600; letter-spacing: .07em;
+    text-transform: uppercase; color: #78716C; margin-bottom: 3px; padding: 0 2px;
+  }
+  .ebubble {
+    padding: 10px 13px; border-radius: 12px;
+    font-size: 13px; line-height: 1.65; white-space: pre-wrap;
+  }
+  .emsg.user .ebubble {
+    background: #4F46E5; color: #fff; font-weight: 500;
+    border-radius: 12px 12px 4px 12px;
+  }
+  .emsg.bot .ebubble {
+    background: #fff; border: 1px solid #E7E5E4; color: #1C1917;
+    border-radius: 12px 12px 12px 4px;
+  }
+  .emsg.bot .ebubble.edanger   { border-left: 3px solid #E11D48; background: #FFF1F2; }
+  .emsg.bot .ebubble.esolution { border-left: 3px solid #D97706; background: #FFFBEB; }
+
+  .echips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+  .echip {
+    font-size: 11.5px; font-family: inherit;
+    background: #fff; border: 1px solid #C7D2FE; color: #4338CA;
+    border-radius: 999px; padding: 5px 12px; cursor: pointer;
+    min-height: 30px; display: inline-flex; align-items: center;
+    font-weight: 500; transition: background .12s, color .12s;
+  }
+  .echip:hover { background: #EEF2FF; }
+  .echip:focus-visible { outline: 2px solid #6366F1; outline-offset: 2px; }
+
+  .etyping span {
+    display: inline-block; width: 6px; height: 6px; background: #A8A29E;
+    border-radius: 50%; animation: ebounce 1.2s infinite; margin: 0 2px;
+  }
+  .etyping span:nth-child(2) { animation-delay: .15s; }
+  .etyping span:nth-child(3) { animation-delay: .3s; }
+  @keyframes ebounce {
+    0%,60%,100% { transform:translateY(0); opacity:.4; }
+    30%          { transform:translateY(-4px); opacity:1; }
+  }
+  @media (prefers-reduced-motion: reduce) { .etyping span { animation:none; opacity:1; } }
+
+  #eli-input-area {
+    display: flex; border-top: 1px solid #E7E5E4;
+    background: #fff; flex-shrink: 0;
+  }
+  #eli-input-area:focus-within { border-top-color: #6366F1; }
+  #eli-textarea {
+    flex: 1; background: transparent; border: none; outline: none;
+    padding: 12px 14px; font-family: inherit; font-size: 14px;
+    color: #1C1917; resize: none; line-height: 1.5;
+  }
+  #eli-textarea::placeholder { color: #A8A29E; }
+  #eli-send {
+    background: #4F46E5; border: none; border-left: 1px solid #4338CA;
+    padding: 0 16px; cursor: pointer; color: #fff; font-size: 15px;
+    min-width: 50px; min-height: 44px;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .12s; flex-shrink: 0;
+  }
+  #eli-send:hover { background: #4338CA; }
+  #eli-send:focus-visible { outline: 2px solid #6366F1; outline-offset: -3px; }
+  #eli-send:disabled { background: #D6D3D1; cursor: not-allowed; }
+
+  .eli-sr { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+
+  @media (max-width: 480px) {
+    #eli-panel { width: 100vw; }
+    #eli-fab { bottom: 16px; right: 16px; }
+  }
 </style>
-</head>
 <body>
 <div id="app">
 
@@ -499,7 +2229,7 @@
   <div id="topbar">
     <div class="topbar-left">
       <div class="house-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#2070b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
           <path d="M3 9.5L12 3l9 6.5V21H3V9.5z"/>
           <rect x="9" y="14" width="6" height="7" rx="1"/>
         </svg>
@@ -512,21 +2242,100 @@
     <div class="status-pill">All systems reviewed</div>
   </div>
 
+  <!-- MAIN TABS -->
+  <div id="maintabs">
+    <button class="main-tab active" data-view="home" aria-label="Home">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 11l9-7 9 7v9a1 1 0 01-1 1h-5v-7h-6v7H4a1 1 0 01-1-1v-9z"/>
+      </svg>
+      Home
+    </button>
+    <button class="main-tab" data-view="roadmap" aria-label="Strategic Roadmap">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 6h16M4 12h16M4 18h10"/>
+        <circle cx="20" cy="18" r="1.6" fill="currentColor" stroke="none"/>
+      </svg>
+      Strategic Roadmap
+    </button>
+    <button class="main-tab" data-view="apartment" aria-label="Apartment">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="4" y="3" width="16" height="18" rx="1.5"/>
+        <line x1="9" y1="7" x2="9" y2="7.01"/>
+        <line x1="15" y1="7" x2="15" y2="7.01"/>
+        <line x1="9" y1="11" x2="9" y2="11.01"/>
+        <line x1="15" y1="11" x2="15" y2="11.01"/>
+        <line x1="9" y1="15" x2="9" y2="15.01"/>
+        <line x1="15" y1="15" x2="15" y2="15.01"/>
+        <path d="M10 21v-3h4v3"/>
+      </svg>
+      Apartment
+    </button>
+    <button class="main-tab" data-view="setup" aria-label="Monitoring Setup">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M2 4.5A1.5 1.5 0 013.5 3H10a3 3 0 013 3v15a2.5 2.5 0 00-2.5-2.5H2z"/>
+        <path d="M22 4.5A1.5 1.5 0 0020.5 3H14a3 3 0 00-3 3v15a2.5 2.5 0 012.5-2.5H22z"/>
+      </svg>
+      Monitoring Setup
+    </button>
+  </div>
+
+  <!-- HOME VIEW -->
+  <div id="home-view">
+    <div id="home-scroll">
+
+      <!-- HERO -->
+      <section class="home-section home-hero" aria-labelledby="hero-title">
+        <div class="home-hero-text">
+          <div class="home-eyebrow">Daily Living Labs</div>
+          <h1 class="home-headline" id="hero-title">Preparing Eli for independence<span class="home-headline-accent">.</span></h1>
+          <p class="home-lede">An evidence-based design framework for Eli's transition into semi-independent living. Every room, every routine, every safeguard considered. Built room by room around how Eli actually lives, not how systems assume he should.</p>
+          <div class="home-cta-row">
+            <button class="home-btn-primary" data-go="roadmap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+              Explore the Roadmap
+            </button>
+            <button class="home-btn-outline" data-go="apartment">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M10 21v-3h4v3"/></svg>
+              Tour the Apartment
+            </button>
+          </div>
+        </div>
+        <div class="home-hero-visual" aria-hidden="true">
+          <svg viewBox="0 0 200 160" preserveAspectRatio="xMidYMid meet">
+            <rect x="22" y="42" width="72" height="80" rx="9" fill="rgba(255,255,255,0.55)" stroke="rgba(168, 162, 158,0.45)" stroke-width="1.2"/>
+            <rect x="62" y="62" width="80" height="68" rx="9" fill="rgba(255,255,255,0.7)" stroke="rgba(168, 162, 158,0.55)" stroke-width="1.2"/>
+            <rect x="100" y="32" width="72" height="92" rx="9" fill="rgba(255,255,255,0.85)" stroke="rgba(168, 162, 158,0.6)" stroke-width="1.2"/>
+            <line x1="58" y1="62" x2="58" y2="122" stroke="rgba(168, 162, 158,0.35)" stroke-width="1" stroke-dasharray="2 3"/>
+            <line x1="62" y1="92" x2="142" y2="92" stroke="rgba(168, 162, 158,0.35)" stroke-width="1" stroke-dasharray="2 3"/>
+            <circle cx="40" cy="56" r="4.5" fill="#F43F5E" opacity="0.85"/>
+            <circle cx="82" cy="80" r="4.5" fill="#6366F1" opacity="0.85"/>
+            <circle cx="138" cy="60" r="4.5" fill="#F59E0B" opacity="0.85"/>
+            <circle cx="120" cy="104" r="4.5" fill="#047857" opacity="0.85"/>
+            <circle cx="158" cy="92" r="4.5" fill="#4F46E5" opacity="0.85"/>
+          </svg>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- APARTMENT VIEW -->
+  <div id="apartment-view" class="hidden">
   <!-- KEY BAR -->
   <div id="keybar">
     <div class="keybar-left">
       <span class="key-label">Key</span>
       <div class="legend-items">
         <div class="legend-item">
-          <div class="legend-dot" style="background:#e87098"></div>
+          <div class="legend-dot" style="background:#F43F5E"></div>
           <span class="legend-label">Danger</span>
         </div>
         <div class="legend-item">
-          <div class="legend-dot" style="background:#5888c0"></div>
+          <div class="legend-dot" style="background:#6366F1"></div>
           <span class="legend-label">Challenge</span>
         </div>
         <div class="legend-item">
-          <div class="legend-dot" style="background:#d89830"></div>
+          <div class="legend-dot" style="background:#F59E0B"></div>
           <span class="legend-label">Frustration</span>
         </div>
       </div>
@@ -592,21 +2401,106 @@
       <div id="panel-hazards"></div>
       <div id="panel-legend">
         <div class="panel-legend-item">
-          <div class="panel-legend-dot" style="background:#e87098"></div>
+          <div class="panel-legend-dot" style="background:#F43F5E"></div>
           <span class="panel-legend-label">Danger</span>
         </div>
         <div class="panel-legend-item">
-          <div class="panel-legend-dot" style="background:#5888c0"></div>
+          <div class="panel-legend-dot" style="background:#6366F1"></div>
           <span class="panel-legend-label">Challenge</span>
         </div>
         <div class="panel-legend-item">
-          <div class="panel-legend-dot" style="background:#d89830"></div>
+          <div class="panel-legend-dot" style="background:#F59E0B"></div>
           <span class="panel-legend-label">Frustration</span>
         </div>
       </div>
     </div>
   </div>
+  </div><!-- /apartment-view -->
 
+  <!-- ROADMAP VIEW -->
+  <div id="roadmap-view" class="hidden">
+    <div id="roadmap-header">
+      <div class="roadmap-title">Daily Living Labs Strategic Roadmap</div>
+      <div class="roadmap-legend">
+        <div class="roadmap-legend-item">
+          <div class="roadmap-legend-dot" style="background:#0EA5E9"></div>
+          <span class="roadmap-legend-label">Research</span>
+        </div>
+        <div class="roadmap-legend-item">
+          <div class="roadmap-legend-dot" style="background:#F59E0B"></div>
+          <span class="roadmap-legend-label">Hardware</span>
+        </div>
+        <div class="roadmap-legend-item">
+          <div class="roadmap-legend-dot" style="background:#D946EF"></div>
+          <span class="roadmap-legend-label">AI</span>
+        </div>
+        <div class="roadmap-legend-item">
+          <div class="roadmap-legend-dot" style="background:#10B981"></div>
+          <span class="roadmap-legend-label">Stakeholder</span>
+        </div>
+      </div>
+    </div>
+    <div id="roadmap-board">
+      <div id="roadmap-scroll">
+        <div id="roadmap-grid"></div>
+      </div>
+      <button type="button" class="roadmap-nav-btn left hidden"
+              data-action="roadmap-scroll-left"
+              aria-label="Scroll roadmap left">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="15,18 9,12 15,6"/>
+        </svg>
+      </button>
+      <button type="button" class="roadmap-nav-btn right hidden"
+              data-action="roadmap-scroll-right"
+              aria-label="Scroll roadmap right">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="9,18 15,12 9,6"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- SETUP GUIDE VIEW -->
+  <div id="setup-view" class="hidden">
+    <div id="setup-scroll">
+      <div id="setup-content">
+        <header class="setup-view-header">
+          <h1 class="setup-view-heading">Monitoring Setup</h1>
+          <p class="setup-view-subtitle">Step-by-step walkthrough for connecting and configuring Eli's monitoring system.</p>
+        </header>
+        <div class="setup-progress-wrap">
+          <div class="setup-progress-meta">
+            <span class="setup-step-counter"></span>
+            <span class="setup-step-title"></span>
+          </div>
+          <div class="setup-progress-bar">
+            <div class="setup-progress-fill"></div>
+          </div>
+        </div>
+        <div id="setup-screen-wrap" aria-live="polite"></div>
+        <div class="setup-nav">
+          <button type="button" class="setup-btn-prev" data-action="setup-prev" aria-label="Previous step">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15,18 9,12 15,6"/></svg>
+            <span>Previous</span>
+          </button>
+          <button type="button" class="setup-btn-next" data-action="setup-next" aria-label="Next step">
+            <span class="setup-btn-next-label">Next</span>
+            <svg class="setup-btn-next-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,18 15,12 9,6"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- CARD DETAIL PANEL -->
+<div id="card-panel" class="hidden" role="dialog" aria-modal="true" aria-labelledby="card-panel-title">
+  <div id="card-panel-overlay" data-action="close-panel" aria-hidden="true"></div>
+  <div id="card-panel-sheet">
+    <!-- contents rendered by JS -->
+  </div>
 </div>
 
 <script>
@@ -620,31 +2514,31 @@ const FLOORS = {
       {
         id: 'living-room', name: 'Living Room', floor: 1,
         style: { left:'3%', top:'3%', width:'49%', height:'87%' },
-        badge: { color:'#cc8c28', count:3 }, zIndex: 1,
+        badge: { color:'#D97706', count:3 }, zIndex: 1,
         photos: ['images/living_room_1.jpg','images/living_room_2.jpg','images/living_room_3.jpg']
       },
       {
         id: 'entrance', name: 'Entrance', floor: 1,
         style: { left:'3%', top:'3%', width:'14%', height:'16%' },
-        badge: { color:'#c06888', count:3 }, zIndex: 3,
+        badge: { color:'#F43F5E', count:3 }, zIndex: 3,
         photos: ['images/entrance_1.jpg','images/entrance_2.jpg']
       },
       {
         id: 'patio', name: 'Patio', floor: 1,
         style: { left:'3%', top:'78%', width:'16%', height:'12%' },
-        badge: { color:'#cc8c28', count:3 }, zIndex: 3,
+        badge: { color:'#D97706', count:3 }, zIndex: 3,
         photos: ['images/patio_1.jpg','images/patio_2.jpg']
       },
       {
         id: 'dining', name: 'Dining / Laundry / Pantry', floor: 1,
         style: { left:'59%', top:'3%', width:'32%', height:'39%' },
-        badge: { color:'#5888c0', count:2 }, zIndex: 2,
+        badge: { color:'#6366F1', count:2 }, zIndex: 2,
         photos: ['images/dining_1.jpg','images/dining_2.jpg','images/dining_3.jpg']
       },
       {
         id: 'kitchen', name: 'Kitchen', floor: 1,
         style: { left:'59%', top:'48%', width:'32%', height:'42%' },
-        badge: { color:'#d85858', count:5 }, zIndex: 2,
+        badge: { color:'#E11D48', count:5 }, zIndex: 2,
         photos: ['images/kitchen_1.jpg','images/kitchen_2.jpg','images/kitchen_3.jpg']
       }
     ]
@@ -656,25 +2550,25 @@ const FLOORS = {
       {
         id: 'bedroom2', name: 'Bedroom 2', floor: 2,
         style: { left:'3%', top:'5%', width:'25%', height:'79%' },
-        badge: { color:'#5888c0', count:2 }, zIndex: 1,
+        badge: { color:'#6366F1', count:2 }, zIndex: 1,
         photos: ['images/bedroom2_1.jpg','images/bedroom2_2.jpg']
       },
       {
         id: 'stairs', name: 'Stairs', floor: 2,
         style: { left:'33%', top:'5%', width:'26%', height:'37%' },
-        badge: { color:'#5888c0', count:2 }, zIndex: 1,
+        badge: { color:'#6366F1', count:2 }, zIndex: 1,
         photos: ['images/stairs_1.jpg','images/stairs_2.jpg']
       },
       {
         id: 'bathroom', name: 'Bathroom', floor: 2,
         style: { left:'33%', top:'48%', width:'26%', height:'39%' },
-        badge: { color:'#d85858', count:4 }, zIndex: 1,
+        badge: { color:'#E11D48', count:4 }, zIndex: 1,
         photos: ['images/bathroom_1.jpg','images/bathroom_2.jpg','images/bathroom_3.jpg']
       },
       {
         id: 'elis-bedroom', name: "Eli's Bedroom", floor: 2,
         style: { left:'64%', top:'5%', width:'28%', height:'79%' },
-        badge: { color:'#cc8c28', count:3 }, zIndex: 1,
+        badge: { color:'#D97706', count:3 }, zIndex: 1,
         photos: ['images/elis_bedroom_1.jpg','images/elis_bedroom_2.jpg','images/elis_bedroom_3.jpg']
       }
     ]
@@ -1015,7 +2909,7 @@ const ROOM_DATA = {
           {
             title: 'Blocking the door from the inside',
             desc: 'He pulls out the bathroom drawer to barricade the door as an avoidance mechanism.',
-            solution: 'Convert the bathroom door to an outward-swinging configuration so it cannot be barricaded from inside using furniture. If a full door rehang is not feasible, remove the bathroom drawer and replace with a fixed shelf. Install an Aqara Door and Window Sensor so Home Assistant detects if the door has been closed for an extended period and alerts Brandy.',
+            solution: 'Convert the bathroom door to an outward-swinging configuration so it cannot be barricaded from inside using furniture. If a full door rehang is not feasible, remove the bathroom drawer and replace with a fixed shelf. Install an Aqara Door and Window Sensor so Home Assistant detects if the door has been closed for an extended period and alerts Brandi.',
             price: 'Approximate cost: door rehang $200–600, Aqara sensor $42',
             links: [{ text: 'View Aqara Door and Window Sensor on Amazon', url: 'https://www.amazon.com/Aqara-Automation-3rd-Party-Connection-Compatible/dp/B07D37VDM3' }]
           }
@@ -1059,7 +2953,7 @@ const ROOM_DATA = {
           {
             title: 'Staying up all night',
             desc: 'Eli remains active through the night which compounds pantry raiding, stair wandering, and next-day dysregulation.',
-            solution: 'Smart bulb shifts to warm dim red at scheduled sleep time as an environmental wind-down cue. Bed occupancy sensor monitors whether Eli is in bed after a set time and alerts Brandy if not. Pantry and stair locks activate automatically at sleep schedule time regardless of whether Eli sleeps.',
+            solution: 'Smart bulb shifts to warm dim red at scheduled sleep time as an environmental wind-down cue. Bed occupancy sensor monitors whether Eli is in bed after a set time and alerts Brandi if not. Pantry and stair locks activate automatically at sleep schedule time regardless of whether Eli sleeps.',
             price: 'Approx. $20 to $40 per bulb.',
             links: [{ text: 'View Philips Hue bulbs on Amazon', url: 'https://www.amazon.com/s?k=philips+hue+white+ambiance+bulb' }]
           }
@@ -1078,7 +2972,7 @@ const ROOM_DATA = {
           {
             title: 'Waking up without a caregiver present',
             desc: 'Sleep medication makes him very hard to wake. Smart alarms are critical.',
-            solution: 'Smart alarm system using a Hatch Alarm Clock paired with a bed occupancy sensor such as the Withings Sleep Mat or a pressure mat sensor under the mattress. Home Assistant monitors whether Eli has gotten out of bed within a set window after alarm trigger. If not, it escalates to a push notification or phone call to Brandy. A door sensor on the bedroom door confirms he has exited the room.',
+            solution: 'Smart alarm system using a Hatch Alarm Clock paired with a bed occupancy sensor such as the Withings Sleep Mat or a pressure mat sensor under the mattress. Home Assistant monitors whether Eli has gotten out of bed within a set window after alarm trigger. If not, it escalates to a push notification or phone call to Brandi. A door sensor on the bedroom door confirms he has exited the room.',
             price: 'Approximate cost: Withings Sleep Mat $200, Hatch Alarm $160, pressure mat sensor $200',
             links: [
               { text: 'View Withings Sleep Mat on Amazon', url: 'https://www.amazon.com/Withings-Nokia-Sleep-Temperature-Compatible/dp/B078Z1B34S' },
@@ -1088,7 +2982,7 @@ const ROOM_DATA = {
           {
             title: 'End of day routine and wind-down gate',
             desc: 'Eli does not place clothes in the hamper or complete basic end of day tasks without a direct prompt. A physical solution alone does not change the behavior.',
-            solution: 'End of day completion gate built into Home Assistant. At a set time each evening the tablet displays a wind-down checklist including clothes in hamper, lights off in bathroom, shoes put away, and iPad charging. Each item is a large tap to confirm button. Once all items are checked off Home Assistant triggers the wind-down scene, dims the lights, enables TV or preferred evening content, and logs completion for Brandy to review. Eli cannot access the wind-down state without completing the checklist.',
+            solution: 'End of day completion gate built into Home Assistant. At a set time each evening the tablet displays a wind-down checklist including clothes in hamper, lights off in bathroom, shoes put away, and iPad charging. Each item is a large tap to confirm button. Once all items are checked off Home Assistant triggers the wind-down scene, dims the lights, enables TV or preferred evening content, and logs completion for Brandi to review. Eli cannot access the wind-down state without completing the checklist.',
             price: 'No additional cost, built into existing Home Assistant routine.',
             links: []
           }
@@ -1117,7 +3011,7 @@ const ROOM_DATA = {
           {
             title: 'Gaming the reward system',
             desc: 'Eli understands behavioral incentives intellectually and turns them into a game to exploit.',
-            solution: 'Incentive structure built into the daily screen routine with caregiver override capabilities so the system cannot be gamed without Brandy\'s awareness.',
+            solution: 'Incentive structure built into the daily screen routine with caregiver override capabilities so the system cannot be gamed without Brandi\'s awareness.',
             links: []
           }
         ]
@@ -1157,9 +3051,9 @@ const ROOM_DATA = {
 // ─── CATEGORY COLORS ────────────────────────────────────────────────────────
 
 const CAT_COLORS = {
-  'Danger':      '#e87098',
-  'Challenge':   '#5888c0',
-  'Frustration': '#d89830'
+  'Danger':      '#F43F5E',
+  'Challenge':   '#6366F1',
+  'Frustration': '#F59E0B'
 };
 
 // ─── ICON SVGS ───────────────────────────────────────────────────────────────
@@ -1355,7 +3249,7 @@ function renderHazards(roomId, roomInfo) {
 
   if (!roomInfo.categories || roomInfo.categories.length === 0) {
     const msg = document.createElement('div');
-    msg.style.cssText = 'font-size:11px;color:#8090a4;padding:16px 0;text-align:center;';
+    msg.style.cssText = 'font-size:11px;color:#78716C;padding:16px 0;text-align:center;';
     msg.textContent = 'Hazard data will be added in the next pass.';
     panelHazards.appendChild(msg);
     return;
@@ -1560,9 +3454,1471 @@ floorTabs.forEach(tab => {
 
 backBtn.addEventListener('click', closeRoom);
 
+// ─── ROADMAP STATE ───────────────────────────────────────────────────────────
+
+const DEFAULT_OWNERS = {
+  research: 'Design team',
+  hardware: 'Contractor',
+  ai: 'Design team',
+  stakeholder: 'Family',
+  deliverable: 'Design team',
+  question: 'Family'
+};
+
+const CATEGORY_DOT_COLORS = {
+  research: '#0EA5E9',
+  hardware: '#F59E0B',
+  ai: '#D946EF',
+  stakeholder: '#10B981',
+  deliverable: '#EAB308',
+  question: '#78716C'
+};
+
+const CATEGORY_LABELS = {
+  research: 'Research',
+  hardware: 'Hardware',
+  ai: 'AI',
+  stakeholder: 'Stakeholder',
+  deliverable: 'Deliverable',
+  question: 'Question'
+};
+
+let _cardId = 0;
+function makeCardId() { return 'card-' + (++_cardId); }
+
+function escapeHtml(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function C(type, title, description, whyItMatters, dependencies, owner) {
+  return {
+    id: makeCardId(),
+    type, title, description, whyItMatters,
+    dependencies: (dependencies && dependencies.length) ? dependencies : ['None'],
+    owner: owner || DEFAULT_OWNERS[type],
+    structural: type === 'deliverable' || type === 'question'
+  };
+}
+
+function createInitialRoadmap() {
+  _cardId = 0;
+  return [
+    {
+      id: 'p1', phase: 'Phase 1', title: 'Research & Definition',
+      period: 'Current - End of Semester',
+      milestone: 'Semester deliverable complete',
+      collapsed: true,
+      cards: [
+        C('research', 'Room-by-room Home Assistant automation specs',
+          'Document every Home Assistant automation, sensor, and trigger needed for each room of the new triplex. Each room gets its own one-page spec written in plain language so caregivers and family can review.',
+          'Without per-room specs the contractor and AI team end up guessing during installation.',
+          ['Stakeholder interviews']),
+        C('hardware', 'Hardware requirements analysis',
+          'Map every device, sensor, lock, and controller the triplex needs. Includes part numbers, quantities, and where each item goes.',
+          'Buying everything at once avoids late gaps that delay move-in.',
+          ['Room-by-room Home Assistant automation specs']),
+        C('ai', 'AI layer recommendations',
+          'Outline which AI models and assistants run in the home, what each does, and where each lives (local versus cloud).',
+          'Sets the boundary between automation Eli sees and the model that learns in the background.',
+          ['Behavioral insights documentation']),
+        C('hardware', 'Physical modification checklist',
+          'List every physical change to the unit: locks, lighting, plumbing, fixtures, finishes. The contractor uses this directly.',
+          'Brings physical safety changes into the same plan as the smart system.',
+          ['Hardware requirements analysis'], 'Contractor'),
+        C('research', 'Behavioral insights documentation',
+          'Compile what the family, caregivers, and team have learned about Eli\'s daily patterns, triggers, and preferences.',
+          'The behavioral model and routine schedule depend on getting this right.',
+          ['Stakeholder interviews']),
+        C('ai', 'Assessment tool design',
+          'Design the daily assessment tool that captures Eli\'s mood, sleep, and behavior in a structured way.',
+          'Gives caregivers and family a shared language for tracking how Eli is doing.',
+          ['Behavioral insights documentation']),
+        C('stakeholder', 'Stakeholder interviews',
+          'Sit down with Brandi, Jeff, Irania, and the design team to capture what\'s working today, what isn\'t, and what they want from the new home.',
+          'Anchors every later decision in what the people who live with Eli already know.',
+          ['None'], 'Design team'),
+        C('deliverable', 'Comprehensive implementation blueprint',
+          'A single document that ties together specs, hardware, AI layer, modifications, and stakeholder input into an actionable plan.',
+          'Gives everyone one place to check before construction begins.',
+          ['All Phase 1 cards']),
+        C('question', 'Budget not confirmed',
+          'The total budget for hardware, AI infrastructure, modifications, and labor has not been finalized.',
+          'Decisions about device tiers and modification scope depend on this number.',
+          ['Family'])
+      ]
+    },
+    {
+      id: 'p2', phase: 'Phase 2', title: 'Behavioral Baseline Collection',
+      period: 'Pre-Construction (3-6 months)',
+      milestone: 'Sensors installed at current home',
+      collapsed: true,
+      cards: [
+        C('hardware', 'Install sensors in current home',
+          'Place motion, door, and environmental sensors in Eli\'s current bedroom and common areas.',
+          'Generates a behavioral baseline before move-in so the new home starts already tuned.',
+          ['Hardware requirements analysis'], 'Caregiver'),
+        C('hardware', 'Aqara sleep sensor deployment',
+          'Install Aqara sleep monitoring sensors in Eli\'s current bedroom to capture baseline sleep patterns, movement during the night, and wake times. This data feeds the behavioral model that the triplex system will use from day one.',
+          'Without baseline sleep data, alert thresholds in the new home are guesswork.',
+          ['Install sensors in current home'], 'Caregiver'),
+        C('hardware', 'Motion & door sensor installation',
+          'Install motion sensors in hallways and door sensors at exterior doors in the current home.',
+          'Captures movement and exit patterns the new home will need to recognize.',
+          ['Install sensors in current home'], 'Caregiver'),
+        C('research', 'Log sleep patterns & daily rhythms',
+          'Review the sensor logs weekly, annotate notable nights, and compile a baseline rhythm.',
+          'The triplex routine schedule starts from this baseline.',
+          ['Aqara sleep sensor deployment']),
+        C('research', 'Record Google Home voice interactions',
+          'Collect anonymized examples of how Eli speaks to Google Home, including prompts, follow-ups, and corrections.',
+          'Voice-trained AI in the new home should sound familiar to Eli, not generic.',
+          ['None'], 'Caregiver'),
+        C('ai', 'Build voice training dataset',
+          'Convert the recorded interactions into a labeled dataset for the in-home assistant.',
+          'Lets the assistant respond in a tone Eli already trusts.',
+          ['Record Google Home voice interactions']),
+        C('deliverable', 'Behavioral baseline dataset & voice training data',
+          'The full set of behavioral data and voice samples the AI layer will use to start tuned to Eli.',
+          'Day one in the new home should not feel like a cold start.',
+          ['All Phase 2 cards']),
+        C('question', 'Construction timeline unknown',
+          'The contractor has not committed to a firm start date for the triplex build.',
+          'Phase 3 cards depend on the construction window being known.',
+          ['Contractor'])
+      ]
+    },
+    {
+      id: 'p3', phase: 'Phase 3', title: 'Construction Integration',
+      period: 'During Triplex Build',
+      milestone: 'Construction begins',
+      collapsed: true,
+      cards: [
+        C('stakeholder', 'Work with contractor on system specs',
+          'Walk the contractor through the smart home and physical modification specs so the build accommodates them from day one.',
+          'Retrofitting wiring and fixtures after the build is expensive and slow.',
+          ['Comprehensive implementation blueprint']),
+        C('hardware', 'Induction stove installation',
+          'Replace the standard stove with an induction unit that heats only the cookware and cools quickly.',
+          'Lower burn risk and faster shutdown if something is left running.',
+          ['Physical modification checklist']),
+        C('hardware', 'Shower-only bathroom design',
+          'Design the bathroom around a curbless walk-in shower with non-slip surfaces and no tub.',
+          'Removes drowning risk and reduces fall hazards.',
+          ['Physical modification checklist']),
+        C('hardware', 'Impeller toilet & unbreakable windows',
+          'Specify an impeller-based toilet that resists clogs and impact-resistant windows that cannot be shattered.',
+          'Two of the most common destructive incidents are addressed at the building stage.',
+          ['Physical modification checklist']),
+        C('hardware', 'Recessed LED lighting plan',
+          'Plan flush, recessed LED lighting throughout the unit. No fixtures Eli can pull, swing, or break.',
+          'Calmer rooms and one less category of repair.',
+          ['Physical modification checklist']),
+        C('hardware', 'Pre-wiring for sensors & cameras',
+          'Run dedicated low-voltage wiring to every planned sensor and camera location before drywall goes up.',
+          'Pre-wiring gives a stable backbone for cameras and high-traffic devices.',
+          ['Hardware requirements analysis']),
+        C('hardware', 'RFID reader & smart lock placement',
+          'Mount RFID readers and smart locks at every door and cabinet that needs scheduled access.',
+          'Cleanly handles areas that need to be restricted at certain times of day.',
+          ['Hardware requirements analysis']),
+        C('hardware', 'Network infrastructure (ethernet, Wi-Fi, server)',
+          'Run ethernet to the AV closet, install enterprise-grade Wi-Fi access points, and stand up a local Home Assistant server.',
+          'A reliable network is the floor every other smart-home decision sits on.',
+          ['Pre-wiring for sensors & cameras']),
+        C('deliverable', 'Construction specs with smart home integration',
+          'Construction blueprints updated with every smart home and modification detail baked in.',
+          'One source of truth across building, electrical, and AV.',
+          ['All Phase 3 cards']),
+        C('question', 'Contractor coordination schedule TBD',
+          'A clear week-by-week schedule for when smart home and modification work happens during the build.',
+          'Sensors, wiring, and lighting all have to happen in the right order.',
+          ['Contractor'])
+      ]
+    },
+    {
+      id: 'p4', phase: 'Phase 4', title: 'System Installation & Configuration',
+      period: 'Post-Construction (2-4 weeks)',
+      milestone: 'Construction complete',
+      collapsed: true,
+      cards: [
+        C('hardware', 'Install all Home Assistant hardware',
+          'Mount, wire, and test every sensor, lock, camera, and controller.',
+          'With construction done, this is the moment everything physically goes live.',
+          ['Construction specs with smart home integration']),
+        C('ai', 'Configure automations & sensors',
+          'Translate the room-by-room specs into actual Home Assistant automations and tune sensor thresholds.',
+          'The configurations decide what happens automatically when Eli moves in.',
+          ['Install all Home Assistant hardware']),
+        C('hardware', 'Set up cameras, locks, RFID readers',
+          'Bring cameras online, register RFID tags, and pair every smart lock with the home server.',
+          'These are the most security-sensitive devices in the house.',
+          ['Install all Home Assistant hardware']),
+        C('ai', 'Configure water valves & thermostats',
+          'Set up automatic water shutoff valves, thermostat schedules, and leak alerts.',
+          'Two of the most damaging things that can go wrong are addressed in software.',
+          ['Install all Home Assistant hardware']),
+        C('ai', 'Build caregiver dashboard',
+          'Stand up a tablet dashboard with status, alerts, and quick actions for the caregiver on duty.',
+          'Caregivers should be able to act without learning Home Assistant.',
+          ['Configure automations & sensors']),
+        C('ai', 'Set up family remote monitoring',
+          'Configure remote views and alerts so Brandi and Jeff can check in from anywhere.',
+          'Visibility from outside the home reduces overall worry.',
+          ['Build caregiver dashboard']),
+        C('stakeholder', "Load Eli's routine schedule",
+          'Translate Eli\'s typical week into the system: wake times, meals, activities, quiet hours, sleep.',
+          'Routine is where the home meets daily life.',
+          ['Behavioral insights documentation']),
+        C('stakeholder', 'Full dry run simulation',
+          'Walk the family and caregivers through a simulated full day before move-in.',
+          'Catches the gaps that don\'t show up on paper.',
+          ['All Phase 4 cards'], 'Design team'),
+        C('deliverable', 'Fully operational system ready for occupancy',
+          'The triplex is wired, configured, and tested. Move-in can begin.',
+          'Anchors the transition from build to living in the space.',
+          ['All Phase 4 cards']),
+        C('question', 'Testing window duration needs validation',
+          'How long the dry run period should last before Eli moves in is still open.',
+          'Affects when phase 5 can begin.',
+          ['Family', 'Design team'], 'Design team')
+      ]
+    },
+    {
+      id: 'p5', phase: 'Phase 5', title: 'Supervised Transition',
+      period: 'Move-In (3-6 months)',
+      milestone: 'First day at triplex',
+      collapsed: true,
+      cards: [
+        C('stakeholder', 'Start with hours at triplex + caregiver',
+          'Begin with short visits where Eli and a caregiver use the unit together.',
+          'Gentle introduction. The home should feel familiar before it feels like home.',
+          ['Fully operational system ready for occupancy']),
+        C('stakeholder', 'Gradually increase to half days',
+          'Extend visits to half-day blocks once Eli is comfortable.',
+          'Each step longer than the last builds trust without overwhelming.',
+          ['Start with hours at triplex + caregiver']),
+        C('stakeholder', 'Progress to evenings & overnights',
+          'Begin overnight stays at the triplex with a caregiver present.',
+          'Sleep in the new space is the biggest test.',
+          ['Gradually increase to half days']),
+        C('ai', 'AI assessment tool collects feedback',
+          'Caregivers log daily assessments after each session.',
+          'Catches small adjustments before they become big ones.',
+          ['Assessment tool design'], 'Caregiver'),
+        C('ai', 'Behavioral model trains on real patterns',
+          'The model trained on baseline data updates with real-time patterns from the triplex.',
+          'Day-one settings should improve with each session.',
+          ['Build voice training dataset']),
+        C('ai', 'Continuous automation adjustments',
+          'Tune automations based on what\'s actually happening in the home.',
+          'No first attempt is ever perfect.',
+          ['Configure automations & sensors']),
+        C('deliverable', 'Validated system with real-world behavioral data',
+          'A system that\'s no longer theoretical. It has been tested with the person it was designed for.',
+          'Proof that the model works in this home, with this family.',
+          ['All Phase 5 cards']),
+        C('question', 'Caregiver staffing plan in progress',
+          'A long-term staffing plan for caregivers across the week.',
+          'Sustainable independence requires sustainable support.',
+          ['Family'])
+      ]
+    },
+    {
+      id: 'p6', phase: 'Phase 6', title: 'Graduated Independence',
+      period: '6-12 Months',
+      milestone: 'First solo evening',
+      collapsed: true,
+      cards: [
+        C('stakeholder', 'Caregiver pulls back gradually',
+          'Caregiver presence is reduced in small steps, with the system handling more of each day.',
+          'Independence has to be built, not switched on.',
+          ['Validated system with real-world behavioral data'], 'Caregiver'),
+        C('stakeholder', '30 min → 1 hr → evening alone',
+          'Defined intervals where Eli is alone in the unit, increasing as confidence grows.',
+          'Concrete milestones make progress visible.',
+          ['Caregiver pulls back gradually'], 'Caregiver'),
+        C('ai', 'System monitors with alerts',
+          'During solo intervals the system actively monitors and routes alerts to the on-duty caregiver.',
+          'The system is the safety net when no one is in the room.',
+          ['Continuous automation adjustments']),
+        C('stakeholder', 'Caregiver receives real-time notifications',
+          'Caregivers get a phone alert any time something needs attention.',
+          'Decision speed is the difference between a small issue and a real one.',
+          ['System monitors with alerts'], 'Caregiver'),
+        C('stakeholder', 'Family reviews weekly trend reports',
+          'Brandi and Jeff get a weekly digest of patterns, alerts, and changes.',
+          'Lets the family stay in the loop without watching every notification.',
+          ['Set up family remote monitoring']),
+        C('ai', 'Adapt prompt timing & thresholds',
+          'Refine when the system speaks up, and when it stays quiet.',
+          'Too many prompts create noise. Too few create gaps.',
+          ['System monitors with alerts']),
+        C('ai', 'Refine routine flows',
+          'Tighten routines as Eli settles in. Some steps can be removed, others added.',
+          'Routines should evolve with the resident, not stay frozen.',
+          ["Load Eli's routine schedule"]),
+        C('deliverable', 'Stable independent living routine with system support',
+          'A workable rhythm where Eli lives in the unit with system-mediated support.',
+          'The version of independence the project is aiming at.',
+          ['All Phase 6 cards']),
+        C('question', 'Alert threshold calibration ongoing',
+          'Alert sensitivity has not yet stabilized.',
+          'Alerts need to settle so caregivers trust them.',
+          ['Caregiver', 'Design team'], 'Design team')
+      ]
+    },
+    {
+      id: 'p7', phase: 'Phase 7', title: 'Continuous Improvement',
+      period: 'Ongoing - Indefinite',
+      milestone: 'Full independence baseline',
+      collapsed: true,
+      cards: [
+        C('ai', 'System updates for new behaviors',
+          'As Eli grows and his patterns shift, the system adapts.',
+          'A static system doesn\'t fit a person who keeps changing.',
+          ['Stable independent living routine with system support']),
+        C('hardware', 'Hardware upgrades as tech improves',
+          'Sensors, locks, and controllers get replaced when better options arrive.',
+          'The home shouldn\'t fall behind the resident.',
+          ['None']),
+        C('ai', 'AI model continuous refinement',
+          'Periodic retraining with new behavioral data.',
+          'Keeps the model honest about who Eli is now.',
+          ['Behavioral model trains on real patterns']),
+        C('research', 'Document approach for replication',
+          'Write up what was built, what worked, and what didn\'t.',
+          'So the next family doesn\'t start from scratch.',
+          ['None']),
+        C('research', 'Prepare for second triplex resident',
+          'Adapt the framework for whoever moves into the second unit.',
+          'The triplex was always meant for more than one resident.',
+          ['Document approach for replication']),
+        C('stakeholder', 'Optimize caregiver-to-resident ratio',
+          'Tune how many caregiver hours each resident actually needs.',
+          'A sustainable model is what makes the program last.',
+          ['Caregiver staffing plan in progress']),
+        C('deliverable', 'Living system that evolves with Eli',
+          'A home that improves as the resident does.',
+          'The promise the project has been building toward.',
+          ['All Phase 7 cards']),
+        C('question', 'Second resident not identified, long-term maintenance owner TBD',
+          'Who lives in unit two, and who maintains the system long-term, are still open.',
+          'Both questions affect the post-launch plan.',
+          ['Family'])
+      ]
+    }
+  ];
+}
+
+let roadmapState = createInitialRoadmap();
+let openCardCtx = null;
+let lastFocusedBeforePanel = null;
+
+// ─── ICONS ───────────────────────────────────────────────────────────────────
+
+const X_ICON        = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`;
+const CHEVRON_DOWN  = `<svg class="phase-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3,6 8,11 13,6"/></svg>`;
+const CHEVRON_RIGHT = `<svg class="phase-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6,3 11,8 6,13"/></svg>`;
+
+// ─── ROADMAP RENDER ──────────────────────────────────────────────────────────
+
+function renderRoadmap() {
+  const grid = document.getElementById('roadmap-grid');
+  if (!grid) return;
+
+  // Walk phases in order; group consecutive collapsed phases into a single stack column.
+  // Each expanded phase becomes its own column.
+  const columns = [];
+  let stack = null;
+  for (const phase of roadmapState) {
+    if (phase.collapsed) {
+      if (!stack) {
+        stack = { type: 'stack', phases: [] };
+        columns.push(stack);
+      }
+      stack.phases.push(phase);
+    } else {
+      stack = null;
+      columns.push({ type: 'expanded', phase });
+    }
+  }
+
+  grid.innerHTML = columns.map(col => {
+    if (col.type === 'stack') {
+      return `<div class="phase-stack-col">${col.phases.map(renderCollapsedStrip).join('')}</div>`;
+    }
+    return renderExpandedPhase(col.phase);
+  }).join('');
+
+  // After content reflow, recompute nav button visibility
+  requestAnimationFrame(updateRoadmapNavButtons);
+}
+
+function updateRoadmapNavButtons() {
+  const scroll  = document.getElementById('roadmap-scroll');
+  const leftBtn = document.querySelector('.roadmap-nav-btn.left');
+  const rightBtn = document.querySelector('.roadmap-nav-btn.right');
+  if (!scroll || !leftBtn || !rightBtn) return;
+
+  // Mobile stacks vertically — never show the chevron buttons
+  const isMobile = window.matchMedia('(max-width: 639px)').matches;
+  if (isMobile) {
+    leftBtn.classList.add('hidden');
+    rightBtn.classList.add('hidden');
+    return;
+  }
+
+  const { scrollLeft, scrollWidth, clientWidth } = scroll;
+  const noScrollNeeded = scrollWidth <= clientWidth + 4;
+  const atStart = scrollLeft <= 4;
+  const atEnd   = scrollLeft + clientWidth >= scrollWidth - 4;
+
+  leftBtn.classList.toggle('hidden', noScrollNeeded || atStart);
+  rightBtn.classList.toggle('hidden', noScrollNeeded || atEnd);
+}
+
+(function attachRoadmapScrollListeners() {
+  const scroll = document.getElementById('roadmap-scroll');
+  if (scroll) {
+    scroll.addEventListener('scroll', updateRoadmapNavButtons, { passive: true });
+  }
+  window.addEventListener('resize', updateRoadmapNavButtons, { passive: true });
+})();
+
+function renderCollapsedStrip(phase) {
+  const totalCards = phase.cards.length;
+  return `
+    <button type="button" class="phase-collapsed-strip"
+            data-action="toggle-phase" data-phase-id="${phase.id}"
+            aria-expanded="false"
+            aria-label="${escapeHtml(phase.phase)}: ${escapeHtml(phase.title)}. Expand phase.">
+      <div class="phase-strip-top">
+        <span class="phase-tag-strip">${escapeHtml(phase.phase)}</span>
+        <span class="phase-count-strip">${totalCards} cards</span>
+        ${CHEVRON_RIGHT}
+      </div>
+      <span class="phase-title-strip">${escapeHtml(phase.title)}</span>
+    </button>
+  `;
+}
+
+function renderExpandedPhase(phase) {
+  const editableCards = phase.cards.filter(c => !c.structural);
+  const deliverable = phase.cards.find(c => c.type === 'deliverable');
+  const question    = phase.cards.find(c => c.type === 'question');
+
+  return `
+    <div class="phase-col" data-phase-id="${phase.id}">
+      <button class="phase-card phase-header-btn" type="button"
+              data-action="toggle-phase" data-phase-id="${phase.id}"
+              aria-expanded="true"
+              aria-label="${escapeHtml(phase.phase)}: ${escapeHtml(phase.title)}. Collapse phase.">
+        <div class="phase-header-row">
+          <div class="phase-header-titles">
+            <div class="phase-tag">${escapeHtml(phase.phase)}</div>
+            <div class="phase-title">${escapeHtml(phase.title)}</div>
+            <div class="phase-period">${escapeHtml(phase.period)}</div>
+          </div>
+          ${CHEVRON_DOWN}
+        </div>
+      </button>
+      <div class="phase-body">
+        <div class="phase-items">
+          ${editableCards.map(c => renderCard(c, phase)).join('')}
+        </div>
+        ${deliverable ? renderDeliverable(deliverable, phase) : ''}
+        ${question ? renderQuestion(question, phase) : ''}
+      </div>
+    </div>
+  `;
+}
+
+function renderCard(card, phase) {
+  return `
+    <div class="phase-item ${card.type}"
+         role="button" tabindex="0"
+         data-action="open-card"
+         data-card-id="${card.id}"
+         data-phase-id="${phase.id}"
+         aria-label="${escapeHtml(card.title)}. Tap to view details.">
+      <span class="phase-item-text">${escapeHtml(card.title)}</span>
+    </div>
+  `;
+}
+
+function renderDeliverable(card, phase) {
+  return `
+    <div class="phase-deliverable" role="button" tabindex="0"
+         data-action="open-card"
+         data-card-id="${card.id}"
+         data-phase-id="${phase.id}"
+         aria-label="Deliverable: ${escapeHtml(card.title)}">
+      <div class="phase-deliverable-tag">Deliverable</div>
+      <div class="phase-deliverable-text">${escapeHtml(card.title)}</div>
+    </div>
+  `;
+}
+
+function renderQuestion(card, phase) {
+  return `
+    <div class="phase-question" role="button" tabindex="0"
+         data-action="open-card"
+         data-card-id="${card.id}"
+         data-phase-id="${phase.id}"
+         aria-label="Open question: ${escapeHtml(card.title)}">
+      <div class="phase-question-tag">Question</div>
+      <div class="phase-question-text">${escapeHtml(card.title)}</div>
+    </div>
+  `;
+}
+
+// ─── ACTIONS ─────────────────────────────────────────────────────────────────
+
+function findPhase(phaseId) { return roadmapState.find(p => p.id === phaseId); }
+function findCard(phaseId, cardId) {
+  const p = findPhase(phaseId);
+  return p ? p.cards.find(c => c.id === cardId) : null;
+}
+
+function togglePhase(phaseId) {
+  const p = findPhase(phaseId);
+  if (!p) return;
+  const wasCollapsed = p.collapsed;
+  p.collapsed = !p.collapsed;
+  renderRoadmap();
+
+  // Auto-scroll the newly expanded phase into view (and move focus to its header)
+  if (wasCollapsed) {
+    const isMobile = window.matchMedia('(max-width: 639px)').matches;
+    setTimeout(() => {
+      const el = document.querySelector(
+        `#roadmap-grid .phase-col[data-phase-id="${phaseId}"]:not(.collapsed)`
+      );
+      if (!el) return;
+      try {
+        if (isMobile) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+          el.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        }
+      } catch (e) {
+        el.scrollIntoView();
+      }
+      const headerBtn = el.querySelector('.phase-header-btn');
+      if (headerBtn && headerBtn.focus) {
+        try { headerBtn.focus({ preventScroll: true }); }
+        catch (e) { headerBtn.focus(); }
+      }
+    }, 280);
+  }
+}
+
+// ─── CARD PANEL ──────────────────────────────────────────────────────────────
+
+function openCardPanel(phaseId, cardId) {
+  const card = findCard(phaseId, cardId);
+  if (!card) return;
+  openCardCtx = { phaseId, cardId };
+  lastFocusedBeforePanel = document.activeElement;
+
+  const panel = document.getElementById('card-panel');
+  panel.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+
+  renderCardPanelContent();
+  setTimeout(() => {
+    const closeBtn = document.getElementById('card-panel-close');
+    if (closeBtn) closeBtn.focus();
+  }, 30);
+}
+
+function closeCardPanel() {
+  const panel = document.getElementById('card-panel');
+  if (panel) panel.classList.add('hidden');
+  document.body.style.overflow = '';
+  const sheet = document.getElementById('card-panel-sheet');
+  if (sheet) sheet.style.transform = '';
+  openCardCtx = null;
+  if (lastFocusedBeforePanel && lastFocusedBeforePanel.focus) {
+    try { lastFocusedBeforePanel.focus(); } catch(e) {}
+  }
+  lastFocusedBeforePanel = null;
+}
+
+function renderCardPanelContent() {
+  if (!openCardCtx) return;
+  const phase = findPhase(openCardCtx.phaseId);
+  const card = findCard(openCardCtx.phaseId, openCardCtx.cardId);
+  if (!card || !phase) { closeCardPanel(); return; }
+
+  const sheet = document.getElementById('card-panel-sheet');
+  if (!sheet) return;
+
+  sheet.innerHTML = `
+    <div id="card-panel-handle" aria-hidden="true"></div>
+    <div id="card-panel-titlebar">
+      <div id="card-panel-title-wrap">
+        <h2 class="panel-title" id="card-panel-title">${escapeHtml(card.title)}</h2>
+        <div class="panel-meta-row">
+          <span class="panel-category-pill">
+            <span class="panel-cat-dot" style="background:${CATEGORY_DOT_COLORS[card.type]}"></span>
+            <span>${CATEGORY_LABELS[card.type]}</span>
+          </span>
+          <span class="panel-phase-label">${escapeHtml(phase.phase)} · ${escapeHtml(phase.title)}</span>
+        </div>
+      </div>
+      <button type="button" id="card-panel-close" data-action="close-panel" aria-label="Close card details">${X_ICON}</button>
+    </div>
+    <div id="card-panel-content">
+      <section class="panel-section">
+        <div class="panel-section-label">Full description</div>
+        <p class="panel-section-text">${escapeHtml(card.description)}</p>
+      </section>
+
+      <section class="panel-section">
+        <div class="panel-section-label">Why it matters</div>
+        <p class="panel-section-text">${escapeHtml(card.whyItMatters)}</p>
+      </section>
+
+      <section class="panel-section">
+        <div class="panel-section-label">Dependencies</div>
+        <ul class="panel-deps">
+          ${card.dependencies.map(d => `<li>${escapeHtml(d)}</li>`).join('')}
+        </ul>
+      </section>
+
+      <section class="panel-section">
+        <div class="panel-section-label">Owner</div>
+        <p class="panel-section-text">${escapeHtml(card.owner)}</p>
+      </section>
+    </div>
+  `;
+}
+
+// ─── ROADMAP EVENT WIRING ───────────────────────────────────────────────────
+
+document.addEventListener('click', e => {
+  const target = e.target.closest('[data-action]');
+  if (!target) return;
+  const action = target.dataset.action;
+  const phaseId = target.dataset.phaseId || (target.closest('[data-phase-id]') && target.closest('[data-phase-id]').dataset.phaseId);
+  const cardId  = target.dataset.cardId  || (target.closest('[data-card-id]')  && target.closest('[data-card-id]').dataset.cardId);
+
+  if (action === 'toggle-phase') { togglePhase(phaseId); }
+  else if (action === 'open-card') { openCardPanel(phaseId, cardId); }
+  else if (action === 'close-panel') { closeCardPanel(); }
+  else if (action === 'setup-prev')  { setupGoPrev(); }
+  else if (action === 'setup-next')  { setupGoNext(); }
+  else if (action === 'setup-done')  { setView('home'); }
+  else if (action === 'setup-print') { window.print(); }
+  else if (action === 'roadmap-scroll-left' || action === 'roadmap-scroll-right') {
+    const scroll = document.getElementById('roadmap-scroll');
+    if (!scroll) return;
+    const delta = action === 'roadmap-scroll-left' ? -320 : 320;
+    try { scroll.scrollBy({ left: delta, behavior: 'smooth' }); }
+    catch (e) { scroll.scrollLeft += delta; }
+  }
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && openCardCtx) { closeCardPanel(); return; }
+  if ((e.key === 'Enter' || e.key === ' ') && document.activeElement && document.activeElement.matches('[data-action="open-card"], [data-action="toggle-phase"]')) {
+    e.preventDefault();
+    document.activeElement.click();
+  }
+});
+
+// Mobile swipe-down to dismiss
+(function attachSheetSwipe() {
+  const panel = document.getElementById('card-panel');
+  if (!panel) return;
+  let startY = null;
+  panel.addEventListener('touchstart', e => {
+    if (window.innerWidth > 720) return;
+    const sheet = document.getElementById('card-panel-sheet');
+    if (!sheet) return;
+    const rect = sheet.getBoundingClientRect();
+    const y = e.touches[0].clientY;
+    if (y - rect.top > 80) return;
+    startY = y;
+  }, { passive: true });
+  panel.addEventListener('touchmove', e => {
+    if (startY == null) return;
+    const sheet = document.getElementById('card-panel-sheet');
+    const dy = e.touches[0].clientY - startY;
+    if (dy > 0 && sheet) sheet.style.transform = `translateY(${dy}px)`;
+  }, { passive: true });
+  panel.addEventListener('touchend', e => {
+    if (startY == null) return;
+    const sheet = document.getElementById('card-panel-sheet');
+    const dy = (e.changedTouches[0].clientY - startY);
+    if (sheet) sheet.style.transform = '';
+    if (dy > 80) closeCardPanel();
+    startY = null;
+  });
+})();
+
+// ─── MAIN TAB SWITCHING ──────────────────────────────────────────────────────
+
+const homeView      = document.getElementById('home-view');
+const apartmentView = document.getElementById('apartment-view');
+const roadmapView   = document.getElementById('roadmap-view');
+const setupView     = document.getElementById('setup-view');
+const mainTabs      = document.querySelectorAll('.main-tab');
+
+const VIEW_MAP = {
+  home:      homeView,
+  roadmap:   roadmapView,
+  apartment: apartmentView,
+  setup:     setupView
+};
+
+function setView(view) {
+  if (!VIEW_MAP[view]) return;
+
+  Object.entries(VIEW_MAP).forEach(([k, el]) => {
+    el.classList.toggle('hidden', k !== view);
+  });
+
+  mainTabs.forEach(t => {
+    t.classList.toggle('active', t.dataset.view === view);
+  });
+
+  if (view === 'roadmap') renderRoadmap();
+  if (view === 'setup') {
+    setupStep = 0;
+    renderSetup();
+  }
+  if (view === 'apartment' && currentRoom == null) {
+    // ensure floor toggle visible after returning from a room
+    floortoggle.style.display = '';
+  }
+}
+
+// ─── SETUP GUIDE ─────────────────────────────────────────────────────────────
+
+const PRINTER_ICON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="6,9 6,2 18,2 18,9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>`;
+
+const TEAM_ELI_PLACEHOLDER = '[team-eli-email-placeholder]';
+const TEAM_ELI_LINK_HTML = `<a href="mailto:${TEAM_ELI_PLACEHOLDER}" class="setup-mail-link">${TEAM_ELI_PLACEHOLDER}</a>`;
+
+function setupHtml(text) {
+  // Escape HTML, then turn the literal team-eli token into a styled mailto link.
+  return escapeHtml(text)
+    .replace(/\[team-eli-email-placeholder\]/g, TEAM_ELI_LINK_HTML);
+}
+
+const SETUP_STEPS = [
+  {
+    type: 'before-start',
+    title: 'Before you start',
+    eyebrow: 'Good news',
+    paragraphs: [
+      'The Home Assistant Green box is already set up. Dashboard, alerts, automations, and learning are all configured.',
+      "You only need to do three things: connect the hardware to WiFi, place the sensors, and set up the caregiver's phone.",
+      'Once everything is connected, the system runs on its own.'
+    ]
+  },
+  {
+    type: 'intro',
+    title: 'What this system does',
+    intro: 'Before we set anything up, here is what the monitoring system watches for.',
+    monitoring: [
+      { dot: '#0EA5E9', name: 'Pacing',             text: 'Counts back-and-forth movement. Flags more than 8 crossings in a short window.' },
+      { dot: '#F59E0B', name: 'Agitation in place', text: 'Detects shaking or stimming when Eli is still. Flags more than 10 motion bursts.' },
+      { dot: '#F43F5E', name: 'Heart rate',         text: 'Reads continuously, no contact needed. Flags above 110 bpm for 3 minutes.' },
+      { dot: '#D946EF', name: 'Breathing rate',     text: 'Reads continuously, no contact needed. Flags above 25 per minute for 3 minutes.' }
+    ],
+    alerts: [
+      { color: '#43a047', label: 'Low',    text: 'One indicator elevated. Regular notification.' },
+      { color: '#ffa600', label: 'Medium', text: 'Two indicators elevated. High priority.' },
+      { color: '#db4437', label: 'High',   text: 'Three or more indicators. Persistent notification.' },
+      { color: '#db4437', label: 'Night',  text: 'Any indicator between 10 PM and 7 AM. Thresholds are halved.' }
+    ],
+    closing: 'Long-press any notification to log what you did. The system asks how the day went every evening at 7 PM.'
+  },
+  {
+    type: 'step',
+    title: 'Plug in the Home Assistant Green',
+    items: [
+      'Connect the box to the router with an ethernet cable.',
+      'Plug the box into power.',
+      'Wait 5 minutes.',
+      'On a phone or computer on the same WiFi, open a browser and go to homeassistant.local:8123.'
+    ],
+    callouts: [{
+      style: 'info',
+      paragraphs: ['Log in with the username and password you were given. Do not change any settings. If something needs to be adjusted, email Team Eli at [team-eli-email-placeholder].']
+    }],
+    image: 'Screenshot: Home Assistant Green plugged into router and power, with the dashboard loading on a laptop screen.'
+  },
+  {
+    type: 'step',
+    title: 'Write down your WiFi name and password',
+    body: 'You will need both for the next steps. Case sensitive. Spaces matter.',
+    image: 'Screenshot: A piece of paper with WiFi name and password written down.'
+  },
+  {
+    type: 'step',
+    title: 'Set up the Aqara FP2 sensor on your WiFi',
+    items: [
+      'Open the Aqara Home app.',
+      'Add the FP2 as a new device.',
+      'Select your WiFi and enter the password.',
+      'In the sensor settings, set up Zone Positioning. Create 3 horizontal strips covering the room top to bottom.',
+      'In Home Assistant, open Settings, then Devices & Services. The FP2 will appear. Tap Configure.'
+    ],
+    image: 'Screenshot: Aqara Home app showing the FP2 added with three zones configured.'
+  },
+  {
+    type: 'step',
+    title: 'Set up the Aqara G3 camera on your WiFi',
+    items: [
+      'In the Aqara Home app, add the G3 as a new device.',
+      'In Home Assistant, open Settings, then Devices & Services. The G3 will appear. Tap Configure.',
+      'Confirm the camera feed and motion sensor work on the dashboard.'
+    ],
+    image: 'Screenshot: Aqara G3 camera feed live on the Home Assistant dashboard.'
+  },
+  {
+    type: 'step',
+    title: 'Plug in the breathing and heart rate sensor',
+    items: [
+      'Plug the sensor into any USB power source.',
+      'It connects to WiFi automatically.',
+      'It will appear in Settings, then Devices & Services in Home Assistant.'
+    ],
+    note: 'Not showing up? Email Team Eli at [team-eli-email-placeholder].',
+    image: 'Screenshot: XIAO MR60BHA2 sensor plugged into a USB wall adapter.'
+  },
+  {
+    type: 'step',
+    title: "Set up the caregiver's phone",
+    lead: 'This phone receives every alert. Without this step, no one gets notified.',
+    subheading: 'Steps',
+    items: [
+      "On the caregiver's iPhone, download Home Assistant Companion from the App Store.",
+      'Open the app. Make sure the phone is on the same WiFi as the Home Assistant Green.',
+      'If asked for a URL, type homeassistant.local:8123. Log in with the username and password you were given.',
+      'When the app asks for notification permission, tap Allow.',
+      'To confirm: walk in front of the sensors, then long-press the notification on the phone. If response buttons appear, you are done.'
+    ],
+    callouts: [{
+      style: 'important',
+      eyebrow: 'Important',
+      paragraphs: [
+        'Only the phone logged into the app receives notifications. New phone, new login.',
+        'Need alerts on more than one phone? Each person installs the app and logs in. Then email Team Eli at [team-eli-email-placeholder] to add their phone to the system.'
+      ]
+    }],
+    image: 'Screenshot: Home Assistant Companion app login screen on an iPhone with the notification permission dialog visible.'
+  },
+  {
+    type: 'step-grouped',
+    title: "Place the sensors in Eli's room",
+    groups: [
+      { label: 'FP2 sensor',       text: 'Mount 6 to 7 feet up on a wall, looking down. Plug into USB power.' },
+      { label: 'G3 camera',        text: 'Place on a shelf or wall where it sees most of the room. Plug into USB power.' },
+      { label: 'Breathing sensor', text: 'Place 3 to 5 feet from where Eli sits or lies, pointed at his chest. Plug into USB power.' }
+    ],
+    image: "Screenshot: Diagram of Eli's room showing where each sensor is placed."
+  },
+  {
+    type: 'step',
+    title: 'Test everything',
+    items: [
+      'Walk between FP2 zones. The Zone Transitions gauge on the dashboard should go up.',
+      'Move in front of the G3. Camera Motion should show Detected.',
+      'Sit still near the breathing sensor for 2 to 3 minutes. Heart Rate and Breathing Rate should appear.',
+      "Walk between zones more than 8 times. A notification should arrive on the caregiver's phone.",
+      'Long-press the notification. The response buttons should appear: Gave gabapentin, Redirected activity, Let him work through it.'
+    ],
+    note: 'Anything not working? Email Team Eli at [team-eli-email-placeholder].',
+    image: "Screenshot: Caregiver's phone showing a test notification with response buttons."
+  },
+  {
+    type: 'reference',
+    title: 'Caregiver quick reference',
+    bullets: [
+      'You receive a notification when the system detects unusual activity.',
+      'Green: one thing is slightly off, probably fine.',
+      'Yellow: two things off at once, go check on Eli.',
+      'Red: multiple things off, or nighttime activity. Check on Eli right away.',
+      'Long-press any notification to log what you did.',
+      'Every evening at 7 PM, a check-in asks how the day went. Long-press to respond.',
+      'Notifications stopped? Check that the Home Assistant Green box is plugged in and the light is on.',
+      'Sensor not working? Check that it is still plugged into power.',
+      'Changed phones or reinstalled the app? Log in again with the same username and password.'
+    ]
+  }
+];
+
+let setupStep = 0;
+
+function renderSetup() {
+  const wrap = document.getElementById('setup-screen-wrap');
+  if (!wrap) return;
+
+  const idx = setupStep;
+  const step = SETUP_STEPS[idx];
+  const total = SETUP_STEPS.length;
+
+  // Progress meta
+  const fill    = setupView.querySelector('.setup-progress-fill');
+  const counter = setupView.querySelector('.setup-step-counter');
+  const titleEl = setupView.querySelector('.setup-step-title');
+  if (fill)    fill.style.width = `${((idx + 1) / total) * 100}%`;
+  if (counter) counter.textContent = `Step ${idx + 1} of ${total}`;
+  if (titleEl) titleEl.textContent = step.title;
+
+  // Card content (with subtle fade)
+  wrap.style.opacity = '0';
+  setTimeout(() => {
+    wrap.innerHTML = renderSetupScreen(step);
+    wrap.style.opacity = '1';
+  }, 80);
+
+  // Nav buttons
+  const prevBtn = setupView.querySelector('.setup-btn-prev');
+  const nextBtn = setupView.querySelector('.setup-btn-next');
+  const nextLbl = nextBtn && nextBtn.querySelector('.setup-btn-next-label');
+  const nextIcn = nextBtn && nextBtn.querySelector('.setup-btn-next-icon');
+  if (prevBtn) prevBtn.disabled = idx === 0;
+  if (nextBtn) {
+    if (idx === total - 1) {
+      if (nextLbl) nextLbl.textContent = 'Done';
+      if (nextIcn) nextIcn.style.display = 'none';
+      nextBtn.dataset.action = 'setup-done';
+      nextBtn.setAttribute('aria-label', 'Finish setup guide');
+    } else {
+      if (nextLbl) nextLbl.textContent = 'Next';
+      if (nextIcn) nextIcn.style.display = '';
+      nextBtn.dataset.action = 'setup-next';
+      nextBtn.setAttribute('aria-label', 'Next step');
+    }
+  }
+}
+
+function renderSetupScreen(step) {
+  const idx = setupStep;
+  if (step.type === 'before-start') return renderSetupBeforeStart(step);
+  if (step.type === 'intro')        return renderSetupIntro(step);
+  if (step.type === 'reference')    return renderSetupReference(step);
+  if (step.type === 'step-grouped') return renderSetupGroupedStep(step, idx);
+  return renderSetupListStep(step, idx);
+}
+
+function renderSetupBeforeStart(step) {
+  return `
+    <section class="setup-card" aria-labelledby="setup-screen-title">
+      <div class="setup-before-eyebrow">${escapeHtml(step.eyebrow)}</div>
+      <div class="setup-before-row">
+        <svg class="setup-before-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="m9 12 2 2 4-4"/>
+        </svg>
+        <h1 class="setup-before-title" id="setup-screen-title">${escapeHtml(step.title)}</h1>
+      </div>
+      <div class="setup-before-card">
+        ${step.paragraphs.map(p => `<p>${setupHtml(p)}</p>`).join('')}
+      </div>
+    </section>
+  `;
+}
+
+function renderSetupCallout(callout) {
+  const style = callout.style === 'important' ? 'important' : 'info';
+  const eyebrowHTML = callout.eyebrow
+    ? `<div class="setup-callout-eyebrow">${escapeHtml(callout.eyebrow)}</div>`
+    : '';
+  const paras = Array.isArray(callout.paragraphs) ? callout.paragraphs : [callout.paragraphs];
+  const parasHTML = paras.map(p => `<p class="setup-callout-text">${setupHtml(p)}</p>`).join('');
+  return `
+    <aside class="setup-callout ${style}" role="note">
+      ${eyebrowHTML}${parasHTML}
+    </aside>
+  `;
+}
+
+function renderSetupIntro(step) {
+  return `
+    <section class="setup-card" aria-labelledby="setup-screen-title">
+      <h1 class="setup-screen-title" id="setup-screen-title">${escapeHtml(step.title)}</h1>
+      <p class="setup-screen-intro">${setupHtml(step.intro)}</p>
+      <div class="setup-section-label">Monitoring areas</div>
+      <div class="setup-monitor-list">
+        ${step.monitoring.map(m => `
+          <div class="setup-monitor-item">
+            <span class="setup-monitor-dot" style="background:${m.dot}" aria-hidden="true"></span>
+            <div class="setup-monitor-text">
+              <div class="setup-monitor-name">${escapeHtml(m.name)}</div>
+              <div class="setup-monitor-desc">${setupHtml(m.text)}</div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+      <div class="setup-section-label">Alert levels</div>
+      <div class="setup-alert-list">
+        ${step.alerts.map(a => `
+          <div class="setup-alert-item">
+            <span class="setup-alert-circle" style="background:${a.color}" aria-hidden="true"></span>
+            <div class="setup-alert-text"><span class="setup-alert-label">${escapeHtml(a.label)}:</span> ${setupHtml(a.text)}</div>
+          </div>
+        `).join('')}
+      </div>
+      <p class="setup-closing">${setupHtml(step.closing)}</p>
+
+      <section class="setup-learn-card" aria-labelledby="setup-learn-title">
+        <div class="setup-learn-eyebrow">How the system learns</div>
+        <h2 class="setup-learn-title" id="setup-learn-title">It gets smarter over time</h2>
+        <div class="setup-learn-body">
+          <p>The system tracks Eli's average heart rate and breathing over a rolling 24-hour window. It is always learning what is normal for him.</p>
+          <p>Right now, alerts use fixed thresholds. As the system learns Eli's baseline, those thresholds will adjust to him personally. Fewer false alerts, more accurate flags.</p>
+        </div>
+        <div class="setup-learn-svg-wrap">
+          <svg viewBox="0 0 400 160" role="img" aria-label="Heart rate baseline and adaptive alert threshold over 24 hours">
+            <defs>
+              <clipPath id="setup-learn-plot-clip">
+                <rect x="20" y="20" width="360" height="120" rx="8"/>
+              </clipPath>
+            </defs>
+            <rect x="20" y="20" width="360" height="120" rx="8" fill="#FAFAF9"/>
+            <g clip-path="url(#setup-learn-plot-clip)">
+              <rect x="20" y="20" width="360" height="80" fill="#FECDD3"/>
+              <line x1="20" y1="20" x2="380" y2="20" stroke="#FDA4AF" stroke-width="2"/>
+              <line x1="20" y1="100" x2="380" y2="100" stroke="#6366F1" stroke-width="1.5" stroke-dasharray="5 3"/>
+              <path d="M 25 122 Q 45 120, 70 123 Q 90 121, 105 119 Q 115 105, 125 60 Q 138 80, 150 122 Q 175 124, 195 120 Q 210 118, 220 110 Q 235 70, 250 65 Q 265 95, 280 122 Q 305 120, 320 122 Q 335 105, 345 75 Q 358 80, 370 110 Q 376 118, 380 121" stroke="#57534E" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+            </g>
+            <rect x="20" y="20" width="360" height="120" rx="8" fill="none" stroke="#E7E5E4" stroke-width="1"/>
+            <text x="372" y="42" text-anchor="end" font-size="10" font-weight="600" fill="#9F1239">Alert threshold zone</text>
+            <text x="372" y="95" text-anchor="end" font-size="10" font-weight="500" fill="#44403C">24 hour average: 82 bpm</text>
+          </svg>
+          <div class="setup-learn-caption">As Eli's baseline shifts, the threshold shifts with it.</div>
+        </div>
+      </section>
+    </section>
+  `;
+}
+
+function renderSetupListStep(step, idx) {
+  const leadHTML       = step.lead       ? `<p class="setup-lead">${setupHtml(step.lead)}</p>` : '';
+  const subheadingHTML = step.subheading ? `<div class="setup-step-subheading">${escapeHtml(step.subheading)}</div>` : '';
+  const bodyHTML       = step.body       ? `<p class="setup-body">${setupHtml(step.body)}</p>` : '';
+  const itemsHTML      = (step.items && step.items.length)
+    ? `<ol class="setup-step-list">${step.items.map(it => `<li><span>${setupHtml(it)}</span></li>`).join('')}</ol>`
+    : '';
+  const noteHTML       = step.note       ? `<p class="setup-note">${setupHtml(step.note)}</p>` : '';
+  const calloutsHTML   = (step.callouts || []).map(renderSetupCallout).join('');
+  const stepNum        = idx + 1;
+  return `
+    <section class="setup-card" aria-labelledby="setup-screen-title">
+      <h1 class="setup-screen-title" id="setup-screen-title">${escapeHtml(step.title)}</h1>
+      ${leadHTML}
+      ${subheadingHTML}
+      ${bodyHTML}
+      ${itemsHTML}
+      ${noteHTML}
+      ${calloutsHTML}
+      ${step.image ? `
+        <img
+          src="images/Step ${stepNum}.png"
+          alt="${escapeHtml(step.image)}"
+          style="width:100%;border-radius:12px;border:1px solid #E7E5E4;margin-top:20px;display:block;"
+          onerror="this.style.display='none'"
+        >
+      ` : ''}
+    </section>
+  `;
+}
+
+function renderSetupGroupedStep(step, idx) {
+  const stepNum = idx + 1;
+  return `
+    <section class="setup-card" aria-labelledby="setup-screen-title">
+      <h1 class="setup-screen-title" id="setup-screen-title">${escapeHtml(step.title)}</h1>
+      <div class="setup-grouped-list">
+        ${step.groups.map(g => `
+          <div class="setup-grouped-item">
+            <div class="setup-grouped-label">${escapeHtml(g.label)}</div>
+            <div class="setup-grouped-text">${setupHtml(g.text)}</div>
+          </div>
+        `).join('')}
+      </div>
+      ${step.image ? `
+        <img
+          src="images/Step ${stepNum}.png"
+          alt="${escapeHtml(step.image)}"
+          style="width:100%;border-radius:12px;border:1px solid #E7E5E4;margin-top:20px;display:block;"
+          onerror="this.style.display='none'"
+        >
+      ` : ''}
+    </section>
+  `;
+}
+
+function renderSetupReference(step) {
+  return `
+    <section class="setup-card reference" aria-labelledby="setup-screen-title">
+      <div class="setup-reference-eyebrow">Quick reference</div>
+      <h1 class="setup-reference-title" id="setup-screen-title">${escapeHtml(step.title)}</h1>
+      <ul class="setup-reference-bullets">
+        ${step.bullets.map(b => `<li>${setupHtml(b)}</li>`).join('')}
+      </ul>
+      <button type="button" class="setup-print-btn" data-action="setup-print">
+        ${PRINTER_ICON}<span>Print this page</span>
+      </button>
+    </section>
+    <aside class="setup-help-card" aria-labelledby="setup-help-title">
+      <strong id="setup-help-title">Need help?</strong>
+      <p>Email Team Eli at ${TEAM_ELI_LINK_HTML}. We will get back to you.</p>
+    </aside>
+  `;
+}
+
+function setupGoNext() {
+  if (setupStep < SETUP_STEPS.length - 1) {
+    setupStep += 1;
+    renderSetup();
+  }
+}
+function setupGoPrev() {
+  if (setupStep > 0) {
+    setupStep -= 1;
+    renderSetup();
+  }
+}
+
+mainTabs.forEach(tab => {
+  tab.addEventListener('click', () => setView(tab.dataset.view));
+});
+
+// Wire up Home view CTAs and path cards (any element with data-go="<view>")
+document.querySelectorAll('[data-go]').forEach(el => {
+  el.addEventListener('click', () => setView(el.dataset.go));
+});
+
 // ─── INIT ────────────────────────────────────────────────────────────────────
 
 renderFloor(1);
+setView('home');
+
+// ═══════════════════════════════════════════════════════
+//  ELI CHATBOT — floating bubble + slide-out panel
+//  Added on top of original site. Zero changes to original code.
+// ═══════════════════════════════════════════════════════
+
+(function() {
+
+// ── Project context extracted from the site data ──
+const CTX = `You are an AI assistant built into the "Project Eli — Safety Framework" website. This site was created by Team Eli (Anh Le, Jordan Johnson, Laila Pantor-Wellington, Nathalie Lara, Camila Sanchez) for Eli's family — his parents Jeff and Brandi, and their caregiver.
+
+ABOUT ELI:
+Eli is a 21-year-old man with autism preparing for semi-independent living in a specially designed triplex apartment (Franklin Flats / Unit B). He is fast-moving, strong-willed, and capable of real independence in the right environment. He communicates via iPad and text, loves cooking, video games, music, hiking, and exercise, and responds very well to timers, structured schedules, and visual prompts. He takes sleep medication and is very hard to wake in the morning. After exercise his heart rate rises and he can enter an unsoothable anxiety state. He uses learned phrases rather than expressing genuine feelings, making his emotional state hard to read.
+
+HOW THE WEBSITE WORKS:
+The site has four main sections accessed via tabs at the top:
+1. HOME tab — overview of the project, stats (rooms mapped, hazards identified, solutions proposed), and path cards that navigate to other sections.
+2. APARTMENT tab — the main interactive feature. Shows a floor plan of the apartment. Users click any room to open a detail panel with photos, hazards, and solutions. Use Floor 1 and Floor 2 buttons to switch levels. Floor 1 has: Entrance, Living Room, Kitchen, Dining/Laundry/Pantry, Patio. Floor 2 has: Eli's Bedroom, Bedroom 2, Bathroom, Stairs. Each room shows hazards sorted into Danger (pink/red), Challenge (blue/indigo), and Frustration (amber/yellow) categories. Click any hazard card to expand it and see the description, solution, cost estimate, and product links.
+3. ROADMAP tab — a horizontal scrollable column board showing the strategic project roadmap with phases, task cards, deliverables, and open questions.
+4. MONITORING SETUP tab — a step-by-step guided walkthrough for setting up Eli's smart home monitoring system. Has Previous/Next buttons and a progress bar. Covers what the system monitors, alert levels, how it learns Eli's baseline, and hardware/software setup steps.
+
+HAZARD COLOR SYSTEM:
+- Danger (red/pink) — physical safety risk that could cause harm
+- Challenge (blue/indigo) — task that is difficult or needs support but not immediately dangerous
+- Frustration (amber/yellow) — behavioral or routine issue that causes friction
+
+ROOM-BY-ROOM HAZARDS AND SOLUTIONS:
+
+ENTRANCE (Floor 1) — High risk:
+- Danger: Unauthorized exit — Eli leaves quickly, encounters unsafe environments, or meets strangers. Solution: Lockly smart lock + Bluetooth/NFC wearable bracelet (~$349). RFID/NFC access control system. Door has no turning lock so it is smart-lock compatible.
+- Danger: Opening door to strangers — cannot distinguish safe vs unsafe visitors. Solution: Camera/monitors and behavioral sensors alert caregiver automatically.
+- Danger: Emergency evacuations — smart alarms escalate to caregiver if he doesn't respond within a set window.
+- Extra: Door Guardian Confounding Lock with Key ($29.95–33.00), LUMOplay wall games (free with projector), Tack GPS Tracker Plus Cam Bundle.
+
+LIVING ROOM (Floor 1) — Moderate risk, 9 hazards:
+- Danger: TV destruction — Eli breaks TVs. Option A: mount TV high in recessed plexiglass enclosure (~$200–400). Option B: short-throw projector on wall arm mount with locking cage (~$200–500). Pair with Kasa Smart Plug for scheduled on/off.
+- Danger: Breakable windows — replace with polycarbonate or laminated safety glass panels; interim: window security film ($10–30/window).
+- Danger: Outlets as improvised weapons — outlet covers can be popped off and shattered. Replace with Leviton Tamper-Resistant outlets ($10–20).
+- Challenge: No effective behavioral cue system — smart bulbs on schedule for light transitions. Wall tablet with large buttons (Call Mom, Show my schedule). Smart bulbs ($20–30 each).
+- Challenge: Communication panel for emergencies — wall-mounted tablet with charging dock, Home Assistant companion app, always on and charged (~$100–230 + $30 dock).
+
+KITCHEN (Floor 1) — High risk, 9 hazards:
+- Danger: Electric stove unsupervised — Kasa Smart Plug on microwave/small appliances ($10–20), Aeotec Heavy Duty Smart Switch ZW078 on the hardwired range ($90–100) cuts power when caregiver leaves via geofence automation.
+- Danger: Open burner hazard — Kasa KP115 Smart Plug with energy monitoring ($10–20), or upgrade to induction cooktop ($30–150 portable).
+- Danger: Metal in the microwave — supply only microwave-safe cookware (silicone, ceramic, glass). Smart plug disables microwave when unsupervised.
+- Danger: Flooding at kitchen sink — Zooz ZSE42 Z-Wave Water Leak Sensor under sink triggers Zooz ZAC36 Titan Water Valve Actuator to cut water (~$225–240 total).
+- Danger: Pantry raiding/throwing canned goods — Yale Smart Cabinet Lock Bluetooth ($80–130), time-scheduled locking overnight.
+- Challenge: Task sequencing while cooking — wall-mounted tablet with step-by-step recipe prompts, Home Assistant pushes timed reminders.
+
+DINING / LAUNDRY / PANTRY (Floor 1):
+- Challenge: Task completion and routine issues — voice-activated Home Assistant to Alexa device for meal routine prompts.
+- Challenge: Food safety and cleanliness — voice reminders to eat slowly, wash dishes, clean up. Caregiver alerted if cleanup hasn't happened.
+- Challenge: Lint trap fire hazard — Home Assistant recurring reminder to clean lint trap.
+- Frustration: Pantry raiding at night — Bluetooth cabinet lock with timer ($86).
+- Dining room: Shatterproof silverware ($7–17), shatterproof dinnerware ($30–40), bolt chairs/table to floor with L-brackets. Sensory lighting: Philips Hue dims when sensors detect Eli sitting to eat.
+
+BATHROOM (Floor 2) — High risk, 5 hazards:
+- Danger: Mirror as breakable weapon — replace with polycarbonate or acrylic mirror ($40–120), or apply shatterproof safety film.
+- Danger: Intentional bathtub/toilet overflow — Saniflo Saniplus macerator toilet ($700–1,000 + plumber), water shutoff automation on floor sensor alert.
+- Danger: Exposed light bulb fixtures — replace all with recessed LED downlights ($30/fixture).
+- Danger: Blocking door from inside — convert to outward-swinging door ($200–600), remove bathroom drawer, install Aqara Door and Window Sensor ($42) for extended closure alerts.
+- Challenge: Medication management — Hero Smart Pill Dispenser ($99 + $45/month) or Amazon Pill Dispenser. Pair with Wyze Cam for visual confirmation.
+- Challenge: Washing without actually cleaning — Echo Show 8 near bathroom ($180 with mount) with step-by-step audio hygiene routine via Home Assistant morning/evening sequence.
+
+ELI'S BEDROOM (Floor 2) — Moderate risk, 5 hazards:
+- Danger: Ceiling fan blades — remove ceiling fan, replace with bladeless fan or flush-mount light ($80–300).
+- Danger: Staying up all night — smart bulbs shift to warm dim red at sleep time. Bed occupancy sensor alerts Brandi if not in bed. Pantry and stair locks activate at sleep schedule time.
+- Challenge: Unpredictable anxiety/dysregulation — Empatica Embrace Plus or Garmin HRV sensor (~$400) detects elevated heart rate/skin conductance and triggers caregiver alerts via Home Assistant.
+- Challenge: Waking up without caregiver — Hatch Alarm Clock + Withings Sleep Mat ($200) or pressure mat sensor ($200). Home Assistant escalates to Brandi if no out-of-bed confirmed. Bedroom door sensor confirms exit.
+- Challenge: End of day routine — Home Assistant wind-down checklist on tablet (clothes in hamper, lights off, shoes away, iPad charging). Eli cannot access wind-down state without completing all items.
+
+BEDROOM 2 (Floor 2) — Lower risk, 2 hazards:
+- Challenge: Boredom and narrow activity range — equip as gym and media room with elliptical and video game setup. Futon for occasional guests.
+- Frustration: Gaming the reward system — structured schedule with Home Assistant preventing access to preferred activities until checklist is complete.
+
+STAIRS (Floor 2) — Lower risk, 2 hazards:
+- Danger: Fall risk during dysregulation — Eli moves fast and may fall on stairs when dysregulated. Non-slip treads, motion sensor lighting.
+- Frustration: Nighttime wandering — stair access gate or sensor locks pantry and kitchen automatically at sleep schedule time.
+
+PATIO (Floor 1):
+- Danger: Unsupervised outdoor access — fence that cannot be scaled. Consider enclosed climate-controlled patio for heat sensitivity.
+- Danger: Heat sensitivity — Eli gets overheated outdoors easily, triggering anxiety.
+
+HOME ASSISTANT:
+Home Assistant is free open-source smart home software running on a local hub (Raspberry Pi or similar). It is the backbone connecting all smart devices. It runs automations like: cutting stove power when caregiver leaves, locking pantry at bedtime, dimming lights at sleep time, escalating alerts if Eli doesn't wake or take medication, and running the tablet-based daily schedule and wind-down checklist.
+
+MONITORING SETUP TAB:
+The Monitoring Setup tab is a step-by-step walkthrough for setting up the smart home system. Use the Previous and Next buttons to move through steps. There is a progress bar at the top. The last step has a Print button for a quick reference card. A "Need help?" section has a Team Eli contact email.
+
+ROADMAP TAB:
+Shows the Daily Living Labs Strategic Roadmap as a horizontal scrollable column board. Each phase has task cards color-coded by type (Research=blue, Hardware=amber, AI=purple, Stakeholder=green), plus Deliverable cards (yellow) and Open Questions cards (gray). Use left/right arrows on desktop to scroll.
+
+PRODUCT LINKS (include these when recommending solutions):
+- Lockly smart lock: https://www.amazon.com/s?k=lockly+smart+lock
+- Aqara Door and Window Sensor: https://www.amazon.com/Aqara-Automation-3rd-Party-Connection-Compatible/dp/B07D37VDM3
+- Aeotec Heavy Duty Smart Switch ZW078: https://www.amazon.com/s?k=Aeotec+Heavy+Duty+Smart+Switch+ZW078
+- Kasa KP115 Smart Plug: https://www.amazon.com/s?k=kasa+kp115+smart+plug
+- Zooz ZSE42 Water Leak Sensor: https://www.amazon.com/s?k=zooz+zse42+water+leak+sensor
+- Zooz ZAC36 Titan Water Valve Actuator: https://www.amazon.com/s?k=zooz+zac36+valve+actuator
+- Yale Smart Cabinet Lock: https://www.amazon.com/s?k=yale+smart+cabinet+lock+bluetooth
+- Hero Smart Pill Dispenser: https://herohealth.com/our-product/
+- Saniflo Saniplus macerator toilet: https://www.saniflo.com/us/installing-a-toilet/73-saniplus.html
+- Polycarbonate mirror: https://www.amazon.com/s?k=polycarbonate+mirror
+- Echo Show 8: https://www.amazon.com/All-New-Echo-Show-8/dp/B0BLS3Y632
+- Withings Sleep Mat: https://www.amazon.com/Withings-Nokia-Sleep-Temperature-Compatible/dp/B078Z1B34S
+- Hatch Restore 3 alarm clock: https://www.amazon.com/Hatch-Restore-Sunrise-Alarm-Machine/dp/B0DLLSCVZW
+- Philips Hue smart bulbs: https://www.amazon.com/s?k=philips+hue+white+ambiance+bulb
+- Empatica Embrace Plus: https://www.empatica.com/embrace-plus/
+- Bladeless ceiling fan: https://www.amazon.com/s?k=bladeless+ceiling+fan
+- Leviton Tamper-Resistant outlets: https://www.amazon.com/s?k=leviton+tamper+resistant+outlet
+- Window security film: https://www.amazon.com/s?k=window+security+film
+- Bluetooth cabinet lock with timer: https://www.amazon.com/s?k=bluetooth+cabinet+lock+timer
+- Brandi — primary caregiver, key contact for scheduling and floor plan
+- Jeff — co-caregiver, involved in home modification decisions
+- Mike — project advisor/supervisor at the university
+- Team Eli — UX research student team
+
+Respond warmly and helpfully. These are Eli's parents and caregiver. Keep answers concise. You can use **bold** for emphasis and structure. When recommending solutions, include the relevant product link from the site data as a plain URL on its own line. After your answer suggest 2-3 follow-up questions on a new line starting exactly with "chips:" separated by "|".`;
+
+const MODES = {
+  explain: 'HOW IT WORKS mode: Help the user navigate this website. Explain tabs, how to click rooms on the floor plan, what the hazard colors mean, and how to use the Monitoring Setup and Roadmap tabs. Be warm and clear.',
+  dangers: 'DANGERS mode: Walk through specific room-by-room safety risks based on the hazard data from the site. Rate risks. Explain why each is dangerous specifically for Eli.',
+  solutions: 'SOLUTIONS mode: Recommend specific smart home solutions from the site data. Give product names, approximate costs, and explain how each addresses a specific challenge for Eli.'
+};
+
+const OPENERS = {
+  explain: { text: 'Happy to walk you through the site! 💡\n\nThis is an interactive apartment safety framework for Eli. Here is how to get started:\n\nUse the tabs at the top to navigate — Home gives you the overview, Apartment lets you explore room-by-room, Roadmap shows the project plan, and Monitoring Setup walks you through the smart home system.\n\nIn the Apartment tab, just click any room on the floor plan to see its hazards and solutions.\n\nWhat would you like to know?', chips: ['How do I use the apartment map?', 'What do the colors mean?', 'How do I use the Monitoring Setup tab?', 'What is Home Assistant?'] },
+  dangers: { text: 'Switching to Dangers mode ⚠️\n\nI can walk you through room-by-room risks based on what was identified during the home walkthrough and caregiver interviews.\n\nWhich room or area would you like to start with?', chips: ['Kitchen dangers', 'Bathroom risks', 'Front door safety', 'Bedroom challenges', 'Living room hazards'] },
+  solutions: { text: 'Solutions mode activated 🔧\n\nI can walk you through the specific smart home products and modifications recommended for Eli\'s apartment, with costs and links.\n\nWhat challenge should we look at first?', chips: ['Door lock options', 'Water shutoff sensors', 'Medication management', 'Bedtime and sleep routine', 'Kitchen safety tools'] }
+};
+
+let eMode = null;
+const eHistory = [];
+
+// ── Build HTML ──
+document.body.insertAdjacentHTML('beforeend', `
+<button id="eli-fab" aria-label="Open AI Assistant" onclick="eliOpen()">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+</button>
+
+<div id="eli-overlay" onclick="eliClose()" aria-hidden="true"></div>
+
+<div id="eli-panel" role="dialog" aria-modal="true" aria-label="Eli AI Assistant">
+  <div id="eli-header">
+    <div class="eli-hicon" aria-hidden="true">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+    </div>
+    <div class="eli-htitles">
+      <div class="eli-htitle">Eli Assistant</div>
+      <div class="eli-hsub">Ask about dangers, solutions, or how to use this site</div>
+    </div>
+    <button id="eli-close" onclick="eliClose()" aria-label="Close assistant">✕</button>
+  </div>
+
+  <div id="eli-modes" role="group" aria-label="Choose a topic">
+    <button class="eli-mode" data-m="explain" onclick="eliMode('explain',this)" aria-pressed="false">
+      <span class="eli-mode-icon" aria-hidden="true">💡</span>How It Works
+    </button>
+    <button class="eli-mode" data-m="dangers" onclick="eliMode('dangers',this)" aria-pressed="false">
+      <span class="eli-mode-icon" aria-hidden="true">⚠️</span>Dangers
+    </button>
+    <button class="eli-mode" data-m="solutions" onclick="eliMode('solutions',this)" aria-pressed="false">
+      <span class="eli-mode-icon" aria-hidden="true">🔧</span>Solutions
+    </button>
+  </div>
+
+  <div id="eli-msgs" role="log" aria-live="polite" aria-label="Conversation">
+    <div class="emsg bot">
+      <span class="esender">Assistant</span>
+      <div class="ebubble">Hi Brandi, Jeff, or caregiver! 👋\n\nI can help you navigate this site, understand room-by-room dangers in the apartment, or explore the smart home solutions we recommend.\n\nPick a topic above or just ask me anything.</div>
+      <div class="echips" role="list">
+        <button class="echip" role="listitem" onclick="eliChip(this)">How do I use this site?</button>
+        <button class="echip" role="listitem" onclick="eliChip(this)">Kitchen dangers</button>
+        <button class="echip" role="listitem" onclick="eliChip(this)">Bathroom safety</button>
+        <button class="echip" role="listitem" onclick="eliChip(this)">Smart lock options</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="eli-input-area" role="group" aria-label="Type your message">
+    <label for="eli-textarea" class="eli-sr">Your message</label>
+    <textarea id="eli-textarea" rows="1" placeholder="Ask anything about Eli's home…"></textarea>
+    <button id="eli-send" onclick="eliSend()" aria-label="Send">➤</button>
+  </div>
+</div>
+`);
+
+// ── Open / Close ──
+window.eliOpen = function() {
+  document.getElementById('eli-panel').classList.add('open');
+  document.getElementById('eli-overlay').classList.add('open');
+  document.getElementById('eli-textarea').focus();
+};
+window.eliClose = function() {
+  document.getElementById('eli-panel').classList.remove('open');
+  document.getElementById('eli-overlay').classList.remove('open');
+  document.getElementById('eli-fab').focus();
+};
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') eliClose(); });
+
+// ── Mode ──
+window.eliMode = function(m, btn) {
+  eMode = m;
+  document.querySelectorAll('.eli-mode').forEach(function(b) {
+    var active = b.dataset.m === m;
+    b.classList.toggle('active', active);
+    b.setAttribute('aria-pressed', active ? 'true' : 'false');
+  });
+  var o = OPENERS[m];
+  eliAddBot(o.text, m, o.chips);
+};
+
+// ── DOM helpers ──
+function eliAddUser(text) {
+  var el = document.getElementById('eli-msgs');
+  var d = document.createElement('div');
+  d.className = 'emsg user';
+  d.innerHTML = '<span class="esender" style="text-align:right;">You</span><div class="ebubble">' + eliEsc(text) + '</div>';
+  el.appendChild(d); el.scrollTop = el.scrollHeight;
+}
+
+function eliAddBot(text, mode, chips) {
+  var el = document.getElementById('eli-msgs');
+  var cls = 'ebubble' + (mode === 'dangers' ? ' edanger' : mode === 'solutions' ? ' esolution' : '');
+  var chipsHtml = '';
+  if (chips && chips.length) {
+    chipsHtml = '<div class="echips" role="list">' + chips.map(function(c) {
+      return '<button class="echip" role="listitem" onclick="eliChip(this)">' + eliEsc(c) + '</button>';
+    }).join('') + '</div>';
+  }
+  var d = document.createElement('div');
+  d.className = 'emsg bot';
+  d.innerHTML = '<span class="esender">Assistant</span><div class="' + cls + '" style="white-space:normal;">' + eliStripMd(text) + '</div>' + chipsHtml;
+  el.appendChild(d); el.scrollTop = el.scrollHeight;
+}
+
+function eliAddTyping() {
+  var el = document.getElementById('eli-msgs');
+  var d = document.createElement('div');
+  d.className = 'emsg bot'; d.id = 'eli-typing';
+  d.innerHTML = '<span class="esender">Assistant</span><div class="ebubble etyping"><span></span><span></span><span></span></div>';
+  el.appendChild(d); el.scrollTop = el.scrollHeight;
+}
+function eliRemoveTyping() { var t = document.getElementById('eli-typing'); if (t) t.remove(); }
+function eliStripMd(s) {
+  return s
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/^#{1,3}\s+(.+)$/gm, '<strong>$1</strong>')
+    .replace(/`([^`]+)`/g, '<code style="background:#F5F5F4;padding:1px 5px;border-radius:4px;font-size:12px;">$1</code>')
+    .replace(/\[([^\]]+)\]\((https?:\/\/[^\)]+)\)/g, '<a href="$2" target="_blank" rel="noopener" style="color:#4F46E5;text-decoration:underline;text-underline-offset:2px;">$1</a>')
+    .replace(/(^|[\s\n])(https?:\/\/[^\s<]+)/g, '$1<a href="$2" target="_blank" rel="noopener" style="color:#4F46E5;text-decoration:underline;text-underline-offset:2px;word-break:break-all;">$2</a>')
+    .replace(/\n/g, '<br>');
+}
+function eliEsc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+// ── Send ──
+window.eliSend = async function() {
+  var ta = document.getElementById('eli-textarea');
+  var text = ta.value.trim();
+  if (!text) return;
+  ta.value = ''; ta.style.height = 'auto';
+  eliAddUser(text);
+  eHistory.push({ role: 'user', content: text });
+  var btn = document.getElementById('eli-send');
+  btn.disabled = true;
+  eliAddTyping();
+
+  try {
+    var modePrompt = eMode ? MODES[eMode] : 'General assistant mode. Answer helpfully and suggest the user pick a topic above for more focused help.';
+    var system = CTX + '\n\nCURRENT MODE: ' + (eMode || 'general') + '\n' + modePrompt;
+    var resp = await fetch('https://framework-proxy.dll-team-eli.workers.dev', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-5',
+        max_tokens: 800,
+        system: system,
+        messages: eHistory
+      })
+    });
+    var data = await resp.json();
+    var raw = (data.content && data.content[0] && data.content[0].text) ? data.content[0].text : 'Sorry, something went wrong. Please try again.';
+    raw = eliStripMd(raw);
+    var reply = raw, chips = [];
+    var m = raw.match(/chips:\s*(.+)$/s);
+    if (m) { reply = raw.slice(0, m.index).trim(); chips = m[1].split('|').map(function(s){ return s.trim(); }).filter(Boolean); }
+    eliRemoveTyping();
+    eHistory.push({ role: 'assistant', content: raw });
+    eliAddBot(reply, eMode, chips);
+  } catch(err) {
+    eliRemoveTyping();
+    eliAddBot('Sorry, something went wrong. Check your connection and try again.', null, []);
+  } finally {
+    btn.disabled = false;
+  }
+};
+
+window.eliChip = function(el) {
+  document.getElementById('eli-textarea').value = el.textContent;
+  eliSend();
+};
+
+// ── Input auto-resize + Enter to send ──
+document.getElementById('eli-textarea').addEventListener('input', function() {
+  this.style.height = 'auto';
+  this.style.height = Math.min(this.scrollHeight, 100) + 'px';
+});
+document.getElementById('eli-textarea').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); eliSend(); }
+});
+
+})();
 </script>
 </body>
 </html>
