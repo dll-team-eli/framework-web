@@ -209,6 +209,17 @@
     flex-direction: column;
     height: calc(100vh - 90px);
     overflow: hidden;
+    background: #FAFAF9;
+  }
+  /* Inner wrapper around the carousel so it can be padded + centered without
+     the wrap (which is aspect-locked) being stretched by flex parent. */
+  #carousel-area {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 14px 16px 16px;
   }
 
   /* ─── ROOM TOPBAR ─── */
@@ -231,33 +242,75 @@
   }
   #back-btn:hover { background: #FAFAF9; border-color: #A8A29E; }
   #back-btn svg { color: #4F46E5; }
-  #room-name-label { font-size: 17px; font-weight: 600; color: #1C1917; letter-spacing: -0.01em; }
+  #room-name-label { font-size: 17px; font-weight: 600; color: #1C1917; letter-spacing: -0.01em; margin-left: auto; }
   .floor-tag {
     font-size: 12px; background: #EEF2FF; color: #4338CA;
     border-radius: 999px; padding: 4px 11px; font-weight: 600;
     letter-spacing: 0.02em;
   }
+  /* Room + floor switcher (in #room-topbar) */
+  #room-switcher {
+    display: flex; align-items: center; gap: 8px;
+  }
+  .floor-switch {
+    display: inline-flex;
+    background: #F5F5F4;
+    border: 1px solid #D6D3D1;
+    border-radius: 8px;
+    padding: 2px;
+    gap: 2px;
+  }
+  .floor-switch-btn {
+    border: none; background: transparent; cursor: pointer;
+    font-size: 13px; font-weight: 500; color: #57534E;
+    padding: 6px 12px; border-radius: 6px;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .floor-switch-btn:hover { color: #1C1917; }
+  .floor-switch-btn.active {
+    background: #fff; color: #4F46E5; font-weight: 600;
+    box-shadow: 0 1px 2px rgba(28, 25, 23, 0.08);
+  }
+  .floor-switch-btn:focus-visible { outline: 2px solid #6366F1; outline-offset: -2px; }
+  #room-select {
+    background: #fff;
+    border: 1px solid #D6D3D1;
+    border-radius: 8px;
+    padding: 8px 30px 8px 12px;
+    font-size: 13px; font-weight: 500; color: #44403C;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 14 14' fill='none' stroke='%2378716C' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><polyline points='2,4 7,9 12,4'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+  }
+  #room-select:hover { background-color: #FAFAF9; border-color: #A8A29E; }
+  #room-select:focus-visible { outline: 2px solid #6366F1; outline-offset: -2px; }
 
   /* ─── PHOTO CAROUSEL ─── */
   #carousel-wrap {
-    flex: 1;
+    /* All room photos are 2220×1472 (aspect 1.508). Lock the wrap to that aspect
+       so the image fills edge-to-edge — no letterbox, no leftover dark band. */
     position: relative;
-    min-height: 0;
+    width: 100%;
+    aspect-ratio: 2220 / 1472;
+    max-height: 100%;
+    margin: 0 auto;
     overflow: hidden;
-    background: #1C1917;
+    border-radius: 12px;
+    background: #1C1917; /* fallback only — visible briefly during image load */
   }
   #carousel {
     position: absolute;
     inset: 0;
-    background: #1C1917;
   }
   #carousel-img {
     position: absolute;
-    top: 16px; left: 16px; right: 16px; bottom: 16px;
-    width: calc(100% - 32px);
-    max-height: calc(100% - 32px);
-    object-fit: contain;
-    border-radius: 10px;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     display: none;
     z-index: 5;
   }
@@ -397,6 +450,8 @@
     border-width: 3px !important;
     z-index: 10;
   }
+  .hazard-icon svg { width: 16px; height: 16px; display: block; }
+
 
   /* ─── ACCORDION ─── */
   .accordion-card {
@@ -443,9 +498,99 @@
   }
   .accordion-header:hover { background: #F5F5F4; }
   .accordion-dot {
-    width: 8px; height: 8px;
+    width: 16px; height: 16px;
     border-radius: 50%;
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .accordion-dot svg { width: 11px; height: 11px; display: block; }
+  .accordion-cat-pill {
+    display: inline-block;
+    margin: 10px 0 4px;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.02em;
+    padding: 2px 8px;
+    border-radius: 999px;
+    line-height: 1.4;
+  }
+  .accordion-cat-pill[data-cat="danger"]      { background: #FFE4E6; color: #BE123C; }
+  .accordion-cat-pill[data-cat="challenge"]   { background: #E0E7FF; color: #4338CA; }
+  .accordion-cat-pill[data-cat="frustration"] { background: #FEF3C7; color: #B45309; }
+
+  /* ─── PANEL VIEW TOGGLE (Hazards / HA Automations) ─── */
+  #view-toggle {
+    display: flex;
+    background: #F5F5F4;
+    border: 1px solid #D6D3D1;
+    border-radius: 8px;
+    padding: 2px;
+    gap: 2px;
+    margin: 0 14px 8px;
+    flex-shrink: 0;
+  }
+  .view-switch-btn {
+    flex: 1;
+    border: none; background: transparent; cursor: pointer;
+    font-size: 12px; font-weight: 500; color: #57534E;
+    padding: 7px 10px;
+    border-radius: 6px;
+    transition: background 0.15s ease, color 0.15s ease;
+    letter-spacing: 0.01em;
+  }
+  .view-switch-btn:hover { color: #1C1917; }
+  .view-switch-btn.active {
+    background: #fff;
+    color: #4F46E5;
+    font-weight: 600;
+    box-shadow: 0 1px 2px rgba(28,25,23,0.08);
+  }
+  .view-switch-btn:focus-visible { outline: 2px solid #6366F1; outline-offset: -2px; }
+
+  /* Toggle which body-content is visible inside each card */
+  .automation-content { display: none; }
+  #detail-panel.view-automations .hazard-content     { display: none; }
+  #detail-panel.view-automations .automation-content { display: block; }
+
+  /* Subtle accent so the automation cards feel "in a different mode"
+     while clearly part of the same family. */
+  #detail-panel.view-automations .accordion-card { border-color: #E0E7FF; }
+  #detail-panel.view-automations .accordion-card.open { box-shadow: 0 0 0 1px #C7D2FE; }
+
+  .automation-row {
+    margin-top: 9px;
+    padding: 8px 10px;
+    background: #F5F3FF;
+    border-left: 3px solid #6366F1;
+    border-radius: 0 5px 5px 0;
+  }
+  .automation-label {
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    color: #4338CA;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 3px;
+  }
+  .automation-text { font-size: 13px; color: #44403C; line-height: 1.5; }
+  .automation-text.muted { color: #78716C; font-style: italic; }
+  .automation-devices { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+  .device-tag {
+    font-size: 11px; font-weight: 500;
+    color: #4338CA;
+    background: #fff;
+    border: 1px solid #C7D2FE;
+    border-radius: 999px;
+    padding: 2px 8px;
+  }
+  .automation-empty {
+    margin-top: 10px;
+    font-size: 12px; color: #78716C; font-style: italic;
+    padding: 8px 10px;
+    background: #FAFAF9;
+    border-radius: 5px;
   }
   .accordion-title {
     font-size: 13.5px; font-weight: 500;
@@ -488,20 +633,6 @@
     font-size: 13px; color: #4F46E5; text-decoration: none;
   }
   .accordion-link:hover { text-decoration: underline; }
-
-  /* ─── PANEL LEGEND ─── */
-  #panel-legend {
-    padding: 10px 15px;
-    border-top: 1px solid #E7E5E4;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    flex-shrink: 0;
-    background: #FAFAF9;
-  }
-  .panel-legend-item { display: flex; align-items: center; gap: 6px; }
-  .panel-legend-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
-  .panel-legend-label { font-size: 12px; color: #57534E; }
 
   /* ─── OVERVIEW STATE ─── */
   #overview { display: flex; flex-direction: column; flex: 1; }
@@ -1047,12 +1178,8 @@
       min-height: 36px;
     }
     #room-name-label { font-size: 12px; }
-    #carousel-wrap {
-      flex: none;
-      height: 320px;
-      min-height: 320px;
-    }
-    #carousel-img { top: 12px; left: 12px; right: 12px; bottom: 12px; }
+    #carousel-area { padding: 10px 12px 12px; }
+    #carousel-wrap { aspect-ratio: 2220 / 1472; max-height: none; }
     .carousel-arrow { width: 36px; height: 36px; }
     #arrow-prev { left: 8px; }
     #arrow-next { right: 8px; }
@@ -1067,7 +1194,6 @@
     #panel-header { padding: 12px 14px; }
     #panel-room-name { font-size: 14px; }
     #panel-hazards { padding: 12px; }
-    #panel-legend { padding: 9px 12px; gap: 10px; flex-wrap: wrap; }
 
     /* Hazard icons stay tappable */
     .hazard-icon { width: 32px; height: 32px; }
@@ -2381,25 +2507,34 @@
           </svg>
           Back to floor plan
         </button>
+        <div id="room-switcher" role="group" aria-label="Room navigation">
+          <div class="floor-switch" role="tablist" aria-label="Floor">
+            <button type="button" class="floor-switch-btn" data-floor="1" role="tab">Floor 1</button>
+            <button type="button" class="floor-switch-btn" data-floor="2" role="tab">Floor 2</button>
+          </div>
+          <select id="room-select" aria-label="Choose room"></select>
+        </div>
         <span id="room-name-label"></span>
         <span class="floor-tag" id="room-floor-tag"></span>
       </div>
-      <div id="carousel-wrap">
-        <div id="carousel">
-          <img id="carousel-img" alt="">
-          <div id="photo-icon-layer"></div>
-          <div class="carousel-placeholder" id="carousel-placeholder">
-            <span class="carousel-placeholder-label" id="carousel-label">Photo 1 of 1</span>
+      <div id="carousel-area">
+        <div id="carousel-wrap">
+          <div id="carousel">
+            <img id="carousel-img" alt="">
+            <div id="photo-icon-layer"></div>
+            <div class="carousel-placeholder" id="carousel-placeholder">
+              <span class="carousel-placeholder-label" id="carousel-label">Photo 1 of 1</span>
+            </div>
+            <div class="carousel-counter" id="carousel-counter">1 / 1</div>
+            <div class="carousel-dots" id="carousel-dots"></div>
           </div>
-          <div class="carousel-counter" id="carousel-counter">1 / 1</div>
-          <div class="carousel-dots" id="carousel-dots"></div>
+          <button class="carousel-arrow" id="arrow-prev">
+            <svg width="10" height="16" viewBox="0 0 10 16" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="8,2 2,8 8,14"/></svg>
+          </button>
+          <button class="carousel-arrow" id="arrow-next">
+            <svg width="10" height="16" viewBox="0 0 10 16" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,2 8,8 2,14"/></svg>
+          </button>
         </div>
-        <button class="carousel-arrow" id="arrow-prev">
-          <svg width="10" height="16" viewBox="0 0 10 16" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="8,2 2,8 8,14"/></svg>
-        </button>
-        <button class="carousel-arrow" id="arrow-next">
-          <svg width="10" height="16" viewBox="0 0 10 16" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,2 8,8 2,14"/></svg>
-        </button>
       </div>
     </div>
     <div id="detail-panel">
@@ -2407,21 +2542,11 @@
         <div id="panel-room-name"></div>
         <div id="panel-risk-meta"></div>
       </div>
-      <div id="panel-hazards"></div>
-      <div id="panel-legend">
-        <div class="panel-legend-item">
-          <div class="panel-legend-dot" style="background:#F43F5E"></div>
-          <span class="panel-legend-label">Danger</span>
-        </div>
-        <div class="panel-legend-item">
-          <div class="panel-legend-dot" style="background:#6366F1"></div>
-          <span class="panel-legend-label">Challenge</span>
-        </div>
-        <div class="panel-legend-item">
-          <div class="panel-legend-dot" style="background:#F59E0B"></div>
-          <span class="panel-legend-label">Frustration</span>
-        </div>
+      <div id="view-toggle" role="tablist" aria-label="Panel view">
+        <button type="button" class="view-switch-btn active" data-view="hazards" role="tab">Hazards</button>
+        <button type="button" class="view-switch-btn" data-view="automations" role="tab">HA Automations</button>
       </div>
+      <div id="panel-hazards"></div>
     </div>
   </div>
   </div><!-- /apartment-view -->
@@ -2520,33 +2645,34 @@ const FLOORS = {
     image: 'images/Team_Eli.jpg',
     hint: 'Downstairs — entrance, living room, kitchen, dining / laundry / pantry, patio',
     zones: [
-      {
-        id: 'living-room', name: 'Living Room', floor: 1,
-        style: { left:'3%', top:'3%', width:'49%', height:'87%' },
-        badge: { color:'#D97706', count:3 }, zIndex: 1,
-        photos: ['images/living_room_1.jpg','images/living_room_2.jpg','images/living_room_3.jpg']
-      },
+      // Coords are % of #floormap. Calibrated against the rendered image.
       {
         id: 'entrance', name: 'Entrance', floor: 1,
-        style: { left:'3%', top:'3%', width:'14%', height:'16%' },
+        style: { left:'14.7%', top:'9.9%', width:'15.9%', height:'24.6%' },
         badge: { color:'#F43F5E', count:3 }, zIndex: 3,
         photos: ['images/entrance_1.jpg','images/entrance_2.jpg']
       },
       {
+        id: 'living-room', name: 'Living Room', floor: 1,
+        style: { left:'15.2%', top:'35.1%', width:'44.8%', height:'44.6%' },
+        badge: { color:'#D97706', count:3 }, zIndex: 1,
+        photos: ['images/living_room_1.jpg','images/living_room_2.jpg','images/living_room_3.jpg']
+      },
+      {
         id: 'patio', name: 'Patio', floor: 1,
-        style: { left:'3%', top:'78%', width:'16%', height:'12%' },
+        style: { left:'15.5%', top:'79.6%', width:'44.7%', height:'9.4%' },
         badge: { color:'#D97706', count:3 }, zIndex: 3,
         photos: ['images/patio_1.jpg','images/patio_2.jpg']
       },
       {
         id: 'dining', name: 'Dining / Laundry / Pantry', floor: 1,
-        style: { left:'59%', top:'3%', width:'32%', height:'39%' },
+        style: { left:'60.3%', top:'19.5%', width:'22.9%', height:'28.7%' },
         badge: { color:'#6366F1', count:2 }, zIndex: 2,
         photos: ['images/dining_1.jpg','images/dining_2.jpg','images/dining_3.jpg']
       },
       {
         id: 'kitchen', name: 'Kitchen', floor: 1,
-        style: { left:'59%', top:'48%', width:'32%', height:'42%' },
+        style: { left:'60.5%', top:'47.7%', width:'23.0%', height:'32.0%' },
         badge: { color:'#E11D48', count:5 }, zIndex: 2,
         photos: ['images/kitchen_1.jpg','images/kitchen_2.jpg','images/kitchen_3.jpg']
       }
@@ -2556,27 +2682,28 @@ const FLOORS = {
     image: 'images/upstairs.jpg',
     hint: 'Upstairs — Eli\'s bedroom, bedroom 2, bathroom, stairs',
     zones: [
+      // Coords are % of #floormap. Calibrated against the rendered image.
       {
         id: 'bedroom2', name: 'Bedroom 2', floor: 2,
-        style: { left:'3%', top:'5%', width:'25%', height:'79%' },
+        style: { left:'14.8%', top:'18.0%', width:'22.5%', height:'64.3%' },
         badge: { color:'#6366F1', count:2 }, zIndex: 1,
         photos: ['images/bedroom2_1.jpg','images/bedroom2_2.jpg']
       },
       {
         id: 'stairs', name: 'Stairs', floor: 2,
-        style: { left:'33%', top:'5%', width:'26%', height:'37%' },
+        style: { left:'38.0%', top:'18.4%', width:'23.4%', height:'21.9%' },
         badge: { color:'#6366F1', count:2 }, zIndex: 1,
         photos: ['images/stairs_1.jpg','images/stairs_2.jpg']
       },
       {
         id: 'bathroom', name: 'Bathroom', floor: 2,
-        style: { left:'33%', top:'48%', width:'26%', height:'39%' },
+        style: { left:'38.3%', top:'52.6%', width:'23.1%', height:'29.0%' },
         badge: { color:'#E11D48', count:4 }, zIndex: 1,
         photos: ['images/bathroom_1.jpg','images/bathroom_2.jpg','images/bathroom_3.jpg']
       },
       {
         id: 'elis-bedroom', name: "Eli's Bedroom", floor: 2,
-        style: { left:'64%', top:'5%', width:'28%', height:'79%' },
+        style: { left:'62.3%', top:'17.8%', width:'23.9%', height:'64.7%' },
         badge: { color:'#D97706', count:3 }, zIndex: 1,
         photos: ['images/elis_bedroom_1.jpg','images/elis_bedroom_2.jpg','images/elis_bedroom_3.jpg']
       }
@@ -2584,10 +2711,421 @@ const FLOORS = {
   }
 };
 
+// Hazards that apply to many rooms — defined once and referenced by each room
+// so a single edit propagates everywhere. Originals from living-room/dining/eli.
+const SHARED_HAZARDS = {
+  windows: {
+    title: 'Windows — breakable glass',
+    desc: 'Standard windows are breakable and a confirmed safety hazard.',
+    solution: 'Replace with polycarbonate or laminated safety glass panels. As an interim, apply window security film which holds glass together on impact.',
+    price: 'Approximate cost: security film $10–30 per window DIY',
+    links: []
+  },
+  outlets: {
+    title: 'Outlets as improvised weapons',
+    desc: 'Standard outlet covers can be popped off and shattered into sharp pieces.',
+    solution: 'Replace all outlets with Leviton Tamper-Resistant TR outlets — flush-mounted and screw-secured.',
+    price: 'Approximate cost: $10–20 per outlet, requires licensed electrician',
+    links: []
+  },
+  blinds: {
+    title: 'Pulling blinds off the wall',
+    desc: 'Blinds and curtain rails are regularly pulled down and become projectiles. Rated as a regular problem by caregiver Jeff Pinsker.',
+    solution: 'Remove all blinds and curtain rods entirely. Replace with frosted window film applied directly to the glass with no hardware to pull down and no rails to rip off. Film also adds a layer of shatter resistance to the window.',
+    price: 'Approx. $15 to $30 per window.',
+    links: [{ text: 'View Rabbitgoo frosted window film on Amazon', url: 'https://www.amazon.com/rabbitgoo-Protection-Adhesive-Reducing-Removable/dp/B00RDVE2L2' }]
+  },
+  commPanel: {
+    title: 'Communication panel for emergencies',
+    desc: 'Eli needs a simple always-on way to reach family from the living room.',
+    solution: 'Wall-mounted tablet with charging dock running Home Assistant companion app. Large buttons for calling family or alerting caregiver, always on and charged.',
+    price: 'Approximate cost: tablet $100–230, mount and dock $30',
+    links: []
+  },
+  taskCompletion: {
+    title: 'Task completion and routine issues',
+    desc: 'Eli may forget to eat, start eating and not finish, or not follow structured meal routines.',
+    solution: 'Voice-activated reminders from Home Assistant to an Alexa device prompt Eli through meal routines.',
+    links: []
+  },
+  anxiety: {
+    title: 'Unpredictable anxiety and dysregulation days',
+    desc: 'Some mornings Eli cannot function — he stims, paces, and is unreachable.',
+    solution: 'Physiological monitors such as the Empatica Embrace Plus or Garmin HRV sensor can detect elevated heart rate and skin conductance. Paired with Home Assistant these trigger automatic caregiver alerts when readings exceed a threshold. A camera-based motion pattern sensor detecting repetitive pacing is a secondary option.',
+    price: 'Approximate cost: approximately $400',
+    links: []
+  },
+  pantryRaidingCanned: {
+    title: 'Pantry raiding and throwing canned goods',
+    desc: 'Eli is a short sleeper and could access the pantry late at night. Canned goods double as projectiles.',
+    solution: 'Yale Smart Cabinet Lock with Bluetooth mounts inside the pantry door, time-scheduled to lock during overnight hours with caregiver remote override via app.',
+    price: 'Approximate cost: $80–130',
+    links: [{ text: 'View Yale Smart Cabinet Lock on Amazon', url: 'https://www.amazon.com/Yale-Security-YRCB-490-BLE-WSP-Cabinet-Bluetooth/dp/B0861ZQZ3N' }]
+  },
+  heatTracking: {
+    title: 'Heat-related dysregulation tracking',
+    desc: "Heat sensitivity is a whole-body issue for Eli that affects mood, focus, and likelihood of behavioral escalation. It is not isolated to outdoor or workout spaces. Tracking ambient temperature alongside behavioral signals helps caregivers anticipate dysregulation before it escalates.",
+    solution: 'Install Govee H5101 or Aqara temperature and humidity sensors in every major room, all reporting to Home Assistant. Create a unified dashboard view showing room-by-room temperature trends. HA automation: "If any room exceeds 75°F for more than 15 minutes during occupied hours, lower whole-home AC and notify caregiver. If multiple rooms exceed threshold simultaneously and Eli\'s heart rate or motion patterns show elevated activity, flag as potential pre-escalation state."',
+    price: 'Approximate cost: $20 per sensor, roughly $120 to $140 for full coverage of 6 rooms',
+    links: [{ text: 'View Govee H5101 temperature sensor on Amazon', url: 'https://www.amazon.com/Govee-Temperature-Humidity-Notification-Greenhouse/dp/B07Y36FWTT' }]
+  }
+};
+
+// HA automation content per hazard, keyed by exact hazard title.
+// When the user toggles the right panel to "HA Automations", each card's body
+// shows these fields instead of description / solution / cost / links.
+// Cross-room shared hazards reuse a single entry (titles match across rooms).
+const HAZARD_AUTOMATIONS = {
+  // Living Room
+  'Option A: Wall-mounted TV with physical protection': {
+    trigger: 'Camera detects person reaching toward TV area',
+    detection: 'Frigate object detection on TV zone',
+    alert: 'Notify caregiver with snapshot',
+    action: 'Log event in HA history for pattern review',
+    devices: ['Aqara Camera Hub G3', 'Frigate']
+  },
+  'Option B: Short-throw projector mounted out of reach': {
+    trigger: 'Smart plug power draw on projector outlet',
+    detection: 'Unusual power patterns or off-schedule activation',
+    alert: 'Notify caregiver if projector turns on outside scheduled hours',
+    action: 'Auto-shutoff projector via smart plug if active during sleep hours',
+    devices: ['Kasa Smart Plug', 'HA scheduler']
+  },
+  'Windows — breakable glass': {
+    trigger: 'Aqara vibration sensor on window detects impact',
+    detection: 'Vibration above threshold or glass-break sound via Frigate audio',
+    alert: 'Immediate caregiver notification with room name and live camera',
+    action: 'Trigger emergency lighting and unlock entry doors for caregiver fast access',
+    devices: ['Aqara Vibration Sensor', 'Frigate audio detection']
+  },
+  'Outlets as improvised weapons': {
+    trigger: 'Manual replacement only (no automation, this is a hardware hazard)',
+    detection: 'N/A',
+    alert: 'N/A',
+    action: 'Tamper-Resistant outlets are the physical solution; HA monitors for power anomalies',
+    devices: ['Leviton TR outlets', 'optional smart plug for power monitoring']
+  },
+  'Pulling blinds off the wall': {
+    trigger: 'Aqara motion sensor on blinds detects sudden movement',
+    detection: 'Vibration or position sensor change',
+    alert: 'Notify caregiver',
+    action: 'Switch to recessed or motorized blinds with HA control',
+    devices: ['Aqara Vibration Sensor', 'motorized blind controller']
+  },
+  'Heavy or throwable furniture': {
+    trigger: 'Sudden loud impact detected in the room',
+    detection: 'Aqara FP2 sensor + Frigate audio events',
+    alert: 'Alert to caregiver phone with live camera feed',
+    action: 'Log incident; recommend bolted-down furniture replacement',
+    devices: ['Aqara FP2', 'Frigate audio detection']
+  },
+  'TV and entertainment access control': {
+    trigger: 'Schedule or caregiver presence',
+    detection: 'TV power state via smart plug',
+    alert: 'N/A',
+    action: 'TV only powers on during approved hours or when caregiver present',
+    devices: ['Kasa Smart Plug', 'HA presence detection']
+  },
+  'No effective behavioral cue system': {
+    trigger: 'Time of day or routine state',
+    detection: 'Calendar and HA scheduler',
+    alert: 'Visual or audio cue on iPad or smart display',
+    action: 'Smart bulb dims or color shifts to signal transition (bedtime, mealtime, activity start)',
+    devices: ['Philips Hue bulbs', 'HA dashboard on iPad']
+  },
+  'Difficulty using TV and devices independently': {
+    trigger: 'Manual user request via simplified iPad interface',
+    detection: 'HA dashboard button press',
+    alert: 'N/A',
+    action: 'One-button TV power, channel set, volume preset',
+    devices: ['HA dashboard', 'Broadlink RM4 Pro IR blaster']
+  },
+  'Communication panel for emergencies': {
+    trigger: 'Button press on wall-mounted panel',
+    detection: 'HA event',
+    alert: 'Direct call or message to caregiver, family member, or 911 based on which button pressed',
+    action: 'Open camera feed for caregiver to verify',
+    devices: ['HA dashboard panel', 'mounted iPad', 'Aqara wall switch']
+  },
+  'Heat-related dysregulation tracking': {
+    trigger: 'Room temperature exceeds 75°F for 15+ minutes',
+    detection: 'Govee or Aqara temp/humidity sensor',
+    alert: 'Notify caregiver',
+    action: 'Lower whole-home AC, log temperature with motion data for pre-escalation analysis',
+    devices: ['Govee H5101', 'Ecobee thermostat']
+  },
+  'Task completion and routine issues': {
+    trigger: 'Time-based or motion-based (e.g., entered bathroom but no water flow detected within 5 minutes during morning routine)',
+    detection: 'Motion sensors, water flow sensors, smart plug power draw',
+    alert: 'Gentle reminder via smart speaker or iPad if task incomplete',
+    action: 'Log routine completion patterns for caregiver review',
+    devices: ['Aqara motion sensors', 'water flow sensor', 'HA scheduler']
+  },
+  'Unpredictable anxiety and dysregulation days': {
+    trigger: 'Multiple early indicators (elevated movement frequency, temperature complaints, audio cues like pacing or humming)',
+    detection: 'Aqara FP2 presence sensor (movement frequency), Frigate audio events',
+    alert: 'Notify caregiver of likely pre-escalation state',
+    action: 'Suggest medication timing review, log for doctor visit',
+    devices: ['Aqara FP2', 'Frigate']
+  },
+  // Kitchen
+  'Electric stove — unsupervised access': {
+    trigger: 'Stove power draw without caregiver presence',
+    detection: 'Smart plug or smart breaker on stove circuit',
+    alert: 'Immediate caregiver notification',
+    action: 'Cut power to stove via HA-controlled relay until caregiver present',
+    devices: ['Aqara/Shelly Pro smart breaker', 'caregiver presence']
+  },
+  'Cooking appliance access and hazards': {
+    trigger: 'Appliance power state (oven, microwave, etc.)',
+    detection: 'Smart plug power monitoring',
+    alert: 'Notify if appliance runs longer than expected',
+    action: 'Auto-shutoff after timeout',
+    devices: ['Kasa Smart Plug']
+  },
+  'Flooding — kitchen sink': {
+    trigger: 'Water flow sensor detects continuous flow over threshold time',
+    detection: 'Aqara water leak sensor on counter and floor',
+    alert: 'Immediate caregiver notification',
+    action: 'Auto-shutoff water supply via smart valve',
+    devices: ['Aqara Water Leak Sensor', 'Moen Flo shutoff valve']
+  },
+  'Garbage disposal injury risk': {
+    trigger: 'Disposal power draw without caregiver presence',
+    detection: 'Smart plug on disposal circuit',
+    alert: 'Notify caregiver',
+    action: 'Disposal disabled unless caregiver present (HA presence-based enable)',
+    devices: ['Smart plug', 'caregiver presence detection']
+  },
+  'Fridge shelves pulled out and used as weapons': {
+    trigger: 'Fridge door open longer than threshold or vibration sensor detects shelf removal',
+    detection: 'Aqara door sensor and vibration sensor on fridge shelves',
+    alert: 'Notify caregiver with camera snapshot',
+    action: 'Log incident',
+    devices: ['Aqara Door Sensor', 'Aqara Vibration Sensor']
+  },
+  'Allowing microwave use safely when alone': {
+    trigger: 'Microwave power draw',
+    detection: 'Smart plug, optional metal detection model microwave',
+    alert: 'Notify if running with metal detected',
+    action: 'Auto-cut power if metal detection triggers',
+    devices: ['Panasonic Genius microwave with metal detection', 'Kasa Smart Plug']
+  },
+  'Food hygiene during cooking': {
+    trigger: 'Manual user prompt or scheduled reminder',
+    detection: 'HA scheduler',
+    alert: 'Visual reminder on iPad',
+    action: 'Display step-by-step hygiene checklist before cooking begins',
+    devices: ['HA dashboard', 'iPad']
+  },
+  'Pantry raiding and throwing canned goods': {
+    trigger: 'Pantry door opened outside scheduled hours',
+    detection: 'Aqara door sensor',
+    alert: 'Notify caregiver',
+    action: 'Log incident with camera snapshot',
+    devices: ['Aqara Door Sensor', 'Aqara Camera Hub G3']
+  },
+  'Knives and sharp objects access': {
+    trigger: 'NFC tag tap by caregiver',
+    detection: 'NFC reader near drawer',
+    alert: 'N/A (intentional unlock)',
+    action: 'Smart cabinet lock disengages for 5 minutes, then auto-locks',
+    devices: ['SwitchBot Lock Pro / Aqara Cabinet Lock', 'NFC tag']
+  },
+  'Dishwasher flooding risk': {
+    trigger: 'Aqara water leak sensor under dishwasher',
+    detection: 'Leak sensor or unusual cycle duration',
+    alert: 'Immediate caregiver notification',
+    action: 'Cut water supply via smart valve, disable dishwasher power',
+    devices: ['Aqara Water Leak Sensor', 'smart shutoff valve', 'Kasa Smart Plug']
+  },
+  'Metal detection in the microwave': {
+    trigger: 'Microwave start with metal detected',
+    detection: 'Built-in metal detection on Panasonic Genius unit',
+    alert: 'Microwave refuses to start',
+    action: 'Auto-disable cycle, notify caregiver if attempted multiple times',
+    devices: ['Panasonic Genius microwave', 'Kasa Smart Plug']
+  },
+  // Dining / Laundry / Pantry
+  'Food safety and cleanliness': {
+    trigger: 'Smart fridge or pantry sensor detects expired item',
+    detection: 'Manual entry or RFID-tagged food items in HA',
+    alert: 'Reminder on iPad',
+    action: 'Suggest discard via dashboard',
+    devices: ['HA dashboard', 'optional RFID reader']
+  },
+  'Lint trap fire hazard': {
+    trigger: 'Dryer cycle count since last lint trap clean',
+    detection: 'HA counter on dryer smart plug',
+    alert: 'Reminder to caregiver after every 5 cycles',
+    action: 'Display cleaning checklist',
+    devices: ['Kasa Smart Plug on dryer']
+  },
+  'Pantry raiding at night': {
+    trigger: 'Pantry door opened during sleep hours',
+    detection: 'Aqara door sensor',
+    alert: 'Immediate caregiver notification',
+    action: 'Log incident, optional automatic lock during set hours',
+    devices: ['Aqara Door Sensor', 'smart cabinet lock']
+  },
+  'Washing machine flooding': {
+    trigger: 'Aqara water leak sensor under washing machine',
+    detection: 'Leak sensor or unusual cycle duration',
+    alert: 'Immediate caregiver notification',
+    action: 'Cut water supply via smart valve, disable washer power',
+    devices: ['Aqara Water Leak Sensor', 'smart shutoff valve', 'Kasa Smart Plug']
+  },
+  // Patio
+  'Scalable fence — escape to public space': {
+    trigger: 'Person detected near fence boundary or property edge',
+    detection: 'Frigate person detection in restricted zone',
+    alert: 'Immediate caregiver notification with snapshot',
+    action: 'Log incident, sound chime via outdoor speaker as soft deterrent',
+    devices: ['Aqara Camera Hub G3 (outdoor placement)', 'Frigate']
+  },
+  'Designing a safe outdoor space he will actually use': {
+    trigger: 'Time of day or weather conditions',
+    detection: 'Weather integration in HA',
+    alert: 'Suggest outdoor time when conditions are favorable',
+    action: 'Notify caregiver of optimal windows for outdoor use',
+    devices: ['HA Weather integration', 'dashboard']
+  },
+  'Heat sensitivity and overheating outdoors': {
+    trigger: 'Outdoor temperature exceeds threshold during occupied period',
+    detection: 'Outdoor temp sensor, HA presence detection',
+    alert: 'Suggest indoor return',
+    action: "Send notification to caregiver and Eli's iPad",
+    devices: ['Govee or Aqara outdoor temp sensor']
+  },
+  // Entrance
+  'Unauthorized exit': {
+    trigger: 'Front door opened from inside without caregiver acknowledgment',
+    detection: 'Aqara door sensor, caregiver presence',
+    alert: 'Immediate caregiver notification',
+    action: 'Log exit, sound chime, optional auto-relock',
+    devices: ['Aqara Door Sensor', 'smart lock']
+  },
+  'Opening door to strangers': {
+    trigger: 'Doorbell press or motion at door',
+    detection: 'Camera person detection',
+    alert: 'Caregiver verification before unlock',
+    action: 'Door stays locked until caregiver approves via app',
+    devices: ['Smart doorbell with camera', 'smart lock']
+  },
+  'Emergency situations': {
+    trigger: 'Manual emergency button press or fire alarm',
+    detection: 'HA emergency event',
+    alert: 'Notify caregiver, optional 911 contact',
+    action: 'Unlock all doors, turn on all lights, open camera feeds',
+    devices: ['HA dashboard', 'smart lock', 'smart bulbs', 'cameras']
+  },
+  'Engagement when bored near the entrance': {
+    trigger: 'Loitering detection (person in entry zone for 5+ minutes without exiting)',
+    detection: 'Aqara FP2 presence sensor',
+    alert: 'Notify caregiver to redirect',
+    action: "Suggest activity on Eli's iPad",
+    devices: ['Aqara FP2', 'HA dashboard']
+  },
+  // Bathroom
+  'Mirror as a breakable weapon surface': {
+    trigger: 'Vibration sensor on mirror detects impact',
+    detection: 'Aqara Vibration Sensor',
+    alert: 'Immediate caregiver notification',
+    action: 'Log incident, snapshot from camera',
+    devices: ['Aqara Vibration Sensor', 'Aqara Camera']
+  },
+  'Intentional bathtub and toilet overflow': {
+    trigger: 'Water leak sensor on floor or extended water flow',
+    detection: 'Aqara Water Leak Sensor, water flow sensor',
+    alert: 'Immediate caregiver notification',
+    action: 'Auto-shutoff bathroom water supply',
+    devices: ['Aqara Water Leak Sensor', 'Moen Flo shutoff valve']
+  },
+  'Exposed light bulb fixtures': {
+    trigger: 'Bulb removed (circuit disconnect detected)',
+    detection: 'Smart bulb status in HA',
+    alert: 'Notify caregiver',
+    action: 'Log incident; consider recessed lighting upgrade',
+    devices: ['Smart bulbs (Philips Hue)', 'HA monitoring']
+  },
+  'Blocking the door from the inside': {
+    trigger: 'Door locked from inside for longer than expected',
+    detection: 'Smart lock state, motion sensor inside bathroom',
+    alert: 'Notify caregiver',
+    action: 'Caregiver can unlock remotely via HA app',
+    devices: ['Smart lock with remote unlock', 'motion sensor']
+  },
+  'Medication management without live supervision': {
+    trigger: 'Scheduled medication time',
+    detection: 'HA scheduler, optional pill dispenser sensor',
+    alert: 'Reminder to Eli, video confirmation requested from caregiver',
+    action: 'Log dispensed pills, alert if missed',
+    devices: ['Hero Pill Dispenser', 'Aqara camera']
+  },
+  'Washing without actually cleaning': {
+    trigger: 'Shower/bath water flow detected',
+    detection: 'Water flow sensor, optional camera (privacy considerations)',
+    alert: 'Reminder on iPad with checklist',
+    action: 'Display step-by-step washing routine',
+    devices: ['HA dashboard', 'iPad']
+  },
+  'Toilet flooding via clogging': {
+    trigger: 'Water leak sensor on floor or extended water flow',
+    detection: 'Aqara Water Leak Sensor, water flow sensor',
+    alert: 'Immediate caregiver notification',
+    action: 'Auto-shutoff bathroom water supply',
+    devices: ['Aqara Water Leak Sensor', 'Moen Flo shutoff valve']
+  },
+  // Bedroom 2
+  'Narrow activity range leading to boredom': {
+    trigger: 'Time of day, low motion detection in active hours',
+    detection: 'Aqara motion sensor',
+    alert: 'Suggest activity on iPad',
+    action: 'Display rotating activity prompts',
+    devices: ['HA dashboard', 'motion sensor']
+  },
+  'Gaming the reward system': {
+    trigger: 'Treadmill power draw without sustained motion',
+    detection: 'Smart plug on treadmill, motion sensor',
+    alert: 'Notify caregiver if activity does not match reward criteria',
+    action: 'Pause reward log',
+    devices: ['Kasa Smart Plug', 'motion sensor']
+  },
+  // Eli's Bedroom
+  'Ceiling fan blades': {
+    trigger: 'Fan power draw or speed change',
+    detection: 'Smart plug or smart switch on fan circuit',
+    alert: 'Notify if speed changed unexpectedly',
+    action: 'Log incident',
+    devices: ['Smart switch on fan circuit']
+  },
+  'Staying up all night': {
+    trigger: 'Bedtime schedule',
+    detection: 'Bed occupancy sensor, motion sensor',
+    alert: 'Notify caregiver if Eli not in bed at scheduled time',
+    action: 'Smart bulb shifts to warm dim red as wind-down cue, pantry/stair locks engage',
+    devices: ['Philips Hue bulbs', 'bed occupancy sensor', 'smart locks']
+  },
+  'Waking up without a caregiver present': {
+    trigger: 'Motion detected after sleep hours, before scheduled wake time',
+    detection: 'Motion sensor in bedroom or hallway',
+    alert: 'Notify caregiver',
+    action: 'Log overnight activity, optional warm light to indicate "still night"',
+    devices: ['Motion sensor', 'Philips Hue']
+  },
+  'End of day routine and wind-down gate': {
+    trigger: 'Scheduled wind-down time',
+    detection: 'HA scheduler',
+    alert: 'Visual cue on iPad and smart bulbs',
+    action: 'Lights dim, music shifts to calming, transition cue plays',
+    devices: ['Philips Hue', 'HA scheduler', 'smart speaker']
+  }
+};
+
 const ROOM_DATA = {
   'kitchen': {
     name: 'Kitchen', floor: 1,
-    riskLevel: 'High risk', hazardCount: 9,
+    riskLevel: 'High risk', hazardCount: 15,
     categories: [
       {
         name: 'Danger', cls: 'cat-danger',
@@ -2632,6 +3170,28 @@ const ROOM_DATA = {
             solution: 'Remove all non-essential fridge shelves entirely to reduce the number of removable parts. Replace any remaining shelves with solid polycarbonate inserts which are virtually unbreakable and produce no fragments. Long term, include the fridge in the scheduled lock system so access is limited to meal times only, the same approach used for the pantry.',
             price: 'Approx. $40 to $80 for polycarbonate sheet cut to size. Measure existing shelf dimensions before ordering.',
             links: [{ text: 'View polycarbonate sheets on Amazon', url: 'https://www.amazon.com/s?k=clear+polycarbonate+sheet+cut+to+size' }]
+          },
+          {
+            title: 'Metal detection in the microwave',
+            desc: 'Eli understands how to use the microwave but does not reliably recognize that metal objects (foil, utensils, takeout containers with metal trim) cannot go inside. Without intervention, he could start a fire or damage the appliance.',
+            solution: 'Install a microwave with built-in metal detection that will not start a cycle if metal is detected inside, paired with a smart plug that disables power to the unit unless a caregiver is on the property. Consider models like the Panasonic Genius series with sensor cooking, or pair any microwave with a Kasa Smart Plug for caregiver-controlled access.',
+            price: 'Approximate cost: $150 to $400 for the microwave, $15 for the smart plug',
+            links: [{ text: 'View Kasa Smart Plug on Amazon', url: 'https://www.amazon.com/Kasa-Energy-Monitoring-Smart-Plug/dp/B08LN3C7WK' }]
+          },
+          {
+            title: 'Dishwasher flooding risk',
+            desc: 'The dishwasher is another water source Eli could intentionally overflow or misuse, creating flooding similar to the sink and bathtub risks elsewhere in the home.',
+            solution: 'Install a smart leak sensor (Aqara Water Leak Sensor) under the dishwasher and connect it to an automatic water shutoff valve. The system cuts water supply to the dishwasher if a leak is detected or if usage exceeds a set duration. Pair with caregiver notification through Home Assistant.',
+            price: 'Approximate cost: $20 for the leak sensor, $80 to $150 for an automatic shutoff valve',
+            links: [{ text: 'View Aqara Water Leak Sensor on Amazon', url: 'https://www.amazon.com/Aqara-Detector-Sensitive-Notifications-Required/dp/B07D384YRN' }]
+          },
+          SHARED_HAZARDS.outlets,
+          {
+            title: 'Knives and sharp objects access',
+            desc: 'Knives, scissors, and other sharp objects pose a serious risk if Eli accesses them unsupervised. Brandi confirmed these items need to be locked up and only available when a caregiver is in the room.',
+            solution: 'Install a smart lock on a dedicated knife drawer or utensil cabinet (Aqara U200 smart lock or a SwitchBot Lock Pro). The lock connects to Home Assistant and only unlocks when a caregiver\'s presence is detected on the property through their phone GPS or a wearable Bluetooth tag. HA automation: "If caregiver home, allow knife drawer unlock via NFC tag. If caregiver leaves, auto-lock after 5 minutes."',
+            price: 'Approximate cost: $80 to $150 for the smart lock, plus $10 for an NFC tag the caregiver can tap to unlock',
+            links: [{ text: 'View SwitchBot Lock Pro on Amazon', url: 'https://www.amazon.com/SwitchBot-Bluetooth-Auto-Lock-Compatible-SwitchBot/dp/B0CRFG4S58' }]
           }
         ]
       },
@@ -2651,33 +3211,23 @@ const ROOM_DATA = {
             solution: 'Hand-washing prompt built into the cooking routine screen sequence. Before any recipe step begins the tablet displays a mandatory hand-washing step with a 20 second countdown timer that must complete before the recipe advances. Motion sensor detects when Eli enters the kitchen and triggers the hygiene prompt automatically.',
             price: 'No additional cost, built into existing Home Assistant routine.',
             links: []
-          }
+          },
+          SHARED_HAZARDS.taskCompletion,
+          SHARED_HAZARDS.anxiety,
+          SHARED_HAZARDS.heatTracking
         ]
       },
       {
         name: 'Frustration', cls: 'cat-frustration',
         hazards: [
-          {
-            title: 'Pantry raiding and throwing canned goods',
-            desc: 'Eli is a short sleeper and could access the pantry late at night. Canned goods double as projectiles.',
-            solution: 'Yale Smart Cabinet Lock with Bluetooth mounts inside the pantry door, time-scheduled to lock during overnight hours with caregiver remote override via app.',
-            price: 'Approximate cost: $80–130',
-            links: [{ text: 'View Yale Smart Cabinet Lock on Amazon', url: 'https://www.amazon.com/Yale-Security-YRCB-490-BLE-WSP-Cabinet-Bluetooth/dp/B0861ZQZ3N' }]
-          },
-          {
-            title: 'Task sequencing while cooking',
-            desc: 'He forgets mid-task why he started. Multi-step cooking fails without prompts.',
-            solution: 'Wall-mounted tablet with Home Assistant displays step-by-step recipe prompts and pushes timed reminders to the screen.',
-            price: 'Approximate cost: tablet $100–230, mount and dock $30',
-            links: []
-          }
+          SHARED_HAZARDS.commPanel
         ]
       }
     ]
   },
   'living-room': {
     name: 'Living Room', floor: 1,
-    riskLevel: 'Moderate risk', hazardCount: 9,
+    riskLevel: 'High risk', hazardCount: 13,
     categories: [
       {
         name: 'Danger', cls: 'cat-danger',
@@ -2716,6 +3266,13 @@ const ROOM_DATA = {
             solution: 'Remove all blinds and curtain rods entirely. Replace with frosted window film applied directly to the glass with no hardware to pull down and no rails to rip off. Film also adds a layer of shatter resistance to the window.',
             price: 'Approx. $15 to $30 per window.',
             links: [{ text: 'View Rabbitgoo frosted window film on Amazon', url: 'https://www.amazon.com/rabbitgoo-Protection-Adhesive-Reducing-Removable/dp/B00RDVE2L2' }]
+          },
+          {
+            title: 'Heavy or throwable furniture',
+            desc: 'Chairs, side tables, lamps, decorative objects, and other furniture pieces have been used as projectiles to break TVs, windows, and mirrors. Brandi confirmed three TVs have been broken in three years using thrown objects.',
+            solution: 'Replace standard furniture with bolted-down or rail-mounted alternatives. Use heavy-duty plastic furniture similar to what is used in children\'s institutional settings, or built-in bench seating along walls. Pair with a Home Assistant motion and sound detection automation that alerts the caregiver if loud impact sounds are detected (using an Aqara FP2 sensor or a sound detection integration in HA via Frigate audio events). HA automation: "If sudden loud impact detected in Living Room, send alert to caregiver phone with live camera feed."',
+            price: 'Furniture replacement varies widely ($500 to $3000+); Aqara FP2 sensor $80',
+            links: [{ text: 'View Aqara Presence Sensor FP2 on Amazon', url: 'https://www.amazon.com/Aqara-Presence-Detection-Multi-Person-Compatible/dp/B0C1JZQ5DF' }]
           }
         ]
       },
@@ -2742,26 +3299,23 @@ const ROOM_DATA = {
             solution: 'Replace the standard remote with a simplified large button remote with only on/off, volume, and channel controls. Home Assistant also automates turning on preferred content at scheduled times so Eli does not need to navigate at all.',
             price: 'Approx. $40.',
             links: [{ text: 'View Flipper Big Button Remote on Amazon', url: 'https://www.amazon.com/Flipper-Button-Universal-Seniors-Dementia/dp/B0CR5S1BCN' }]
-          }
+          },
+          SHARED_HAZARDS.taskCompletion,
+          SHARED_HAZARDS.anxiety,
+          SHARED_HAZARDS.heatTracking
         ]
       },
       {
         name: 'Frustration', cls: 'cat-frustration',
         hazards: [
-          {
-            title: 'Communication panel for emergencies',
-            desc: 'Eli needs a simple always-on way to reach family from the living room.',
-            solution: 'Wall-mounted tablet with charging dock running Home Assistant companion app. Large buttons for calling family or alerting caregiver, always on and charged.',
-            price: 'Approximate cost: tablet $100–230, mount and dock $30',
-            links: []
-          }
+          SHARED_HAZARDS.commPanel
         ]
       }
     ]
   },
   'entrance': {
     name: 'Entrance', floor: 1,
-    riskLevel: 'Access / security', hazardCount: 4,
+    riskLevel: 'Lower risk', hazardCount: 4,
     categories: [
       {
         name: 'Danger', cls: 'cat-danger',
@@ -2805,7 +3359,7 @@ const ROOM_DATA = {
   },
   'patio': {
     name: 'Patio', floor: 1,
-    riskLevel: 'Moderate risk', hazardCount: 3,
+    riskLevel: 'Lower risk', hazardCount: 3,
     categories: [
       {
         name: 'Danger', cls: 'cat-danger',
@@ -2847,8 +3401,23 @@ const ROOM_DATA = {
   },
   'dining': {
     name: 'Dining / Laundry / Pantry', floor: 1,
-    riskLevel: 'Lower risk', hazardCount: 4,
+    riskLevel: 'High risk', hazardCount: 12,
     categories: [
+      {
+        name: 'Danger', cls: 'cat-danger',
+        hazards: [
+          SHARED_HAZARDS.windows,
+          SHARED_HAZARDS.outlets,
+          SHARED_HAZARDS.blinds,
+          {
+            title: 'Washing machine flooding',
+            desc: 'The washing machine is another water source that could be intentionally overflowed or misused, similar to the dishwasher, sink, and bathtub.',
+            solution: 'Install an Aqara Water Leak Sensor under the washing machine and connect it to an automatic water shutoff valve on the washer\'s supply line. HA automation: "If leak sensor triggered or washer runs longer than expected cycle time, cut water supply and notify caregiver. Disable washer power via smart plug if Eli is detected unsupervised in laundry area."',
+            price: 'Approximate cost: $20 for leak sensor, $80 to $150 for shutoff valve, $15 for smart plug',
+            links: [{ text: 'View Aqara Water Leak Sensor on Amazon', url: 'https://www.amazon.com/Aqara-Detector-Sensitive-Notifications-Required/dp/B07D384YRN' }]
+          }
+        ]
+      },
       {
         name: 'Challenge', cls: 'cat-challenge',
         hazards: [
@@ -2870,7 +3439,9 @@ const ROOM_DATA = {
             solution: 'Home Assistant sends a recurring reminder to Eli or the caregiver to clean the lint trap once or twice a week.',
             price: 'Approximate cost: $0',
             links: []
-          }
+          },
+          SHARED_HAZARDS.anxiety,
+          SHARED_HAZARDS.heatTracking
         ]
       },
       {
@@ -2882,14 +3453,16 @@ const ROOM_DATA = {
             solution: 'Bluetooth refrigerator and cabinet lock with timer and schedule mode.',
             price: 'Approximate cost: $86',
             links: [{ text: 'View Bluetooth cabinet lock with timer on Amazon', url: 'https://www.amazon.com/s?k=bluetooth+cabinet+lock+timer' }]
-          }
+          },
+          SHARED_HAZARDS.commPanel,
+          SHARED_HAZARDS.pantryRaidingCanned
         ]
       }
     ]
   },
   'bathroom': {
     name: 'Bathroom', floor: 2,
-    riskLevel: 'High risk', hazardCount: 5,
+    riskLevel: 'High risk', hazardCount: 12,
     categories: [
       {
         name: 'Danger', cls: 'cat-danger',
@@ -2921,6 +3494,14 @@ const ROOM_DATA = {
             solution: 'Convert the bathroom door to an outward-swinging configuration so it cannot be barricaded from inside using furniture. If a full door rehang is not feasible, remove the bathroom drawer and replace with a fixed shelf. Install an Aqara Door and Window Sensor so Home Assistant detects if the door has been closed for an extended period and alerts Brandi.',
             price: 'Approximate cost: door rehang $200–600, Aqara sensor $42',
             links: [{ text: 'View Aqara Door and Window Sensor on Amazon', url: 'https://www.amazon.com/Aqara-Automation-3rd-Party-Connection-Compatible/dp/B07D37VDM3' }]
+          },
+          SHARED_HAZARDS.outlets,
+          {
+            title: 'Toilet flooding via clogging',
+            desc: 'Eli intentionally floods bathrooms by clogging toilets with foreign objects. This is part of the same pleasure-driven destruction pattern as bathtub flooding.',
+            solution: 'Install a clog-resistant toilet insert (the spiral RV-style insert mentioned in earlier project discussions) that physically prevents large objects from being flushed. Pair with an Aqara Water Leak Sensor on the bathroom floor connected to Home Assistant. HA automation: "If water detected on bathroom floor, send immediate alert to caregiver, turn on bathroom camera notification, and trigger automatic water shutoff valve to the bathroom supply line."',
+            price: 'Approximate cost: $40 to $80 for the spiral insert, $20 for the leak sensor, $80 to $150 for the shutoff valve',
+            links: [{ text: 'View Aqara Water Leak Sensor on Amazon', url: 'https://www.amazon.com/Aqara-Detector-Sensitive-Notifications-Required/dp/B07D384YRN' }]
           }
         ]
       },
@@ -2940,14 +3521,23 @@ const ROOM_DATA = {
             solution: 'Step-by-step verbal and visual hygiene routine delivered via an Echo Show 8 mounted near the bathroom. Home Assistant triggers morning and evening sequences with timed audio cues for each step including wet hair, add shampoo, scrub for 30 seconds, and rinse. A laminated checklist mounted at eye level supplements the audio prompts.',
             price: 'Approx. $180 for Echo Show 8 with waterproof mount.',
             links: [{ text: 'View Echo Show 8 on Amazon', url: 'https://www.amazon.com/All-New-Echo-Show-8/dp/B0BLS3Y632' }]
-          }
+          },
+          SHARED_HAZARDS.taskCompletion,
+          SHARED_HAZARDS.anxiety,
+          SHARED_HAZARDS.heatTracking
+        ]
+      },
+      {
+        name: 'Frustration', cls: 'cat-frustration',
+        hazards: [
+          SHARED_HAZARDS.commPanel
         ]
       }
     ]
   },
   'elis-bedroom': {
     name: "Eli's Bedroom", floor: 2,
-    riskLevel: 'Moderate risk', hazardCount: 5,
+    riskLevel: 'High risk', hazardCount: 11,
     categories: [
       {
         name: 'Danger', cls: 'cat-danger',
@@ -2965,7 +3555,10 @@ const ROOM_DATA = {
             solution: 'Smart bulb shifts to warm dim red at scheduled sleep time as an environmental wind-down cue. Bed occupancy sensor monitors whether Eli is in bed after a set time and alerts Brandi if not. Pantry and stair locks activate automatically at sleep schedule time regardless of whether Eli sleeps.',
             price: 'Approx. $20 to $40 per bulb.',
             links: [{ text: 'View Philips Hue bulbs on Amazon', url: 'https://www.amazon.com/s?k=philips+hue+white+ambiance+bulb' }]
-          }
+          },
+          SHARED_HAZARDS.windows,
+          SHARED_HAZARDS.outlets,
+          SHARED_HAZARDS.blinds
         ]
       },
       {
@@ -2994,15 +3587,31 @@ const ROOM_DATA = {
             solution: 'End of day completion gate built into Home Assistant. At a set time each evening the tablet displays a wind-down checklist including clothes in hamper, lights off in bathroom, shoes put away, and iPad charging. Each item is a large tap to confirm button. Once all items are checked off Home Assistant triggers the wind-down scene, dims the lights, enables TV or preferred evening content, and logs completion for Brandi to review. Eli cannot access the wind-down state without completing the checklist.',
             price: 'No additional cost, built into existing Home Assistant routine.',
             links: []
-          }
+          },
+          SHARED_HAZARDS.taskCompletion,
+          SHARED_HAZARDS.heatTracking
+        ]
+      },
+      {
+        name: 'Frustration', cls: 'cat-frustration',
+        hazards: [
+          SHARED_HAZARDS.commPanel
         ]
       }
     ]
   },
   'bedroom2': {
     name: 'Bedroom 2', floor: 2,
-    riskLevel: 'Lower risk', hazardCount: 2,
+    riskLevel: 'High risk', hazardCount: 9,
     categories: [
+      {
+        name: 'Danger', cls: 'cat-danger',
+        hazards: [
+          SHARED_HAZARDS.windows,
+          SHARED_HAZARDS.outlets,
+          SHARED_HAZARDS.blinds
+        ]
+      },
       {
         name: 'Challenge', cls: 'cat-challenge',
         hazards: [
@@ -3011,7 +3620,10 @@ const ROOM_DATA = {
             desc: 'Long stretches alone with only an iPad can lead to restlessness and escalation.',
             solution: 'Scheduled activity prompts and a structured wind-down routine delivered via screen. Home Assistant pushes timed reminders to rotate between activities.',
             links: []
-          }
+          },
+          SHARED_HAZARDS.taskCompletion,
+          SHARED_HAZARDS.anxiety,
+          SHARED_HAZARDS.heatTracking
         ]
       },
       {
@@ -3022,7 +3634,8 @@ const ROOM_DATA = {
             desc: 'Eli understands behavioral incentives intellectually and turns them into a game to exploit.',
             solution: 'Incentive structure built into the daily screen routine with caregiver override capabilities so the system cannot be gamed without Brandi\'s awareness.',
             links: []
-          }
+          },
+          SHARED_HAZARDS.commPanel
         ]
       }
     ]
@@ -3067,67 +3680,287 @@ const CAT_COLORS = {
 
 // ─── ICON SVGS ───────────────────────────────────────────────────────────────
 
+// Inline Lucide-style SVGs (no external dependency). Sized 16×16 for pins;
+// CSS rescales to 11×11 inside the sidebar accordion dot.
+// Icon-choice rule: prefer literal object icons (stove, microwave, bed) over
+// conceptual ones (chef, sparkles, shield). Pins must read in <1s without context.
+const SVG_OPEN = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">`;
 const ICON_SVGS = {
-  flame:    `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2s-4 5.5-4 9.5a4 4 0 008 0C16 7.5 12 2 12 2z"/><path d="M10 14.5c.5-1.5 2-2 2-2s1.5.5 2 2"/></svg>`,
-  water:    `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C12 2 5 11 5 15a7 7 0 0014 0C19 11 12 2 12 2z"/></svg>`,
-  lock:     `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>`,
-  lines:    `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="15" y2="17"/></svg>`,
-  pill:     `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3L3 9a5 5 0 007.1 7.1L16 10A5 5 0 009 3z"/><line x1="7.5" y1="10.5" x2="13" y2="5.5"/></svg>`,
-  lightbulb:`<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 2a7 7 0 017 7 7 7 0 01-4 6.3V17H9v-1.7A7 7 0 015 9a7 7 0 017-7z"/></svg>`,
-  person:   `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="4"/><path d="M4 21v-1a8 8 0 0116 0v1"/></svg>`,
-  warning:  `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.6L2.5 18a1.5 1.5 0 001.3 2.2h16.4a1.5 1.5 0 001.3-2.2L13.7 3.6a1.6 1.6 0 00-3.4 0z"/><line x1="12" y1="9" x2="12" y2="13"/><circle cx="12" cy="17" r="1" fill="#fff" stroke="none"/></svg>`
+  // Legacy keys (kept so any unmapped hazard still falls back gracefully)
+  flame:        `${SVG_OPEN}<path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 002.5 2.5z"/></svg>`,
+  water:        `${SVG_OPEN}<path d="M12 2C12 2 5 11 5 15a7 7 0 0014 0C19 11 12 2 12 2z"/></svg>`,
+  lock:         `${SVG_OPEN}<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>`,
+  lines:        `${SVG_OPEN.replace('stroke-linejoin="round"', '')}<line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="15" y2="17"/></svg>`,
+  pill:         `${SVG_OPEN}<path d="M9 3L3 9a5 5 0 007.1 7.1L16 10A5 5 0 009 3z"/><line x1="7.5" y1="10.5" x2="13" y2="5.5"/></svg>`,
+  lightbulb:    `${SVG_OPEN}<path d="M9 18h6M10 21h4M12 2a7 7 0 017 7 7 7 0 01-4 6.3V17H9v-1.7A7 7 0 015 9a7 7 0 017-7z"/></svg>`,
+  person:       `${SVG_OPEN}<circle cx="12" cy="7" r="4"/><path d="M4 21v-1a8 8 0 0116 0v1"/></svg>`,
+  warning:      `${SVG_OPEN}<path d="M10.3 3.6L2.5 18a1.5 1.5 0 001.3 2.2h16.4a1.5 1.5 0 001.3-2.2L13.7 3.6a1.6 1.6 0 00-3.4 0z"/><line x1="12" y1="9" x2="12" y2="13"/><circle cx="12" cy="17" r="1" fill="#fff" stroke="none"/></svg>`,
+
+  // Entrance
+  'door-open':  `${SVG_OPEN}<path d="M13 4h3a2 2 0 012 2v14"/><path d="M2 20h3"/><path d="M13 20h9"/><path d="M11 12v.01"/><path d="M13 4.6v16.2a1 1 0 01-1.2 1L5 20V5.6a2 2 0 011.5-2l4-1a2 2 0 012.5 2z"/></svg>`,
+  'user-at-door': `${SVG_OPEN}<circle cx="9" cy="8" r="3"/><path d="M3 21v-1a6 6 0 016-6"/><rect x="14" y="3" width="7" height="18" rx="1"/><circle cx="18" cy="12" r="0.6" fill="#fff" stroke="none"/></svg>`,
+  'alert-circle': `${SVG_OPEN}<circle cx="12" cy="12" r="10"/><line x1="12" y1="7.5" x2="12" y2="13"/><circle cx="12" cy="16.5" r="0.8" fill="#fff" stroke="none"/></svg>`,
+  clock:        `${SVG_OPEN}<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
+
+  // Living room
+  tv:           `${SVG_OPEN}<rect x="2" y="6" width="20" height="13" rx="2"/><polyline points="8 22 12 19 16 22"/></svg>`,
+  projector:    `${SVG_OPEN}<rect x="2" y="9" width="20" height="9" rx="2"/><circle cx="8" cy="13.5" r="2"/><line x1="14" y1="13" x2="18" y2="13"/><line x1="6" y1="22" x2="6" y2="18"/><line x1="18" y1="22" x2="18" y2="18"/></svg>`,
+  window:       `${SVG_OPEN}<rect x="4" y="3" width="16" height="18" rx="1"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="12" y1="3" x2="12" y2="21"/></svg>`,
+  plug:         `${SVG_OPEN}<path d="M9 2v6"/><path d="M15 2v6"/><path d="M6 8h12v4a6 6 0 11-12 0z"/><path d="M12 18v4"/></svg>`,
+  blinds:       `${SVG_OPEN}<rect x="4" y="3" width="16" height="2"/><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="13" x2="20" y2="13"/><line x1="4" y1="17" x2="20" y2="17"/><line x1="12" y1="17" x2="12" y2="21"/></svg>`,
+  'tv-lock':    `${SVG_OPEN}<rect x="2" y="4" width="20" height="13" rx="2"/><rect x="9" y="9.5" width="6" height="5" rx="0.8"/><path d="M10 9.5V8a2 2 0 014 0v1.5"/></svg>`,
+  bell:         `${SVG_OPEN}<path d="M6 16V11a6 6 0 1112 0v5"/><path d="M3 16h18l-2 2H5z"/><path d="M10 20a2 2 0 004 0"/></svg>`,
+  remote:       `${SVG_OPEN}<rect x="7" y="2" width="10" height="20" rx="3"/><circle cx="12" cy="6.5" r="0.8" fill="#fff" stroke="none"/><line x1="9.5" y1="11" x2="14.5" y2="11"/><line x1="9.5" y1="14" x2="14.5" y2="14"/><line x1="9.5" y1="17" x2="14.5" y2="17"/></svg>`,
+  megaphone:    `${SVG_OPEN}<path d="M3 11v3a1 1 0 001 1h2v-5H4a1 1 0 00-1 1z"/><path d="M21 5L6 10v5l15 4z"/><path d="M6 15v3a2 2 0 002 2h2v-5"/></svg>`,
+
+  // Kitchen
+  stove:        `${SVG_OPEN}<rect x="3" y="6" width="18" height="14" rx="1.5"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="8" cy="14.5" r="1.6"/><circle cx="16" cy="14.5" r="1.6"/><circle cx="8" cy="18" r="1.2"/><circle cx="16" cy="18" r="1.2"/></svg>`,
+  droplet:      `${SVG_OPEN}<path d="M12 2C12 2 5 11 5 15a7 7 0 0014 0C19 11 12 2 12 2z"/></svg>`,
+  trash:        `${SVG_OPEN}<polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>`,
+  fridge:       `${SVG_OPEN}<rect x="5" y="2" width="14" height="20" rx="2"/><line x1="5" y1="10" x2="19" y2="10"/><line x1="9" y1="6" x2="9" y2="7.5"/><line x1="9" y1="13.5" x2="9" y2="16"/></svg>`,
+  microwave:    `${SVG_OPEN}<rect x="2" y="5" width="20" height="14" rx="2"/><rect x="5" y="8" width="9" height="8" rx="0.5"/><circle cx="18.5" cy="10" r="0.8" fill="#fff" stroke="none"/><circle cx="18.5" cy="13" r="0.8" fill="#fff" stroke="none"/></svg>`,
+  dishwasher:   `${SVG_OPEN}<rect x="3" y="3" width="18" height="18" rx="1.5"/><line x1="3" y1="8" x2="21" y2="8"/><line x1="6" y1="5.5" x2="9" y2="5.5"/><line x1="14" y1="5.5" x2="18" y2="5.5"/><circle cx="12" cy="14.5" r="3.5"/><circle cx="12" cy="14.5" r="1.2"/></svg>`,
+  knife:        `${SVG_OPEN}<path d="M2 22l4-4"/><path d="M6 18l11-11a3 3 0 014 4L10 22"/></svg>`,
+  washer:       `${SVG_OPEN}<rect x="4" y="2" width="16" height="20" rx="1.5"/><line x1="4" y1="7" x2="20" y2="7"/><circle cx="9" cy="5" r="0.6" fill="#fff" stroke="none"/><circle cx="12" cy="5" r="0.6" fill="#fff" stroke="none"/><circle cx="15" cy="5" r="0.6" fill="#fff" stroke="none"/><circle cx="12" cy="14.5" r="5"/><circle cx="12" cy="14.5" r="2.2"/></svg>`,
+  toilet:       `${SVG_OPEN}<rect x="6" y="3" width="12" height="6" rx="1"/><path d="M5 9h14l-1.2 8a3 3 0 01-3 2.5H9.2a3 3 0 01-3-2.5z"/><line x1="9" y1="19.5" x2="9" y2="22"/><line x1="15" y1="19.5" x2="15" y2="22"/></svg>`,
+  sofa:         `${SVG_OPEN}<path d="M2 12V8a2 2 0 012-2h16a2 2 0 012 2v4"/><path d="M2 12h20v5a2 2 0 01-2 2H4a2 2 0 01-2-2z"/><line x1="6" y1="19" x2="6" y2="22"/><line x1="18" y1="19" x2="18" y2="22"/><line x1="6" y1="12" x2="6" y2="15"/><line x1="18" y1="12" x2="18" y2="15"/></svg>`,
+  thermometer:  `${SVG_OPEN}<path d="M14 14V4a2 2 0 10-4 0v10a4 4 0 104 0z"/><circle cx="12" cy="18" r="1.4" fill="#fff" stroke="none"/></svg>`,
+  sparkles:     `${SVG_OPEN}<path d="M5 2v8a2 2 0 002 2h0a2 2 0 002-2V2"/><line x1="7" y1="12" x2="7" y2="22"/><path d="M17 22V2"/><ellipse cx="17" cy="6" rx="2.5" ry="3.5"/></svg>`,
+  package:      `${SVG_OPEN}<path d="M12 2L3 7v10l9 5 9-5V7z"/><polyline points="3 7 12 12 21 7"/><line x1="12" y1="22" x2="12" y2="12"/></svg>`,
+  'list-ordered': `${SVG_OPEN}<line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><circle cx="3.5" cy="6" r="1" fill="#fff" stroke="none"/><circle cx="3.5" cy="12" r="1" fill="#fff" stroke="none"/><circle cx="3.5" cy="18" r="1" fill="#fff" stroke="none"/></svg>`,
+
+  // Dining / pantry — list-checks/shield-check intentionally mirror list-ordered/sparkles
+  // (same visual, distinct keys preserved per user spec)
+  'list-checks': `${SVG_OPEN}<line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><circle cx="3.5" cy="6" r="1" fill="#fff" stroke="none"/><circle cx="3.5" cy="12" r="1" fill="#fff" stroke="none"/><circle cx="3.5" cy="18" r="1" fill="#fff" stroke="none"/></svg>`,
+  'shield-check': `${SVG_OPEN}<path d="M5 2v8a2 2 0 002 2h0a2 2 0 002-2V2"/><line x1="7" y1="12" x2="7" y2="22"/><path d="M17 22V2"/><ellipse cx="17" cy="6" rx="2.5" ry="3.5"/></svg>`,
+  moon:         `${SVG_OPEN}<path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg>`,
+
+  // Patio
+  fence:        `${SVG_OPEN}<path d="M5 5l2-2 2 2v17H5z"/><path d="M11 5l2-2 2 2v17h-4z"/><path d="M17 5l2-2 2 2v17h-4z"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="14" x2="21" y2="14"/></svg>`,
+  trees:        `${SVG_OPEN}<path d="M9 22V17"/><path d="M9 17l-4-1 3-4-3 1 4-6 4 6-3-1 3 4z"/><path d="M17 22v-3"/><path d="M17 19l-3-1 2-3-2 1 3-5 3 5-2-1 2 3z"/></svg>`,
+  'thermometer-sun': `${SVG_OPEN}<path d="M14 14a4 4 0 11-4 0V4a2 2 0 014 0z"/><circle cx="12" cy="18" r="1.4" fill="#fff" stroke="none"/><line x1="3" y1="6" x2="5" y2="8"/><line x1="2.5" y1="12" x2="5" y2="12"/></svg>`,
+
+  // Bathroom
+  mirror:       `${SVG_OPEN}<rect x="6" y="2" width="12" height="18" rx="6"/><line x1="9" y1="22" x2="15" y2="22"/><line x1="9" y1="6" x2="11" y2="8"/></svg>`,
+  droplets:     `${SVG_OPEN}<path d="M7 2c0 0-4 5-4 8a4 4 0 008 0C11 7 7 2 7 2z"/><path d="M16 11c0 0-4 5-4 8a4 4 0 008 0C20 16 16 11 16 11z"/></svg>`,
+  'door-locked': `${SVG_OPEN}<rect x="5" y="3" width="14" height="18" rx="1"/><circle cx="15" cy="12" r="0.7" fill="#fff" stroke="none"/><rect x="9" y="13" width="5" height="4" rx="0.5"/><path d="M10 13v-1a1.5 1.5 0 013 0v1"/></svg>`,
+  shower:       `${SVG_OPEN}<path d="M5 11h14a2 2 0 01-2 2H7a2 2 0 01-2-2z"/><line x1="12" y1="2" x2="12" y2="11"/><line x1="8" y1="16" x2="8" y2="18"/><line x1="12" y1="16" x2="12" y2="20"/><line x1="16" y1="16" x2="16" y2="18"/></svg>`,
+
+  // Bedroom 2
+  activity:     `${SVG_OPEN}<polyline points="3 12 7 12 9 6 12 18 14 10 17 12 21 12"/></svg>`,
+  gamepad:      `${SVG_OPEN}<rect x="2" y="6" width="20" height="11" rx="3"/><line x1="6" y1="11" x2="10" y2="11"/><line x1="8" y1="9" x2="8" y2="13"/><circle cx="15.5" cy="10.5" r="0.9" fill="#fff" stroke="none"/><circle cx="17.5" cy="13" r="0.9" fill="#fff" stroke="none"/></svg>`,
+
+  // Eli's bedroom
+  fan:          `${SVG_OPEN}<circle cx="12" cy="12" r="2"/><path d="M12 10c-3 0-5-2-5-5 0-1 1-2 2-2 2 0 4 3 3 7"/><path d="M14 12c0 3 2 5 5 5 1 0 2-1 2-2 0-2-3-4-7-3"/><path d="M12 14c3 0 5 2 5 5 0 1-1 2-2 2-2 0-4-3-3-7"/><path d="M10 12c0-3-2-5-5-5-1 0-2 1-2 2 0 2 3 4 7 3"/></svg>`,
+  bed:          `${SVG_OPEN}<path d="M2 17v-4a3 3 0 013-3h14a3 3 0 013 3v4"/><line x1="2" y1="20" x2="22" y2="20"/><circle cx="7" cy="9" r="2"/><line x1="11" y1="11" x2="20" y2="11"/></svg>`,
+  sunset:       `${SVG_OPEN}<path d="M6 16a6 6 0 0112 0"/><line x1="2" y1="20" x2="22" y2="20"/><line x1="12" y1="3" x2="12" y2="6"/><line x1="4.2" y1="9.2" x2="6.3" y2="11.3"/><line x1="19.8" y1="9.2" x2="17.7" y2="11.3"/><polyline points="9 14 12 17 15 14"/></svg>`,
+
+  // Stairs
+  'arrow-down': `${SVG_OPEN}<line x1="12" y1="4" x2="12" y2="20"/><polyline points="6 14 12 20 18 14"/></svg>`
 };
 
 // ─── HAZARD ICON POSITIONS ───────────────────────────────────────────────────
 
 const HAZARD_META = {
-  // Kitchen
-  'kitchen_0_0': { icon: 'flame',    top: '45%', left: '35%' },
-  'kitchen_0_1': { icon: 'warning',  top: '30%', left: '62%' },
-  'kitchen_0_2': { icon: 'water',    top: '60%', left: '18%' },
-  'kitchen_1_0': { icon: 'lines',    top: '70%', left: '58%' },
-  'kitchen_2_0': { icon: 'lock',     top: '18%', left: '70%' },
-  'kitchen_2_1': { icon: 'warning',  top: '75%', left: '40%' },
-  // Living Room
-  'living-room_0_0': { icon: 'warning',    top: '25%', left: '40%' },
-  'living-room_0_1': { icon: 'warning',    top: '25%', left: '60%' },
-  'living-room_0_2': { icon: 'warning',    top: '30%', left: '20%' },
-  'living-room_0_3': { icon: 'lightbulb',  top: '55%', left: '15%' },
-  'living-room_1_0': { icon: 'lock',       top: '40%', left: '50%' },
-  'living-room_1_1': { icon: 'lines',      top: '65%', left: '35%' },
-  'living-room_2_0': { icon: 'lines',      top: '50%', left: '70%' },
-  // Entrance
-  'entrance_0_0': { icon: 'lock',    top: '35%', left: '30%' },
-  'entrance_0_1': { icon: 'warning', top: '50%', left: '50%' },
-  'entrance_1_0': { icon: 'warning', top: '60%', left: '40%' },
-  'entrance_1_1': { icon: 'lines',   top: '25%', left: '65%' },
-  // Patio
-  'patio_0_0': { icon: 'warning', top: '30%', left: '25%' },
-  'patio_1_0': { icon: 'lines',   top: '50%', left: '55%' },
-  'patio_2_0': { icon: 'warning', top: '65%', left: '40%' },
-  // Dining / Laundry / Pantry
-  'dining_0_0': { icon: 'lines',   top: '30%', left: '35%' },
-  'dining_0_1': { icon: 'warning', top: '50%', left: '55%' },
-  'dining_0_2': { icon: 'warning', top: '40%', left: '70%' },
-  'dining_1_0': { icon: 'lock',    top: '65%', left: '30%' },
-  // Bathroom
-  'bathroom_0_0': { icon: 'warning',    top: '25%', left: '30%' },
-  'bathroom_0_1': { icon: 'water',      top: '55%', left: '45%' },
-  'bathroom_0_2': { icon: 'lightbulb',  top: '20%', left: '65%' },
-  'bathroom_0_3': { icon: 'lock',       top: '60%', left: '20%' },
-  'bathroom_1_0': { icon: 'pill',       top: '35%', left: '60%' },
-  'bathroom_1_1': { icon: 'lines',      top: '70%', left: '55%' },
-  // Eli's Bedroom
-  'elis-bedroom_0_0': { icon: 'warning', top: '20%', left: '50%' },
-  'elis-bedroom_1_0': { icon: 'person',  top: '45%', left: '30%' },
-  'elis-bedroom_1_1': { icon: 'warning', top: '65%', left: '60%' },
-  // Bedroom 2
-  'bedroom2_0_0': { icon: 'lines',   top: '40%', left: '40%' },
-  'bedroom2_1_0': { icon: 'warning', top: '60%', left: '60%' },
-  // Stairs
-  'stairs_0_0': { icon: 'person', top: '40%', left: '45%' },
-  'stairs_1_0': { icon: 'person', top: '65%', left: '35%' }
+  // Positions are %-of-icon-layer (which equals %-of-carousel). Object-fit:contain
+  // letterboxes the photo, so values aim at where each object appears in image 1.
+
+  // Kitchen — image 1: U-shape, sink left, stove right, glass cabinet center, mat floor
+  'kitchen_0_0': { icon: 'flame',         top: '52%', left: '62%' }, // electric stove
+  'kitchen_0_1': { icon: 'stove',         top: '32%', left: '65%' }, // cooking appliances — upper cabinets near stove
+  'kitchen_0_2': { icon: 'droplet',       top: '57%', left: '28%' }, // sink
+  'kitchen_0_3': { icon: 'trash',         top: '67%', left: '28%' }, // garbage disposal — just below sink
+  'kitchen_0_4': { icon: 'fridge',        top: '55%', left: '88%' }, // best guess — no clear fridge in image, dark right edge
+  'kitchen_0_5': { icon: 'microwave',     top: '40%', left: '78%' }, // NEW: metal detection in microwave
+  'kitchen_0_6': { icon: 'dishwasher',    top: '78%', left: '40%' }, // NEW: dishwasher flooding
+  'kitchen_0_7': { icon: 'plug',          top: '50%', left: '12%' }, // NEW: outlets (duplicated from living room)
+  'kitchen_0_8': { icon: 'knife',         top: '64%', left: '46%' }, // NEW: knives — drawer area
+  'kitchen_1_0': { icon: 'microwave',     top: '52%', left: '46%' }, // best guess — microwave not visible, counter prep area
+  'kitchen_1_1': { icon: 'sparkles',      top: '60%', left: '40%' }, // food hygiene — counter prep
+  'kitchen_1_2': { icon: 'list-checks',   top: '45%', left: '50%' }, // task completion (dup)
+  'kitchen_1_3': { icon: 'activity',      top: '50%', left: '20%' }, // anxiety (dup)
+  'kitchen_1_4': { icon: 'thermometer',   top: '18%', left: '8%'  }, // heat tracking (was kitchen_1_5 before tampering removed)
+  // Frustration shifted: task sequencing removed, comm panel now at index 0
+  'kitchen_2_0': { icon: 'megaphone',     top: '40%', left: '88%' }, // comm panel (was kitchen_2_1)
+  // Living Room — image 1: painting left, windows + blinds + planter center, dark accent wall + TV right
+  'living-room_0_0': { icon: 'tv',         top: '32%', left: '62%' }, // wall-mounted TV — dark accent wall
+  'living-room_0_1': { icon: 'projector',  top: '20%', left: '60%' }, // projector — high on wall/ceiling
+  'living-room_0_2': { icon: 'window',     top: '32%', left: '40%' }, // windows
+  'living-room_0_3': { icon: 'plug',       top: '70%', left: '78%' }, // outlets — low wall near TV stand
+  'living-room_0_4': { icon: 'blinds',     top: '32%', left: '46%' }, // blinds (slightly offset from window pin)
+  'living-room_0_5': { icon: 'sofa',       top: '64%', left: '38%' }, // NEW: heavy/throwable furniture — sofa area
+  'living-room_1_0': { icon: 'tv-lock',    top: '55%', left: '78%' }, // TV access — on the TV
+  'living-room_1_1': { icon: 'bell',       top: '60%', left: '50%' }, // behavioral cue — center/sofa area
+  'living-room_1_2': { icon: 'remote',     top: '60%', left: '82%' }, // device control — near TV (offset from tv-lock)
+  'living-room_1_3': { icon: 'list-checks',top: '70%', left: '40%' }, // task completion (dup)
+  'living-room_1_4': { icon: 'activity',   top: '50%', left: '15%' }, // anxiety (dup)
+  'living-room_1_5': { icon: 'thermometer',top: '18%', left: '8%'  }, // heat tracking (was 1_6 before tampering removed)
+  'living-room_2_0': { icon: 'megaphone',  top: '40%', left: '90%' }, // comm panel — wall area on far right
+  // Entrance — image 1: front door left, open floor middle, living room beyond
+  'entrance_0_0': { icon: 'door-open',     top: '40%', left: '25%' }, // unauthorized exit — on the door
+  'entrance_0_1': { icon: 'user-at-door',  top: '50%', left: '30%' }, // strangers — door handle
+  'entrance_1_0': { icon: 'alert-circle',  top: '70%', left: '38%' }, // emergency — open floor near entry
+  'entrance_1_1': { icon: 'clock',         top: '60%', left: '20%' }, // engagement — entry threshold
+  // Patio — best-guess layout: no patio_1.jpg exists on disk yet
+  'patio_0_0': { icon: 'fence',            top: '40%', left: '20%' }, // fence line
+  'patio_1_0': { icon: 'trees',            top: '60%', left: '50%' }, // open patio area
+  'patio_2_0': { icon: 'thermometer-sun',  top: '30%', left: '70%' }, // sun-exposed area
+  // Dining / Laundry / Pantry — image 1: window left, art back, table center, kitchen wall right
+  // NOTE: Danger category was prepended, all existing keys shifted +1 in catIdx.
+  'dining_0_0': { icon: 'window',          top: '32%', left: '28%' }, // NEW: windows (dup) — visible window left
+  'dining_0_1': { icon: 'plug',            top: '70%', left: '12%' }, // NEW: outlets (dup)
+  'dining_0_2': { icon: 'blinds',          top: '36%', left: '32%' }, // NEW: pulling blinds (dup) — near window
+  'dining_0_3': { icon: 'washer',          top: '78%', left: '88%' }, // NEW: washing machine flooding
+  'dining_1_0': { icon: 'list-checks',     top: '58%', left: '48%' }, // task completion (was 0_0)
+  'dining_1_1': { icon: 'shield-check',    top: '63%', left: '42%' }, // food safety (was 0_1)
+  'dining_1_2': { icon: 'flame',           top: '70%', left: '85%' }, // lint trap (was 0_2)
+  'dining_1_3': { icon: 'activity',        top: '50%', left: '70%' }, // anxiety (dup)
+  'dining_1_4': { icon: 'thermometer',     top: '18%', left: '8%'  }, // heat tracking (was 1_5 before tampering removed)
+  'dining_2_0': { icon: 'moon',            top: '32%', left: '85%' }, // pantry raiding at night (was 1_0)
+  'dining_2_1': { icon: 'megaphone',       top: '45%', left: '78%' }, // NEW: comm panel (dup)
+  'dining_2_2': { icon: 'package',         top: '40%', left: '90%' }, // NEW: pantry raiding canned goods (moved from kitchen)
+  // Bathroom — image 1: top-down — bathtub bottom center, toilet + sink right, doorway left
+  'bathroom_0_0': { icon: 'mirror',        top: '45%', left: '60%' }, // best guess — no clear mirror in top-down view; near sink
+  'bathroom_0_1': { icon: 'droplets',      top: '70%', left: '50%' }, // bathtub overflow
+  'bathroom_0_2': { icon: 'lightbulb',     top: '40%', left: '50%' }, // ceiling light fixture
+  'bathroom_0_3': { icon: 'door-locked',   top: '52%', left: '32%' }, // bathroom door
+  'bathroom_0_4': { icon: 'plug',          top: '50%', left: '65%' }, // NEW: outlets near sink (dup)
+  'bathroom_0_5': { icon: 'toilet',        top: '55%', left: '60%' }, // NEW: toilet flooding via clogging
+  'bathroom_1_0': { icon: 'pill',          top: '48%', left: '63%' }, // medication — sink/vanity
+  'bathroom_1_1': { icon: 'shower',        top: '72%', left: '54%' }, // washing — bathtub (offset from overflow)
+  'bathroom_1_2': { icon: 'list-checks',   top: '40%', left: '40%' }, // NEW: task completion (dup)
+  'bathroom_1_3': { icon: 'activity',      top: '60%', left: '38%' }, // anxiety (dup)
+  'bathroom_1_4': { icon: 'thermometer',   top: '18%', left: '8%'  }, // heat tracking (was 1_5 before tampering removed)
+  'bathroom_2_0': { icon: 'megaphone',     top: '30%', left: '50%' }, // NEW: comm panel (dup)
+  // Eli's Bedroom — image 1: ceiling fan top, posters + TV left wall, window + bed right, desk left bottom
+  'elis-bedroom_0_0': { icon: 'fan',       top: '25%', left: '52%' }, // ceiling fan
+  'elis-bedroom_0_1': { icon: 'moon',      top: '74%', left: '64%' }, // staying up all night — bed
+  'elis-bedroom_1_0': { icon: 'activity',  top: '70%', left: '34%' }, // anxiety — desk/workspace
+  'elis-bedroom_1_1': { icon: 'bed',       top: '70%', left: '58%' }, // waking — bed (offset from staying-up)
+  'elis-bedroom_0_2': { icon: 'window',    top: '35%', left: '70%' }, // NEW: windows (dup) — visible window right of TV
+  'elis-bedroom_0_3': { icon: 'plug',      top: '78%', left: '12%' }, // NEW: outlets (dup)
+  'elis-bedroom_0_4': { icon: 'blinds',    top: '38%', left: '68%' }, // NEW: pulling blinds (dup) — near window
+  'elis-bedroom_1_2': { icon: 'sunset',    top: '60%', left: '88%' }, // end-of-day — bedroom doorway
+  'elis-bedroom_1_3': { icon: 'list-checks', top: '52%', left: '46%' }, // task completion (dup)
+  'elis-bedroom_1_4': { icon: 'thermometer', top: '18%', left: '8%'  }, // heat tracking (was 1_5 before tampering removed)
+  'elis-bedroom_2_0': { icon: 'megaphone', top: '30%', left: '92%' }, // NEW: comm panel (dup)
+  // Bedroom 2 — image 1: door left, treadmill + punching bag center, yoga mat floor right
+  // NOTE: Danger category was prepended, all existing keys shifted +1 in catIdx.
+  'bedroom2_0_0': { icon: 'window',        top: '38%', left: '42%' }, // NEW: windows (dup) — visible window center
+  'bedroom2_0_1': { icon: 'plug',          top: '78%', left: '12%' }, // NEW: outlets (dup)
+  'bedroom2_0_2': { icon: 'blinds',        top: '40%', left: '46%' }, // NEW: pulling blinds (dup) — near window
+  'bedroom2_1_0': { icon: 'activity',      top: '60%', left: '58%' }, // boredom (was 0_0)
+  'bedroom2_1_1': { icon: 'list-checks',   top: '70%', left: '70%' }, // NEW: task completion (dup)
+  'bedroom2_1_2': { icon: 'activity',      top: '85%', left: '50%' }, // anxiety (dup)
+  'bedroom2_1_3': { icon: 'thermometer',   top: '18%', left: '8%'  }, // heat tracking (was 1_5 before heat-sensitivity + tampering removed)
+  'bedroom2_2_0': { icon: 'gamepad',       top: '52%', left: '50%' }, // gaming reward (was 1_0)
+  'bedroom2_2_1': { icon: 'megaphone',     top: '30%', left: '20%' }, // NEW: comm panel (dup)
+  // Stairs — best-guess layout: no stairs_1.jpg exists on disk yet
+  'stairs_0_0': { icon: 'arrow-down',      top: '50%', left: '50%' }, // fall risk — stairs center
+  'stairs_1_0': { icon: 'moon',            top: '70%', left: '40%' }  // night wandering
 };
+
+// ─── PER-SLIDE PIN POSITIONS ─────────────────────────────────────────────────
+// Shape:  HAZARD_SLIDE_OVERRIDES[hazardId] = { 0: {top,left}, 1: {top,left} }
+//         A slide without an entry falls back to HAZARD_META[hazardId].
+const HAZARD_SLIDE_OVERRIDES = {
+  // Entrance (2 slides)
+  'entrance_0_0':    { 0: {top:'40.3%',left:'32.6%'}, 1: {top:'35.9%',left:'46.6%'} },
+  'entrance_0_1':    { 0: {top:'29.2%',left:'31.5%'}, 1: {top:'25.3%',left:'47.3%'} },
+  'entrance_1_0':    { 0: {top:'55.5%',left:'35%'},   1: {top:'50.5%',left:'43.1%'} },
+  'entrance_1_1':    { 0: {top:'58.3%',left:'28%'},   1: {top:'45.4%',left:'39.6%'} },
+
+  // Living Room (3 slides)
+  'living-room_0_0': { 0: {top:'46.8%',left:'70.8%'}, 1: {top:'63.1%',left:'19.3%'}, 2: {top:'33.3%',left:'39.5%'} },
+  'living-room_0_1': {                                1: {top:'19.1%',left:'23.5%'}, 2: {top:'19.3%',left:'24.9%'} }, // slide 1 updated; slide 0 → META default
+  'living-room_0_2': {                                1: {top:'39.7%',left:'75.2%'}, 2: {top:'34.4%',left:'73.5%'} }, // slide 0 → META default
+  'living-room_0_3': { 0: {top:'50.7%',left:'26.3%'}, 1: {top:'42.6%',left:'46%'},   2: {top:'41.5%',left:'64.9%'} },
+  'living-room_0_4': {                                1: {top:'44.4%',left:'82.7%'}, 2: {top:'37.9%',left:'80.1%'} }, // slide 0 → META default
+  'living-room_0_5': { 0: {top:'56.8%',left:'55.9%'},                                2: {top:'47.8%',left:'48.7%'} }, // heavy furniture; slide 1 → META default
+  'living-room_1_0': { 0: {top:'57.9%',left:'68.8%'}, 1: {top:'67.5%',left:'24.8%'}, 2: {top:'45.2%',left:'38.6%'} },
+  'living-room_1_1': { 0: {top:'53.6%',left:'40.3%'}, 1: {top:'58.9%',left:'55.7%'}, 2: {top:'46.5%',left:'55.7%'} },
+  'living-room_1_2': { 0: {top:'49.5%',left:'66.4%'}, 1: {top:'77.4%',left:'22.9%'}, 2: {top:'42.7%',left:'43.7%'} },
+  'living-room_1_3': { 0: {top:'55%',left:'84.2%'},   1: {top:'43.2%',left:'13.5%'}, 2: {top:'38.5%',left:'27.7%'} }, // task completion
+  'living-room_1_4': { 0: {top:'73.4%',left:'39.4%'}, 1: {top:'77.5%',left:'51%'},   2: {top:'60.9%',left:'46.9%'} }, // anxiety
+  'living-room_1_5': { 0: {top:'20.6%',left:'13.1%'}, 1: {top:'20.9%',left:'46.2%'}, 2: {top:'23.2%',left:'55.7%'} }, // heat tracking
+  'living-room_2_0': { 0: {top:'20.3%',left:'84.8%'}, 1: {top:'19.9%',left:'69.5%'}, 2: {top:'19.5%',left:'77.5%'} }, // comm panel
+
+  // Dining / Laundry / Pantry (3 slides)
+  'dining_0_0':      {                                1: {top:'54.6%',left:'11.2%'}, 2: {top:'24.3%',left:'46.1%'} }, // windows; slide 0 → META default
+  'dining_0_1':      { 0: {top:'59.3%',left:'23%'},   1: {top:'78.3%',left:'14.4%'}, 2: {top:'48.4%',left:'35.7%'} }, // outlets
+  'dining_0_2':      {                                1: {top:'47.5%',left:'10.8%'}, 2: {top:'33.7%',left:'40.3%'} }, // pulling blinds; slide 0 → META default
+  'dining_0_3':      { 0: {top:'42%',left:'72.4%'},   1: {top:'38.6%',left:'49.5%'}, 2: {top:'33.4%',left:'75.9%'} }, // washing machine
+  'dining_1_0':      { 0: {top:'33.5%',left:'64.8%'}, 1: {top:'40%',left:'22.3%'},   2: {top:'34.9%',left:'64.7%'} }, // task completion
+  'dining_1_1':      { 0: {top:'51.6%',left:'47.8%'}, 1: {top:'56.5%',left:'36.6%'}, 2: {top:'44.8%',left:'51.2%'} }, // food safety
+  'dining_1_2':      { 0: {top:'55.9%',left:'70.1%'}, 1: {top:'45.1%',left:'49.3%'}, 2: {top:'39.7%',left:'73.6%'} }, // lint trap (slide 1 updated)
+  'dining_1_3':      { 0: {top:'74.4%',left:'55.2%'}, 1: {top:'72.3%',left:'63.9%'}, 2: {top:'68.7%',left:'42.9%'} }, // anxiety
+  'dining_1_4':      { 0: {top:'24.1%',left:'73.6%'}, 1: {top:'24.9%',left:'72.5%'}, 2: {top:'57.5%',left:'60.1%'} }, // heat tracking
+  'dining_2_0':      { 0: {top:'72.8%',left:'13.6%'}, 1: {top:'77.2%',left:'85.4%'}, 2: {top:'36.8%',left:'24.9%'} }, // pantry at night
+  'dining_2_1':      { 0: {top:'65.7%',left:'77%'},   1: {top:'33.9%',left:'57.2%'}, 2: {top:'70%',left:'26.5%'} },   // comm panel
+  'dining_2_2':      { 0: {top:'60.4%',left:'12.9%'}, 1: {top:'69.2%',left:'86.9%'}, 2: {top:'45.1%',left:'26.4%'} }, // pantry raiding canned
+
+  // Kitchen (3 slides)
+  'kitchen_0_0':     { 0: {top:'40.8%',left:'59.4%'}, 1: {top:'44.8%',left:'37.5%'}, 2: {top:'57.9%',left:'74.5%'} },
+  'kitchen_0_1':     { 0: {top:'45.1%',left:'42.8%'}, 1: {top:'53.4%',left:'32%'},   2: {top:'43.7%',left:'51.6%'} }, // slide 2 updated
+  'kitchen_0_2':     { 0: {top:'55%',left:'28.8%'},   1: {top:'60.9%',left:'48.6%'}                                  }, // slide 2 → META default
+  'kitchen_0_3':     { 0: {top:'80%',left:'71%'},     1: {top:'57%',left:'63.4%'},   2: {top:'80.6%',left:'18.4%'} },
+  'kitchen_0_4':     { 0: {top:'38%',left:'77.7%'},   1: {top:'39.5%',left:'58.9%'}, 2: {top:'81.5%',left:'54.3%'} },
+  'kitchen_0_5':     { 0: {top:'30.7%',left:'57.2%'}, 1: {top:'34.6%',left:'41%'}                                    }, // metal detection; slide 2 → META default
+  'kitchen_0_6':     {                                                                2: {top:'53.1%',left:'41.6%'} }, // dishwasher; slides 0,1 → META default
+  'kitchen_0_7':     { 0: {top:'74.6%',left:'87.1%'}, 1: {top:'74.9%',left:'15.3%'}, 2: {top:'40.8%',left:'64%'} },   // outlets
+  'kitchen_0_8':     { 0: {top:'44.5%',left:'67.8%'}, 1: {top:'40.9%',left:'45.2%'}                                  }, // knives; slide 2 → META default
+  'kitchen_1_0':     { 0: {top:'31.1%',left:'62.1%'}, 1: {top:'35.8%',left:'36.9%'}, 2: {top:'34.3%',left:'81.7%'} },
+  'kitchen_1_1':     { 0: {top:'41.2%',left:'33.9%'}, 1: {top:'57.6%',left:'23.2%'}                                  }, // slide 2 → META default
+  'kitchen_1_2':     {                                                                2: {top:'38.2%',left:'38.1%'} }, // task completion; slides 0,1 → META default
+  'kitchen_1_3':     { 0: {top:'70%',left:'16.8%'},   1: {top:'76.9%',left:'61.2%'}, 2: {top:'26.5%',left:'24.7%'} }, // anxiety
+  'kitchen_1_4':     { 0: {top:'22.5%',left:'13.1%'}, 1: {top:'78.8%',left:'76%'},   2: {top:'28.2%',left:'17%'} },   // heat tracking
+  'kitchen_2_0':     {                                                                2: {top:'17.5%',left:'46.8%'} }, // comm panel; slides 0,1 → META default
+
+  // Bedroom 2 (2 slides)
+  'bedroom2_0_0':    { 0: {top:'32.3%',left:'39.9%'}, 1: {top:'53.5%',left:'34%'} },   // windows
+  'bedroom2_0_1':    { 0: {top:'56.6%',left:'62.1%'}, 1: {top:'54.3%',left:'54.6%'} }, // outlets
+  'bedroom2_0_2':    { 0: {top:'37.9%',left:'46.7%'}, 1: {top:'66.7%',left:'34.4%'} }, // pulling blinds
+  'bedroom2_1_0':    { 0: {top:'49.4%',left:'41.6%'}, 1: {top:'66.8%',left:'41.7%'} }, // boredom
+  'bedroom2_1_1':    { 0: {top:'51.9%',left:'78.6%'}                                  }, // task completion; slide 1 → META default
+  'bedroom2_1_2':    { 0: {top:'71.5%',left:'38.6%'}, 1: {top:'73.7%',left:'48.1%'} }, // anxiety
+  'bedroom2_1_3':    { 0: {top:'28.2%',left:'78.7%'}, 1: {top:'43.7%',left:'68.9%'} }, // heat tracking
+  'bedroom2_2_0':    { 0: {top:'68.3%',left:'58.7%'}, 1: {top:'68.1%',left:'58%'} },   // gaming
+  'bedroom2_2_1':    {                                1: {top:'45.7%',left:'48.6%'} }, // comm panel; slide 0 → META default
+
+  // Bathroom (3 slides)
+  'bathroom_0_0':    {                                1: {top:'41.1%',left:'71%'},   2: {top:'52.8%',left:'21.8%'} }, // slide 0 → META default
+  'bathroom_0_1':    { 0: {top:'61.1%',left:'53.7%'}, 1: {top:'76.9%',left:'63.3%'}, 2: {top:'58.4%',left:'46%'} },
+  'bathroom_0_2':    {                                1: {top:'19%',left:'53.5%'},   2: {top:'17.8%',left:'47.6%'} }, // slide 0 → META default
+  'bathroom_0_3':    { 0: {top:'46.3%',left:'45.6%'}, 1: {top:'47.7%',left:'50.8%'}, 2: {top:'79.1%',left:'17.3%'} },
+  'bathroom_0_4':    {                                1: {top:'38.8%',left:'57.9%'}, 2: {top:'65.9%',left:'12.6%'} }, // outlets; slide 0 → META default
+  'bathroom_0_5':    {                                1: {top:'66.9%',left:'73.4%'}, 2: {top:'49.1%',left:'37%'} },   // toilet flooding; slide 0 → META default
+  'bathroom_1_0':    { 0: {top:'64%',left:'63.6%'},                                  2: {top:'45.3%',left:'27.6%'} }, // slide 1 → META default
+  'bathroom_1_1':    { 0: {top:'66.2%',left:'37.3%'}, 1: {top:'47.4%',left:'13.1%'}, 2: {top:'35.2%',left:'77.7%'} },
+  'bathroom_1_2':    { 0: {top:'33.8%',left:'37.6%'}, 1: {top:'49.9%',left:'74.3%'}                                  }, // task completion; slide 2 → META default
+  'bathroom_1_3':    { 0: {top:'53.9%',left:'38%'},                                  2: {top:'79.1%',left:'46.7%'} }, // anxiety; slide 1 → META default
+  'bathroom_1_4':    { 0: {top:'25.5%',left:'62.6%'}, 1: {top:'23.6%',left:'34.1%'}, 2: {top:'22.8%',left:'13.6%'} }, // heat tracking
+
+  // Eli's Bedroom (3 slides)
+  'elis-bedroom_0_0': { 0: {top:'19.2%',left:'55.6%'}, 1: {top:'21.4%',left:'48.6%'}, 2: {top:'21.5%',left:'32%'} },   // ceiling fan (slides 1,2 updated)
+  'elis-bedroom_0_1': { 0: {top:'61.1%',left:'68.5%'}, 1: {top:'51.1%',left:'42.9%'}, 2: {top:'47.8%',left:'55.8%'} },
+  'elis-bedroom_0_2': {                                1: {top:'33.9%',left:'18.1%'}, 2: {top:'28%',left:'52.3%'} }, // windows; slide 0 → META default
+  'elis-bedroom_0_3': { 0: {top:'68.5%',left:'23.2%'},                                2: {top:'40.1%',left:'27.1%'} }, // outlets; slide 1 → META default
+  'elis-bedroom_0_4': { 0: {top:'39.4%',left:'63.6%'}, 1: {top:'20.6%',left:'30%'},   2: {top:'35.6%',left:'43.3%'} }, // pulling blinds
+  'elis-bedroom_1_0': { 0: {top:'74.7%',left:'49.5%'}, 1: {top:'70.6%',left:'57.7%'}, 2: {top:'70.6%',left:'56.9%'} }, // anxiety
+  'elis-bedroom_1_1': { 0: {top:'59%',left:'58.4%'},   1: {top:'57.8%',left:'32.2%'}, 2: {top:'47.9%',left:'48.8%'} },
+  'elis-bedroom_1_2': { 0: {top:'43%',left:'38.6%'},   1: {top:'53.5%',left:'78.5%'}, 2: {top:'54.2%',left:'80%'} },
+  'elis-bedroom_1_3': {                                1: {top:'38.8%',left:'62.3%'}, 2: {top:'40%',left:'72.4%'} }, // task completion; slide 0 → META default
+  'elis-bedroom_1_4': { 0: {top:'24.5%',left:'15.9%'}, 1: {top:'23.7%',left:'77.1%'}, 2: {top:'39.5%',left:'14.9%'} }, // heat tracking
+  'elis-bedroom_2_0': { 0: {top:'21.1%',left:'85.2%'}, 1: {top:'21.8%',left:'83.7%'}, 2: {top:'22.3%',left:'82.4%'} }  // comm panel
+};
+
+function getHazardPosition(key, slideIdx) {
+  if (HAZARD_SLIDE_OVERRIDES[key] && Object.prototype.hasOwnProperty.call(HAZARD_SLIDE_OVERRIDES[key], slideIdx)) {
+    return HAZARD_SLIDE_OVERRIDES[key][slideIdx];
+  }
+  const meta = HAZARD_META[key];
+  return meta ? { top: meta.top, left: meta.left } : null;
+}
 
 // ─── STATE ───────────────────────────────────────────────────────────────────
 
@@ -3201,6 +4034,36 @@ function renderFloor(floor) {
   });
 }
 
+// ─── ROOM / FLOOR SWITCHER (in #room-topbar) ─────────────────────────────────
+
+const roomSelect       = document.getElementById('room-select');
+const floorSwitchBtns  = document.querySelectorAll('.floor-switch-btn');
+
+function populateRoomSwitcher(floor, selectedRoomId) {
+  const zones = FLOORS[floor]?.zones || [];
+  roomSelect.innerHTML = zones.map(z =>
+    `<option value="${z.id}"${z.id === selectedRoomId ? ' selected' : ''}>${z.name}</option>`
+  ).join('');
+  floorSwitchBtns.forEach(b => {
+    b.classList.toggle('active', parseInt(b.dataset.floor, 10) === floor);
+  });
+}
+
+floorSwitchBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const floor = parseInt(btn.dataset.floor, 10);
+    if (floor === currentFloor) return;
+    renderFloor(floor);                    // sets currentFloor + updates floor-plan DOM (offscreen)
+    const firstRoom = FLOORS[floor].zones[0];
+    if (firstRoom) openRoom(firstRoom.id); // jumps directly to first room of that floor
+  });
+});
+
+roomSelect.addEventListener('change', () => {
+  const id = roomSelect.value;
+  if (id && id !== currentRoom) openRoom(id);
+});
+
 // ─── ROOM OPEN / CLOSE ───────────────────────────────────────────────────────
 
 function openRoom(roomId) {
@@ -3214,6 +4077,9 @@ function openRoom(roomId) {
   carouselPhotos = zoneData.photos || [];
   carouselImagesLoaded = {};
 
+  // Sync the in-detail switcher to match the room being opened
+  populateRoomSwitcher(currentFloor, roomId);
+
   // Update room topbar
   roomNameLabel.textContent = roomInfo.name;
   roomFloorTag.textContent = `Floor ${roomInfo.floor}`;
@@ -3225,8 +4091,8 @@ function openRoom(roomId) {
   // Render hazard accordion cards
   renderHazards(roomId, roomInfo);
 
-  // Render hazard icons (will become visible once photo loads)
-  renderHazardIcons(roomId, roomInfo);
+  // Render hazard icons for slide 0 (will become visible once photo loads)
+  renderHazardIcons(roomId, roomInfo, 0);
 
   // Setup carousel
   setupCarousel(roomId, carouselPhotos);
@@ -3269,6 +4135,8 @@ function renderHazards(roomId, roomInfo) {
 
     cat.hazards.forEach((hazard, hazardIdx) => {
       const hazardId = `${roomId}_${catIdx}_${hazardIdx}`;
+      const meta = HAZARD_META[hazardId];
+      const dotIcon = meta && ICON_SVGS[meta.icon] ? ICON_SVGS[meta.icon] : '';
 
       const card = document.createElement('div');
       card.className = 'accordion-card';
@@ -3282,21 +4150,40 @@ function renderHazards(roomId, roomInfo) {
             `<a href="${l.url}" target="_blank" rel="noopener" class="accordion-link">${l.text}${LINK_ICON}</a>`
           ).join('')}</div>` : '';
 
+      const catKey = cat.name.toLowerCase();
+      const auto = HAZARD_AUTOMATIONS[hazard.title];
+      const autoRow = (label, value) => value
+        ? `<div class="automation-row"><span class="automation-label">${label}</span><div class="automation-text${/^N\/A$/i.test(value) ? ' muted' : ''}">${value}</div></div>`
+        : '';
+      const devicesHTML = auto && Array.isArray(auto.devices) && auto.devices.length
+        ? `<div class="automation-row"><span class="automation-label">Devices used</span><div class="automation-devices">${auto.devices.map(d => `<span class="device-tag">${d}</span>`).join('')}</div></div>`
+        : '';
+      const automationHTML = auto
+        ? `${autoRow('Trigger', auto.trigger)}${autoRow('Detection', auto.detection)}${autoRow('Alert', auto.alert)}${autoRow('Action', auto.action)}${devicesHTML}`
+        : `<div class="automation-empty">No HA automation defined for this hazard yet.</div>`;
       card.innerHTML = `
         <div class="accordion-header">
-          <div class="accordion-dot" style="background:${color}"></div>
+          <div class="accordion-dot" style="background:${color}">${dotIcon}</div>
           <div class="accordion-title">${hazard.title}</div>
           <svg class="accordion-chevron" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,4 7,9 12,4"/></svg>
         </div>
         <div class="accordion-body">
-          <div class="accordion-desc">${hazard.desc}</div>
-          <div class="accordion-solution">${hazard.solution}</div>
-          ${priceHTML}${linksHTML}
+          <div><span class="accordion-cat-pill" data-cat="${catKey}">${cat.name}</span></div>
+          <div class="hazard-content">
+            <div class="accordion-desc">${hazard.desc}</div>
+            <div class="accordion-solution">${hazard.solution}</div>
+            ${priceHTML}${linksHTML}
+          </div>
+          <div class="automation-content">
+            ${automationHTML}
+          </div>
         </div>
       `;
 
       card.querySelector('.accordion-header').addEventListener('click', () => {
-        toggleAccordionCard(hazardId);
+        // focusHazardCard handles: toggle close on second click, navigate carousel
+        // to a slide that has this hazard's pin if needed, then highlight.
+        focusHazardCard(hazardId);
       });
 
       panelHazards.appendChild(card);
@@ -3304,7 +4191,7 @@ function renderHazards(roomId, roomInfo) {
   });
 }
 
-function renderHazardIcons(roomId, roomInfo) {
+function renderHazardIcons(roomId, roomInfo, slideIdx = 0) {
   const layer = document.getElementById('photo-icon-layer');
   layer.innerHTML = '';
 
@@ -3314,13 +4201,16 @@ function renderHazardIcons(roomId, roomInfo) {
       const key = `${roomId}_${catIdx}_${hazardIdx}`;
       const meta = HAZARD_META[key];
       if (!meta) return;
+      const pos = getHazardPosition(key, slideIdx);
+      if (pos == null) return; // explicitly hidden on this slide
 
       const btn = document.createElement('button');
       btn.className = 'hazard-icon';
       btn.dataset.hazardId = key;
+      btn.dataset.hazardTitle = hazard.title;
       btn.style.background = color;
-      btn.style.top = meta.top;
-      btn.style.left = meta.left;
+      btn.style.top = pos.top;
+      btn.style.left = pos.left;
       btn.innerHTML = ICON_SVGS[meta.icon] || ICON_SVGS.warning;
       btn.title = hazard.title;
       btn.addEventListener('click', () => focusHazardCard(key));
@@ -3357,25 +4247,56 @@ function toggleAccordionCard(hazardId, forceOpen) {
   }
 }
 
-function focusHazardCard(hazardId) {
-  // Ensure card is open
-  toggleAccordionCard(hazardId, true);
+// Returns the slide indices on which a given hazard's pin is visible.
+// Empty array = no pin on any slide (e.g. tampering, heat tracking, anything
+// without a HAZARD_META entry, or with all slides explicitly null in overrides).
+function getSlidesWithPin(hazardId) {
+  if (!HAZARD_META[hazardId]) return [];
+  const total = (carouselPhotos && carouselPhotos.length) || 1;
+  const slides = [];
+  for (let i = 0; i < total; i++) {
+    if (getHazardPosition(hazardId, i) != null) slides.push(i);
+  }
+  return slides;
+}
 
+function focusHazardCard(hazardId) {
   const card = panelHazards.querySelector(`[data-hazard-id="${hazardId}"]`);
   if (!card) return;
 
-  // Remove any existing focus highlight
+  // If this card is already the open one, treat the second click as a close
+  if (card.classList.contains('open')) {
+    toggleAccordionCard(hazardId, false);
+    return;
+  }
+
+  // If the hazard's pin lives on a different slide, navigate there first.
+  // (Pins with no slides at all — tampering, heat tracking — just open the card.)
+  const slidesWithPin = getSlidesWithPin(hazardId);
+  if (slidesWithPin.length > 0 && !slidesWithPin.includes(carouselIndex)) {
+    goToSlide(slidesWithPin[0]);
+  }
+
+  toggleAccordionCard(hazardId, true);
+
   panelHazards.querySelectorAll('.accordion-card.focused').forEach(c => c.classList.remove('focused'));
-
-  // Apply focus highlight
   card.classList.add('focused');
-
-  // Scroll into view
   card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-
-  // Auto-remove highlight after 2s
   setTimeout(() => card.classList.remove('focused'), 2000);
 }
+
+// ─── PANEL VIEW TOGGLE (Hazards / HA Automations) ────────────────────────────
+const detailPanel = document.getElementById('detail-panel');
+const viewToggleBtns = document.querySelectorAll('#view-toggle .view-switch-btn');
+viewToggleBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const view = btn.dataset.view;
+    detailPanel.classList.toggle('view-automations', view === 'automations');
+    viewToggleBtns.forEach(b => b.classList.toggle('active', b === btn));
+    // Cards are not re-rendered — both content blocks coexist; we just show one
+    // via the `view-automations` class. Scroll position and any open card stay.
+  });
+});
 
 // ─── CAROUSEL ────────────────────────────────────────────────────────────────
 
@@ -3443,6 +4364,10 @@ function goToSlide(index) {
   const total = carouselPhotos.length;
   carouselIndex = (index + total) % total;
   updateCarouselDisplay();
+  // Re-render pins for the new slide so per-slide positions take effect
+  if (currentRoom && ROOM_DATA[currentRoom]) {
+    renderHazardIcons(currentRoom, ROOM_DATA[currentRoom], carouselIndex);
+  }
 }
 
 arrowPrev.addEventListener('click', () => goToSlide(carouselIndex - 1));
