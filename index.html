@@ -2077,13 +2077,19 @@
   /* ═══════ CHATBOT ═══════ */
   #eli-fab {
     position: fixed; bottom: 24px; right: 24px; z-index: 1000;
-    width: 52px; height: 52px; border-radius: 999px;
+    height: 48px; border-radius: 999px;
+    padding: 0 18px 0 14px;
     background: #4F46E5; border: none;
     box-shadow: 0 1px 2px rgba(28,25,23,.08), 0 4px 16px rgba(79,70,229,.32);
-    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
     transition: background .15s, transform .15s, box-shadow .15s;
   }
-  #eli-fab:hover { background: #4338CA; transform: scale(1.06); box-shadow: 0 2px 4px rgba(28,25,23,.1), 0 6px 20px rgba(79,70,229,.38); }
+  #eli-fab-label {
+    font-size: 14px; font-weight: 600; color: #fff;
+    font-family: system-ui, 'Inter', sans-serif;
+    white-space: nowrap; letter-spacing: -0.01em;
+  }
+  #eli-fab:hover { background: #4338CA; transform: scale(1.04); box-shadow: 0 2px 4px rgba(28,25,23,.1), 0 6px 20px rgba(79,70,229,.38); }
   #eli-fab:focus-visible { outline: 2px solid #6366F1; outline-offset: 3px; }
 
   #eli-overlay {
@@ -4746,7 +4752,8 @@ const eHistory = [];
 // ── Build HTML ──
 document.body.insertAdjacentHTML('beforeend', `
 <button id="eli-fab" aria-label="Open AI Assistant" onclick="eliOpen()">
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+  <span id="eli-fab-label">AI Assistant</span>
 </button>
 
 <div id="eli-overlay" onclick="eliClose()" aria-hidden="true"></div>
@@ -4757,7 +4764,7 @@ document.body.insertAdjacentHTML('beforeend', `
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
     </div>
     <div class="eli-htitles">
-      <div class="eli-htitle">Eli Assistant</div>
+      <div class="eli-htitle">AI Assistant</div>
       <div class="eli-hsub">Ask about dangers, solutions, or how to use this site</div>
     </div>
     <button id="eli-close" onclick="eliClose()" aria-label="Close assistant">✕</button>
