@@ -7,6 +7,8 @@
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+  html { overflow-x: hidden; }
+
   body {
     background: #FAF8F5;
     font-family: system-ui, 'Inter', sans-serif;
@@ -2099,6 +2101,7 @@
     transform: translateX(100%);
     transition: transform .25s cubic-bezier(.4,0,.2,1);
     box-shadow: -4px 0 32px rgba(28,25,23,.08);
+    overflow: hidden;
   }
   #eli-panel.open { transform: translateX(0); }
 
@@ -4803,6 +4806,8 @@ window.eliClose = function() {
   document.getElementById('eli-panel').classList.remove('open');
   document.getElementById('eli-overlay').classList.remove('open');
   document.getElementById('eli-fab').focus();
+  var ta = document.getElementById('eli-textarea');
+  ta.style.height = 'auto';
 };
 document.addEventListener('keydown', function(e) { if (e.key === 'Escape') eliClose(); });
 
