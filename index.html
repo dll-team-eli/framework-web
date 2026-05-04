@@ -5037,7 +5037,17 @@ const SETUP_STEPS = [
       'The Home Assistant Green box is already set up. Dashboard, alerts, automations, and learning are all configured.',
       "You only need to do three things: connect the hardware to WiFi, place the sensors, and set up the caregiver's phone.",
       'Once everything is connected, the system runs on its own.'
-    ]
+    ],
+    callouts: [{
+      style: 'important',
+      eyebrow: 'Important rules',
+      bullets: [
+        'Do not factory reset, unpair, or add the G3, FP2, or contact sensor to Apple Home.',
+        'Do not create a new Aqara account.',
+        'Stay logged in to the Aqara app on one primary phone.',
+        'For caregiver access, use Home Sharing inside the Aqara app.'
+      ]
+    }]
   },
   {
     type: 'intro',
@@ -5074,6 +5084,19 @@ const SETUP_STEPS = [
   },
   {
     type: 'step',
+    title: 'Set up notifications on your phone',
+    items: [
+      'On your phone, download the Home Assistant app from the App Store or Google Play.',
+      'Open the app. It should automatically find the Home Assistant Green on your WiFi. If not, tap "Enter Address Manually" and type homeassistant.local:8123.',
+      'Log in with the same username and password you were given.',
+      'When the app asks for a device name, type exactly: Primary_phone (capital P, underscore, lowercase phone). This name has to match exactly or notifications will not reach you.',
+      'When asked, allow notifications. This is required.',
+      'Allow location access if prompted (this helps the system know when you are home).'
+    ],
+    image: 'Home Assistant mobile app notification setup screen'
+  },
+  {
+    type: 'step',
     title: 'Write down your WiFi name and password',
     body: 'You will need both for the next steps. Case sensitive. Spaces matter.',
     image: 'Screenshot: A piece of paper with WiFi name and password written down.'
@@ -5081,6 +5104,7 @@ const SETUP_STEPS = [
   {
     type: 'step',
     title: 'Set up the Aqara FP2 sensor on your WiFi',
+    topNote: 'Use the Aqara account credentials provided. Do not create a new account.',
     items: [
       'Open the Aqara Home app.',
       'Add the FP2 as a new device.',
@@ -5093,6 +5117,7 @@ const SETUP_STEPS = [
   {
     type: 'step',
     title: 'Set up the Aqara G3 camera on your WiFi',
+    topNote: 'Use the Aqara account credentials provided. Do not create a new account.',
     items: [
       'In the Aqara Home app, add the G3 as a new device.',
       'In Home Assistant, open Settings, then Devices & Services. The G3 will appear. Tap Configure.',
@@ -5169,7 +5194,11 @@ const SETUP_STEPS = [
       'Notifications stopped? Check that the Home Assistant Green box is plugged in and the light is on.',
       'Sensor not working? Check that it is still plugged into power.',
       'Changed phones or reinstalled the app? Log in again with the same username and password.'
-    ]
+    ],
+    callouts: [{
+      style: 'important',
+      paragraphs: ['Do not change the Home Assistant or Aqara passwords. If a password ever needs to change, contact a technical helper, since the system is connected in multiple places.']
+    }]
   }
 ];
 
@@ -5229,6 +5258,7 @@ function renderSetupScreen(step) {
 }
 
 function renderSetupBeforeStart(step) {
+  const calloutsHTML = (step.callouts || []).map(renderSetupCallout).join('');
   return `
     <section class="setup-card" aria-labelledby="setup-screen-title">
       <div class="setup-before-eyebrow">${escapeHtml(step.eyebrow)}</div>
@@ -5242,6 +5272,7 @@ function renderSetupBeforeStart(step) {
       <div class="setup-before-card">
         ${step.paragraphs.map(p => `<p>${setupHtml(p)}</p>`).join('')}
       </div>
+      ${calloutsHTML}
     </section>
   `;
 }
@@ -5251,11 +5282,16 @@ function renderSetupCallout(callout) {
   const eyebrowHTML = callout.eyebrow
     ? `<div class="setup-callout-eyebrow">${escapeHtml(callout.eyebrow)}</div>`
     : '';
-  const paras = Array.isArray(callout.paragraphs) ? callout.paragraphs : [callout.paragraphs];
+  const paras = callout.paragraphs
+    ? (Array.isArray(callout.paragraphs) ? callout.paragraphs : [callout.paragraphs])
+    : [];
   const parasHTML = paras.map(p => `<p class="setup-callout-text">${setupHtml(p)}</p>`).join('');
+  const bulletsHTML = (callout.bullets && callout.bullets.length)
+    ? `<ul class="setup-callout-text" style="margin:8px 0 0;padding-left:20px;">${callout.bullets.map(b => `<li style="margin-bottom:4px;">${setupHtml(b)}</li>`).join('')}</ul>`
+    : '';
   return `
     <aside class="setup-callout ${style}" role="note">
-      ${eyebrowHTML}${parasHTML}
+      ${eyebrowHTML}${parasHTML}${bulletsHTML}
     </aside>
   `;
 }
@@ -5321,6 +5357,10 @@ function renderSetupIntro(step) {
 }
 
 function renderSetupListStep(step, idx) {
+  // topNote: small subtle hint above body content. Reuses .setup-note typography
+  // (muted color #57534E, line-height 1.6) with inline overrides for top placement
+  // + italic to read as a hint rather than a normal paragraph.
+  const topNoteHTML    = step.topNote    ? `<p class="setup-note" style="margin:0 0 14px;font-style:italic;">${setupHtml(step.topNote)}</p>` : '';
   const leadHTML       = step.lead       ? `<p class="setup-lead">${setupHtml(step.lead)}</p>` : '';
   const subheadingHTML = step.subheading ? `<div class="setup-step-subheading">${escapeHtml(step.subheading)}</div>` : '';
   const bodyHTML       = step.body       ? `<p class="setup-body">${setupHtml(step.body)}</p>` : '';
@@ -5333,6 +5373,7 @@ function renderSetupListStep(step, idx) {
   return `
     <section class="setup-card" aria-labelledby="setup-screen-title">
       <h1 class="setup-screen-title" id="setup-screen-title">${escapeHtml(step.title)}</h1>
+      ${topNoteHTML}
       ${leadHTML}
       ${subheadingHTML}
       ${bodyHTML}
@@ -5377,6 +5418,7 @@ function renderSetupGroupedStep(step, idx) {
 }
 
 function renderSetupReference(step) {
+  const calloutsHTML = (step.callouts || []).map(renderSetupCallout).join('');
   return `
     <section class="setup-card reference" aria-labelledby="setup-screen-title">
       <div class="setup-reference-eyebrow">Quick reference</div>
@@ -5384,6 +5426,7 @@ function renderSetupReference(step) {
       <ul class="setup-reference-bullets">
         ${step.bullets.map(b => `<li>${setupHtml(b)}</li>`).join('')}
       </ul>
+      ${calloutsHTML}
       <button type="button" class="setup-print-btn" data-action="setup-print">
         ${PRINTER_ICON}<span>Print this page</span>
       </button>
