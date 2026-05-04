@@ -484,7 +484,7 @@
   .accordion-cat-pill[data-cat="challenge"]   { background: #E0E7FF; color: #4338CA; }
   .accordion-cat-pill[data-cat="frustration"] { background: #FEF3C7; color: #B45309; }
 
-  /* ─── PANEL VIEW TOGGLE (Hazards / HA Automations) ─── */
+  /* ─── PANEL VIEW TOGGLE (Hazards / Smart Response) ─── */
   #view-toggle {
     display: flex;
     background: #F5F5F4;
@@ -2496,7 +2496,7 @@
       </div>
       <div id="view-toggle" role="tablist" aria-label="Panel view">
         <button type="button" class="view-switch-btn active" data-view="hazards" role="tab">Hazards</button>
-        <button type="button" class="view-switch-btn" data-view="automations" role="tab">HA Automations</button>
+        <button type="button" class="view-switch-btn" data-view="automations" role="tab">Smart Response</button>
       </div>
       <div id="panel-hazards"></div>
     </div>
@@ -2724,7 +2724,7 @@ const SHARED_HAZARDS = {
 };
 
 // HA automation content per hazard, keyed by exact hazard title.
-// When the user toggles the right panel to "HA Automations", each card's body
+// When the user toggles the right panel to "Smart Response", each card's body
 // shows these fields instead of description / solution / cost / links.
 // Cross-room shared hazards reuse a single entry (titles match across rooms).
 const HAZARD_AUTOMATIONS = {
@@ -4207,7 +4207,7 @@ function focusHazardCard(hazardId) {
   setTimeout(() => card.classList.remove('focused'), 2000);
 }
 
-// ─── PANEL VIEW TOGGLE (Hazards / HA Automations) ────────────────────────────
+// ─── PANEL VIEW TOGGLE (Hazards / Smart Response) ────────────────────────────
 const detailPanel = document.getElementById('detail-panel');
 const viewToggleBtns = document.querySelectorAll('#view-toggle .view-switch-btn');
 viewToggleBtns.forEach(btn => {
@@ -5017,10 +5017,15 @@ const PRINTER_ICON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
 const TEAM_ELI_PLACEHOLDER = '[team-eli-email-placeholder]';
 const TEAM_ELI_LINK_HTML = `<a href="mailto:${TEAM_ELI_PLACEHOLDER}" class="setup-mail-link">${TEAM_ELI_PLACEHOLDER}</a>`;
 
+const HA_HELP_URL = 'https://www.home-assistant.io/help/';
+const HA_HELP_EXT_ICON = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline-block;vertical-align:-1px;margin-left:3px;"><path d="M14 3h7v7"/><path d="M10 14L21 3"/><path d="M19 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6"/></svg>`;
+const HA_HELP_LINK_HTML = `<a href="${HA_HELP_URL}" target="_blank" rel="noopener noreferrer" class="setup-mail-link">${HA_HELP_URL}${HA_HELP_EXT_ICON}</a>`;
+
 function setupHtml(text) {
-  // Escape HTML, then turn the literal team-eli token into a styled mailto link.
+  // Escape HTML, then turn the literal placeholder tokens into styled links.
   return escapeHtml(text)
-    .replace(/\[team-eli-email-placeholder\]/g, TEAM_ELI_LINK_HTML);
+    .replace(/\[team-eli-email-placeholder\]/g, TEAM_ELI_LINK_HTML)
+    .replace(/\[ha-help-link\]/g, HA_HELP_LINK_HTML);
 }
 
 const SETUP_STEPS = [
@@ -5063,7 +5068,7 @@ const SETUP_STEPS = [
     ],
     callouts: [{
       style: 'info',
-      paragraphs: ['Log in with the username and password you were given. Do not change any settings. If something needs to be adjusted, email Team Eli at [team-eli-email-placeholder].']
+      paragraphs: ['Log in with the username and password you were given. Do not change any settings. If something needs to be adjusted, visit the Home Assistant Help Center for guidance: [ha-help-link]']
     }],
     image: 'Screenshot: Home Assistant Green plugged into router and power, with the dashboard loading on a laptop screen.'
   },
@@ -5103,7 +5108,7 @@ const SETUP_STEPS = [
       'It connects to WiFi automatically.',
       'It will appear in Settings, then Devices & Services in Home Assistant.'
     ],
-    note: 'Not showing up? Email Team Eli at [team-eli-email-placeholder].',
+    note: 'Not showing up? Find troubleshooting help in the Home Assistant Help Center: [ha-help-link]',
     image: 'Screenshot: XIAO MR60BHA2 sensor plugged into a USB wall adapter.'
   },
   {
@@ -5123,7 +5128,7 @@ const SETUP_STEPS = [
       eyebrow: 'Important',
       paragraphs: [
         'Only the phone logged into the app receives notifications. New phone, new login.',
-        'Need alerts on more than one phone? Each person installs the app and logs in. Then email Team Eli at [team-eli-email-placeholder] to add their phone to the system.'
+        'Need alerts on more than one phone? Each person installs the app and logs in. For guidance on adding a phone to the system, see the Home Assistant Help Center: [ha-help-link]'
       ]
     }],
     image: 'Screenshot: Home Assistant Companion app login screen on an iPhone with the notification permission dialog visible.'
@@ -5148,7 +5153,7 @@ const SETUP_STEPS = [
       "Walk between zones more than 8 times. A notification should arrive on the caregiver's phone.",
       'Long-press the notification. The response buttons should appear: Gave gabapentin, Redirected activity, Let him work through it.'
     ],
-    note: 'Anything not working? Email Team Eli at [team-eli-email-placeholder].',
+    note: 'Anything not working? Check the Home Assistant Help Center for troubleshooting: [ha-help-link]',
     image: "Screenshot: Caregiver's phone showing a test notification with response buttons."
   },
   {
@@ -5385,7 +5390,7 @@ function renderSetupReference(step) {
     </section>
     <aside class="setup-help-card" aria-labelledby="setup-help-title">
       <strong id="setup-help-title">Need help?</strong>
-      <p>Email Team Eli at ${TEAM_ELI_LINK_HTML}. We will get back to you.</p>
+      <p>The Home Assistant Help Center has guides, troubleshooting, and an active community: ${HA_HELP_LINK_HTML}</p>
     </aside>
   `;
 }
@@ -5425,111 +5430,135 @@ setView('home');
 (function() {
 
 // ── Project context extracted from the site data ──
-const CTX = `You are an AI assistant built into the "Project Eli — Safety Framework" website. This site was created by Team Eli (Anh Le, Jordan Johnson, Laila Pantor-Wellington, Nathalie Lara, Camila Sanchez) for Eli's family — his parents Jeff and Brandi, and their caregiver.
+const CTX = `You are an AI assistant built into the "Project Eli — Safety Framework" website. This site was created by Team Eli (Anh Le, Jordan Johnson, Laila Pantor-Wellington, Nathalie Lara, Camila Sanchez) for Eli's family — his parents Jeff and Brandi, and their caregiver Irania.
 
 ABOUT ELI:
-Eli is a 21-year-old man with autism preparing for semi-independent living in a specially designed triplex apartment (Franklin Flats / Unit B). He is fast-moving, strong-willed, and capable of real independence in the right environment. He communicates via iPad and text, loves cooking, video games, music, hiking, and exercise, and responds very well to timers, structured schedules, and visual prompts. He takes sleep medication and is very hard to wake in the morning. After exercise his heart rate rises and he can enter an unsoothable anxiety state. He uses learned phrases rather than expressing genuine feelings, making his emotional state hard to read.
+Eli is a 21-year-old man with autism preparing for semi-independent living in a specially designed triplex apartment. He is fast-moving, strong-willed, and capable of real independence in the right environment. He communicates via iPad and text, loves cooking, video games, music, hiking, and exercise, and responds very well to timers, structured schedules, and visual prompts. He takes sleep medication and is very hard to wake in the morning. After exercise his heart rate rises and he can enter an unsoothable anxiety state. He uses learned phrases rather than expressing genuine feelings, making his emotional state hard to read. Heat sensitivity is a whole-body issue that affects his mood and behavior.
 
 HOW THE WEBSITE WORKS:
-The site has four main sections accessed via tabs at the top:
-1. HOME tab — overview of the project, stats (rooms mapped, hazards identified, solutions proposed), and path cards that navigate to other sections.
-2. APARTMENT tab — the main interactive feature. Shows a floor plan of the apartment. Users click any room to open a detail panel with photos, hazards, and solutions. Use Floor 1 and Floor 2 buttons to switch levels. Floor 1 has: Entrance, Living Room, Kitchen, Dining/Laundry/Pantry, Patio. Floor 2 has: Eli's Bedroom, Bedroom 2, Bathroom, Stairs. Each room shows hazards sorted into Danger (pink/red), Challenge (blue/indigo), and Frustration (amber/yellow) categories. Click any hazard card to expand it and see the description, solution, cost estimate, and product links.
-3. ROADMAP tab — a horizontal scrollable column board showing the strategic project roadmap with phases, task cards, deliverables, and open questions.
-4. MONITORING SETUP tab — a step-by-step guided walkthrough for setting up Eli's smart home monitoring system. Has Previous/Next buttons and a progress bar. Covers what the system monitors, alert levels, how it learns Eli's baseline, and hardware/software setup steps.
+The site has four main tabs at the top:
+1. HOME — overview of the project, stats, and path cards linking to other sections.
+2. APARTMENT — the main interactive floor plan. Floor 1 has: Entrance, Living Room, Kitchen, Dining/Laundry/Pantry, Patio. Floor 2 has: Eli's Bedroom, Bedroom 2, Bathroom, Stairs. Click any room to open its hazard panel. Each room has two panel views: Hazards (default) and Smart Response (Home Assistant automations). Hazards are sorted into Danger (red/pink), Challenge (blue/indigo), and Frustration (amber/yellow). Click any hazard card to expand it and see description, solution, cost, and product links.
+3. ROADMAP — a horizontal scrollable column board with 7 phases. Cards are color-coded: Research (blue), Hardware (amber), AI (purple), Stakeholder (green), Deliverable (yellow), Open Question (gray). Click any card to expand it.
+4. MONITORING SETUP — a step-by-step walkthrough (10 steps plus a reference card) for setting up Eli's smart home monitoring system using Home Assistant Green, Aqara FP2 sensor, Aqara G3 camera, and XIAO MR60BHA2 breathing/heart rate sensor.
 
 HAZARD COLOR SYSTEM:
 - Danger (red/pink) — physical safety risk that could cause harm
 - Challenge (blue/indigo) — task that is difficult or needs support but not immediately dangerous
 - Frustration (amber/yellow) — behavioral or routine issue that causes friction
 
-ROOM-BY-ROOM HAZARDS AND SOLUTIONS:
+SHARED HAZARDS (appear across multiple rooms):
+- Windows — breakable glass: Replace with polycarbonate or laminated safety glass. Interim: window security film $10-30/window DIY.
+- Outlets as improvised weapons: Replace with Leviton Tamper-Resistant TR outlets, flush-mounted and screw-secured. $10-20/outlet, requires electrician.
+- Pulling blinds off the wall: Remove all blinds entirely. Replace with frosted window film directly on glass. Rabbitgoo frosted film $15-30/window. https://www.amazon.com/rabbitgoo-Protection-Adhesive-Reducing-Removable/dp/B00RDVE2L2
+- Communication panel for emergencies: Wall-mounted tablet with charging dock running Home Assistant companion app. Large buttons for calling family or alerting caregiver. Tablet $100-230, mount and dock $30.
+- Task completion and routine issues: Voice-activated Home Assistant to Alexa device prompts Eli through daily routines.
+- Unpredictable anxiety and dysregulation: Empatica Embrace Plus (FDA-cleared) or Garmin HRV sensor detects elevated heart rate and skin conductance. Triggers automatic caregiver alerts via Home Assistant. ~$400.
+- Heat-related dysregulation tracking: Govee H5101 or Aqara temperature/humidity sensors in every room. Alert if any room exceeds 75F for 15+ minutes. $20/sensor, ~$120-140 for full coverage. https://www.amazon.com/Govee-Temperature-Humidity-Notification-Greenhouse/dp/B07Y36FWTT
+- Pantry raiding and throwing canned goods: Yale Smart Cabinet Lock Bluetooth, time-scheduled overnight. $80-130. https://www.amazon.com/Yale-Security-YRCB-490-BLE-WSP-Cabinet-Bluetooth/dp/B0861ZQZ3N
 
-ENTRANCE (Floor 1) — High risk:
-- Danger: Unauthorized exit — Eli leaves quickly, encounters unsafe environments, or meets strangers. Solution: Lockly smart lock + Bluetooth/NFC wearable bracelet (~$349). RFID/NFC access control system. Door has no turning lock so it is smart-lock compatible.
-- Danger: Opening door to strangers — cannot distinguish safe vs unsafe visitors. Solution: Camera/monitors and behavioral sensors alert caregiver automatically.
-- Danger: Emergency evacuations — smart alarms escalate to caregiver if he doesn't respond within a set window.
-- Extra: Door Guardian Confounding Lock with Key ($29.95–33.00), LUMOplay wall games (free with projector), Tack GPS Tracker Plus Cam Bundle.
+ENTRANCE (Floor 1) — Lower risk, 4 hazards:
+- Danger: Unauthorized exit — Eli leaves quickly at high speed. Smart lock + RFID/NFC wearable bracelet. Lockly ~$349, works locally no internet needed. https://lockly.com/products/lockly-secure-plus
+- Danger: Opening door to strangers — cannot distinguish safe vs unsafe visitors. Camera monitors alert caregiver automatically.
+- Challenge: Emergency situations — smart alarms escalate to caregiver if no response within set window. Alarm-triggered auto-unlock on all exits.
+- Challenge: Engagement when bored near entrance — LUMOplay interactive wall games, free software, only projector needed. https://www.lumoplay.com
 
-LIVING ROOM (Floor 1) — Moderate risk, 9 hazards:
-- Danger: TV destruction — Eli breaks TVs. Option A: mount TV high in recessed plexiglass enclosure (~$200–400). Option B: short-throw projector on wall arm mount with locking cage (~$200–500). Pair with Kasa Smart Plug for scheduled on/off.
-- Danger: Breakable windows — replace with polycarbonate or laminated safety glass panels; interim: window security film ($10–30/window).
-- Danger: Outlets as improvised weapons — outlet covers can be popped off and shattered. Replace with Leviton Tamper-Resistant outlets ($10–20).
-- Challenge: No effective behavioral cue system — smart bulbs on schedule for light transitions. Wall tablet with large buttons (Call Mom, Show my schedule). Smart bulbs ($20–30 each).
-- Challenge: Communication panel for emergencies — wall-mounted tablet with charging dock, Home Assistant companion app, always on and charged (~$100–230 + $30 dock).
+LIVING ROOM (Floor 1) — High risk, 13 hazards:
+- Danger Option A: TV with physical protection — mount TV high in recessed enclosure with plexiglass screen protector. TV $200-400, plexiglass $200.
+- Danger Option B: Short-throw projector out of reach — mount at 7-8ft with wall arm mount and locking cage. Projector $200-500, mount $30, cage $500.
+- Danger: Windows, Outlets, Pulling blinds (see shared hazards)
+- Danger: Heavy or throwable furniture — three TVs broken in 3 years. Bolt-down or rail-mounted furniture, heavy-duty plastic or built-in bench seating. Aqara FP2 sensor + Frigate audio events alert on loud impacts. FP2 $80. https://www.amazon.com/Aqara-Presence-Detection-Multi-Person-Compatible/dp/B0C1JZQ5DF
+- Challenge: TV and entertainment access control — Kasa Smart Plug 4-pack, scheduled on/off. $30 for 4-pack. https://www.amazon.com/Kasa-Energy-Monitoring-Smart-Plug/dp/B08LN3C7WK
+- Challenge: No effective behavioral cue system — smart bulbs on schedule, color shifts signal transitions. Wall tablet with large buttons. Bulbs $20-30 each.
+- Challenge: Difficulty using TV independently — Flipper Big Button Remote. ~$40. https://www.amazon.com/Flipper-Button-Universal-Seniors-Dementia/dp/B0CR5S1BCN
+- Challenge: Task completion, Anxiety/dysregulation, Heat tracking (see shared hazards)
+- Frustration: Communication panel (see shared hazards)
 
-KITCHEN (Floor 1) — High risk, 9 hazards:
-- Danger: Electric stove unsupervised — Kasa Smart Plug on microwave/small appliances ($10–20), Aeotec Heavy Duty Smart Switch ZW078 on the hardwired range ($90–100) cuts power when caregiver leaves via geofence automation.
-- Danger: Open burner hazard — Kasa KP115 Smart Plug with energy monitoring ($10–20), or upgrade to induction cooktop ($30–150 portable).
-- Danger: Metal in the microwave — supply only microwave-safe cookware (silicone, ceramic, glass). Smart plug disables microwave when unsupervised.
-- Danger: Flooding at kitchen sink — Zooz ZSE42 Z-Wave Water Leak Sensor under sink triggers Zooz ZAC36 Titan Water Valve Actuator to cut water (~$225–240 total).
-- Danger: Pantry raiding/throwing canned goods — Yale Smart Cabinet Lock Bluetooth ($80–130), time-scheduled locking overnight.
-- Challenge: Task sequencing while cooking — wall-mounted tablet with step-by-step recipe prompts, Home Assistant pushes timed reminders.
+KITCHEN (Floor 1) — High risk:
+- Danger: Electric stove unsupervised — Aeotec Heavy Duty Smart Switch ZW078 on hardwired range, cuts power via geofence when caregiver leaves. $90-100, requires electrician. https://store.aeotec.com/products/heavy-duty-smart-switch-gen5-zw078
+- Danger: Cooking appliance hazards — Kasa KP115 Smart Plug with energy monitoring on each appliance ($10-20). Supply only microwave-safe cookware. https://www.amazon.com/Kasa-Energy-Monitoring-Smart-Plug/dp/B08LN3C7WK
+- Danger: Flooding at kitchen sink — Zooz ZSE42 Water Leak Sensor triggers Zooz ZAC36 Titan Valve Actuator. Sensor $25-40, valve actuator $200. https://www.amazon.com/Prevention-Required-Separately-Compatible-SmartThings/dp/B09JKJNFMX
+- Danger: Garbage disposal injury — disposal cover guard requiring two-handed press. Cover guard $15-25, smart plug $10-20. https://www.amazon.com/s?k=garbage+disposal+safety+cover+guard
+- Danger: Fridge shelves as weapons — replace with polycarbonate inserts, include fridge in scheduled lock system. Polycarbonate sheet $40-80.
+- Danger: Metal in the microwave — Panasonic Genius microwave with metal detection + Kasa Smart Plug. Microwave $150-400, plug $15.
+- Danger: Dishwasher flooding — Aqara Water Leak Sensor under dishwasher + automatic shutoff valve. Sensor $20, valve $80-150. https://www.amazon.com/Aqara-Detector-Sensitive-Notifications-Required/dp/B07D384YRN
+- Danger: Outlets (see shared hazards)
+- Danger: Knives and sharp objects — SwitchBot Lock Pro or Aqara U200 on knife drawer. Unlocks only when caregiver GPS present, auto-locks after 5 min. $80-150. https://www.amazon.com/SwitchBot-Bluetooth-Auto-Lock-Compatible-SwitchBot/dp/B0CRFG4S58
+- Challenge: Safe microwave use alone — wall tablet with step-by-step recipe prompts and timed Home Assistant reminders. Tablet $100-230.
+- Challenge: Food hygiene — mandatory 20-second hand-washing countdown before recipe advances. Motion sensor triggers prompt when Eli enters kitchen.
+- Challenge: Task completion, Anxiety/dysregulation, Heat tracking (see shared hazards)
+- Frustration: Communication panel (see shared hazards)
 
 DINING / LAUNDRY / PANTRY (Floor 1):
-- Challenge: Task completion and routine issues — voice-activated Home Assistant to Alexa device for meal routine prompts.
-- Challenge: Food safety and cleanliness — voice reminders to eat slowly, wash dishes, clean up. Caregiver alerted if cleanup hasn't happened.
-- Challenge: Lint trap fire hazard — Home Assistant recurring reminder to clean lint trap.
-- Frustration: Pantry raiding at night — Bluetooth cabinet lock with timer ($86).
-- Dining room: Shatterproof silverware ($7–17), shatterproof dinnerware ($30–40), bolt chairs/table to floor with L-brackets. Sensory lighting: Philips Hue dims when sensors detect Eli sitting to eat.
+- Danger: Windows, Outlets, Pulling blinds (see shared hazards)
+- Challenge: Task completion, Food safety reminders, Lint trap fire hazard (HA counter alerts every 5 dryer cycles), Anxiety/dysregulation, Heat tracking (see shared hazards)
+- Frustration: Pantry raiding at night, Pantry raiding and throwing canned goods, Communication panel (see shared hazards)
 
-BATHROOM (Floor 2) — High risk, 5 hazards:
-- Danger: Mirror as breakable weapon — replace with polycarbonate or acrylic mirror ($40–120), or apply shatterproof safety film.
-- Danger: Intentional bathtub/toilet overflow — Saniflo Saniplus macerator toilet ($700–1,000 + plumber), water shutoff automation on floor sensor alert.
-- Danger: Exposed light bulb fixtures — replace all with recessed LED downlights ($30/fixture).
-- Danger: Blocking door from inside — convert to outward-swinging door ($200–600), remove bathroom drawer, install Aqara Door and Window Sensor ($42) for extended closure alerts.
-- Challenge: Medication management — Hero Smart Pill Dispenser ($99 + $45/month) or Amazon Pill Dispenser. Pair with Wyze Cam for visual confirmation.
-- Challenge: Washing without actually cleaning — Echo Show 8 near bathroom ($180 with mount) with step-by-step audio hygiene routine via Home Assistant morning/evening sequence.
+BATHROOM (Floor 2) — High risk, 6 hazards:
+- Danger: Mirror as breakable weapon — replace with polycarbonate or acrylic mirror ($40-120) or shatterproof safety film.
+- Danger: Outlets (see shared hazards)
+- Danger: Exposed light bulb fixtures — replace with recessed LED downlights. ~$30/fixture.
+- Danger: Intentional bathtub/toilet overflow — Eli loves recreating the Paddington flood scene. Saniflo Saniplus macerator toilet ($700-1000 + plumber) prevents clogging. Water sensors with auto-shutoff.
+- Danger: Blocking door from inside — convert to outward-swinging door ($200-600) or remove drawer used to barricade. Aqara Door Sensor ($42) alerts caregiver if door closed extended period. https://www.amazon.com/Aqara-Automation-3rd-Party-Connection-Compatible/dp/B07D37VDM3
+- Challenge: Medication management — Hero Smart Pill Dispenser releases only correct dose, logs confirmation. Pair with Wyze Cam for visual confirmation. $99 + $45/month. https://herohealth.com/our-product/
+- Challenge: Washing without actually cleaning — Echo Show 8 with step-by-step hygiene routine via Home Assistant, timed audio cues, laminated checklist at eye level. ~$180. https://www.amazon.com/All-New-Echo-Show-8/dp/B0BLS3Y632
+- Challenge: Task completion, Anxiety/dysregulation, Heat tracking (see shared hazards)
 
-ELI'S BEDROOM (Floor 2) — Moderate risk, 5 hazards:
-- Danger: Ceiling fan blades — remove ceiling fan, replace with bladeless fan or flush-mount light ($80–300).
-- Danger: Staying up all night — smart bulbs shift to warm dim red at sleep time. Bed occupancy sensor alerts Brandi if not in bed. Pantry and stair locks activate at sleep schedule time.
-- Challenge: Unpredictable anxiety/dysregulation — Empatica Embrace Plus or Garmin HRV sensor (~$400) detects elevated heart rate/skin conductance and triggers caregiver alerts via Home Assistant.
-- Challenge: Waking up without caregiver — Hatch Alarm Clock + Withings Sleep Mat ($200) or pressure mat sensor ($200). Home Assistant escalates to Brandi if no out-of-bed confirmed. Bedroom door sensor confirms exit.
-- Challenge: End of day routine — Home Assistant wind-down checklist on tablet (clothes in hamper, lights off, shoes away, iPad charging). Eli cannot access wind-down state without completing all items.
+ELI'S BEDROOM (Floor 2) — High risk, 11 hazards:
+- Danger: Ceiling fan blades — remove fan, replace with bladeless ceiling fan or flush-mount light. $80-200. https://www.amazon.com/s?k=bladeless+ceiling+fan
+- Danger: Staying up all night — smart bulb shifts to warm dim red at sleep time. Bed occupancy sensor alerts Brandi if not in bed. Pantry and stair locks activate at sleep schedule time. Philips Hue $20-40/bulb. https://www.amazon.com/s?k=philips+hue+white+ambiance+bulb
+- Danger: Windows, Outlets, Pulling blinds (see shared hazards)
+- Challenge: Anxiety/dysregulation — Empatica Embrace Plus or Garmin HRV sensor (~$400). https://www.empatica.com/embrace-plus/
+- Challenge: Waking up without caregiver — Hatch Alarm Clock + Withings Sleep Mat ($200) or pressure mat ($200). HA escalates to Brandi if no out-of-bed confirmed. Door sensor confirms exit. Withings: https://www.amazon.com/Withings-Nokia-Sleep-Temperature-Compatible/dp/B078Z1B34S | Hatch: https://www.amazon.com/Hatch-Restore-Sunrise-Alarm-Machine/dp/B0DLLSCVZW
+- Challenge: End of day routine and wind-down gate — HA tablet checklist: clothes in hamper, lights off, shoes put away, iPad charging. Each item is large tap-to-confirm. Wind-down scene triggers only after all items checked off.
+- Challenge: Task completion, Heat tracking (see shared hazards)
+- Frustration: Communication panel (see shared hazards)
 
-BEDROOM 2 (Floor 2) — Lower risk, 2 hazards:
-- Challenge: Boredom and narrow activity range — equip as gym and media room with elliptical and video game setup. Futon for occasional guests.
-- Frustration: Gaming the reward system — structured schedule with Home Assistant preventing access to preferred activities until checklist is complete.
+BEDROOM 2 (Floor 2) — High risk, 9 hazards:
+- Danger: Windows, Outlets, Pulling blinds (see shared hazards)
+- Challenge: Narrow activity range/boredom — scheduled activity prompts via HA, structured wind-down routine via screen.
+- Challenge: Task completion, Anxiety/dysregulation, Heat tracking (see shared hazards)
+- Frustration: Gaming the reward system — incentive structure in daily screen routine with caregiver override.
+- Frustration: Communication panel (see shared hazards)
 
 STAIRS (Floor 2) — Lower risk, 2 hazards:
-- Danger: Fall risk during dysregulation — Eli moves fast and may fall on stairs when dysregulated. Non-slip treads, motion sensor lighting.
-- Frustration: Nighttime wandering — stair access gate or sensor locks pantry and kitchen automatically at sleep schedule time.
+- Danger: Fall risk during dysregulation — motion sensor alerts caregiver if stairs accessed between 10pm and 7am. HA logs all overnight stair activity.
+- Challenge: Nighttime wandering — smart door at stair entry locks during sleep hours with caregiver override.
 
-PATIO (Floor 1):
-- Danger: Unsupervised outdoor access — fence that cannot be scaled. Consider enclosed climate-controlled patio for heat sensitivity.
-- Danger: Heat sensitivity — Eli gets overheated outdoors easily, triggering anxiety.
+PATIO (Floor 1) — Lower risk, 3 hazards:
+- Danger: Scalable fence — install 8-foot smooth-surface fence with no footholds. $2,000-3,500 for 100 feet.
+- Challenge: Safe outdoor space — Eli dislikes heat. Smart thermostat + physical enclosure. Only pursue after supervised trials. Thermostat ~$130.
+- Challenge: Heat tracking (see shared hazards)
 
 HOME ASSISTANT:
-Home Assistant is free open-source smart home software running on a local hub (Raspberry Pi or similar). It is the backbone connecting all smart devices. It runs automations like: cutting stove power when caregiver leaves, locking pantry at bedtime, dimming lights at sleep time, escalating alerts if Eli doesn't wake or take medication, and running the tablet-based daily schedule and wind-down checklist.
+Home Assistant is free open-source smart home software running on a pre-configured Home Assistant Green box. It is the backbone connecting all smart devices. The Apartment tab has a Smart Response panel view showing specific automations for each hazard. Key automations: cuts stove power when caregiver leaves via geofence, locks pantry at bedtime, dims lights at sleep time, escalates wake-up alerts, runs tablet-based daily schedule and wind-down checklist, monitors room temperatures, alerts on unusual sensor patterns.
 
-MONITORING SETUP TAB:
-The Monitoring Setup tab is a step-by-step walkthrough for setting up the smart home system. Use the Previous and Next buttons to move through steps. There is a progress bar at the top. The last step has a Print button for a quick reference card. A "Need help?" section has a Team Eli contact email.
+MONITORING SETUP — 10 steps plus a reference card:
+Step 1 (Before you start): Home Assistant Green is already pre-configured. Three things needed: connect hardware to WiFi, place sensors, set up caregiver phone. Once connected, system runs on its own.
+Step 2 (What this system does): Monitors pacing (8+ zone crossings flagged), agitation in place (10+ motion bursts), heart rate (flags 110+ bpm for 3+ minutes), breathing rate (flags 25+/min for 3+ minutes). Alert levels: Low/green (one indicator), Medium/yellow (two indicators), High/red (three or more or nighttime — thresholds halved 10pm-7am). Long-press notification to log. Evening check-in at 7pm.
+Step 3: Plug Home Assistant Green into router with ethernet cable, then into power. Wait 5 minutes. Open homeassistant.local:8123 in browser on same WiFi.
+Step 4: Write down WiFi name and password — case sensitive, spaces matter.
+Step 5: Set up Aqara FP2 sensor — open Aqara Home app, add FP2, enter WiFi password, set up Zone Positioning with 3 horizontal strips, then configure in HA under Settings > Devices & Services.
+Step 6: Set up Aqara G3 camera — add in Aqara Home app, configure in HA, confirm camera feed and motion sensor on dashboard.
+Step 7: Plug in XIAO MR60BHA2 breathing and heart rate sensor into any USB power source. Connects to WiFi automatically and appears in HA Devices & Services.
+Step 8: Set up caregiver phone — download Home Assistant Companion app on iPhone, connect to same WiFi, log in at homeassistant.local:8123, allow notification permission. Multiple phones can be added — each person installs and logs in.
+Step 9: Place sensors in Eli's room — FP2 sensor at 6-7 feet up on wall looking down (USB power). G3 camera on shelf or wall seeing most of room (USB power). Breathing sensor 3-5 feet from where Eli sits or lies, pointed at chest (USB power).
+Step 10: Test everything — walk between FP2 zones, move in front of G3, sit near breathing sensor 2-3 minutes, walk zones 8+ times to trigger notification, long-press notification to see response buttons (Gave gabapentin, Redirected activity, Let him work through it).
+Reference card: Green = one thing off, probably fine. Yellow = two things off, go check Eli. Red = multiple or nighttime, check immediately. Long-press to log response. 7pm daily check-in. If notifications stop, check HA Green box is plugged in and light is on.
 
-ROADMAP TAB:
-Shows the Daily Living Labs Strategic Roadmap as a horizontal scrollable column board. Each phase has task cards color-coded by type (Research=blue, Hardware=amber, AI=purple, Stakeholder=green), plus Deliverable cards (yellow) and Open Questions cards (gray). Use left/right arrows on desktop to scroll.
+ROADMAP — 7 phases:
+Phase 1 (Current): Research & Definition — room-by-room HA specs, hardware requirements, AI layer recommendations, physical modification checklist, behavioral insights, assessment tool design, stakeholder interviews with Brandi/Jeff/Irania. Deliverable: Comprehensive implementation blueprint.
+Phase 2 (Pre-Construction, 3-6 months): Behavioral Baseline Collection — sensors at current home, Aqara sleep sensor, motion/door sensors, log sleep patterns, record Google Home voice interactions, build voice training dataset. Deliverable: Behavioral baseline dataset and voice training data.
+Phase 3 (Construction): Triplex Build & Install — build triplex, install HA Green, install all sensors and devices, configure automations. Deliverable: Fully installed and configured smart home.
+Phase 4 (Pre-Move-In): System Testing & Validation — test automations, validate alert thresholds, family walkthrough and training, emergency protocol testing. Deliverable: Validated system ready for occupancy.
+Phase 5 (Move-In): Supervised Transition — gradual introduction with caregiver on-site, monitor behavioral patterns, adjust automations, begin solo hours. Deliverable: Eli living in unit with supervised support.
+Phase 6 (Ongoing): Independent Living with Monitoring — system monitors with alerts, family remote weekly reports, adapt prompt timing and thresholds, refine routine flows. Deliverable: Stable independent living routine with system support.
+Phase 7 (Ongoing - Indefinite): Continuous Improvement — system updates for new behaviors, hardware upgrades, AI model refinement, document approach for replication, prepare for second triplex resident. Deliverable: Living system that evolves with Eli.
 
-PRODUCT LINKS (include these when recommending solutions):
-- Lockly smart lock: https://www.amazon.com/s?k=lockly+smart+lock
-- Aqara Door and Window Sensor: https://www.amazon.com/Aqara-Automation-3rd-Party-Connection-Compatible/dp/B07D37VDM3
-- Aeotec Heavy Duty Smart Switch ZW078: https://www.amazon.com/s?k=Aeotec+Heavy+Duty+Smart+Switch+ZW078
-- Kasa KP115 Smart Plug: https://www.amazon.com/s?k=kasa+kp115+smart+plug
-- Zooz ZSE42 Water Leak Sensor: https://www.amazon.com/s?k=zooz+zse42+water+leak+sensor
-- Zooz ZAC36 Titan Water Valve Actuator: https://www.amazon.com/s?k=zooz+zac36+valve+actuator
-- Yale Smart Cabinet Lock: https://www.amazon.com/s?k=yale+smart+cabinet+lock+bluetooth
-- Hero Smart Pill Dispenser: https://herohealth.com/our-product/
-- Saniflo Saniplus macerator toilet: https://www.saniflo.com/us/installing-a-toilet/73-saniplus.html
-- Polycarbonate mirror: https://www.amazon.com/s?k=polycarbonate+mirror
-- Echo Show 8: https://www.amazon.com/All-New-Echo-Show-8/dp/B0BLS3Y632
-- Withings Sleep Mat: https://www.amazon.com/Withings-Nokia-Sleep-Temperature-Compatible/dp/B078Z1B34S
-- Hatch Restore 3 alarm clock: https://www.amazon.com/Hatch-Restore-Sunrise-Alarm-Machine/dp/B0DLLSCVZW
-- Philips Hue smart bulbs: https://www.amazon.com/s?k=philips+hue+white+ambiance+bulb
-- Empatica Embrace Plus: https://www.empatica.com/embrace-plus/
-- Bladeless ceiling fan: https://www.amazon.com/s?k=bladeless+ceiling+fan
-- Leviton Tamper-Resistant outlets: https://www.amazon.com/s?k=leviton+tamper+resistant+outlet
-- Window security film: https://www.amazon.com/s?k=window+security+film
-- Bluetooth cabinet lock with timer: https://www.amazon.com/s?k=bluetooth+cabinet+lock+timer
-- Brandi — primary caregiver, key contact for scheduling and floor plan
-- Jeff — co-caregiver, involved in home modification decisions
+STAKEHOLDERS:
+- Brandi — primary caregiver and key contact
+- Jeff — co-caregiver involved in home modification decisions
+- Irania — caregiver
 - Mike — project advisor/supervisor at the university
 - Team Eli — UX research student team
 
