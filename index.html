@@ -211,15 +211,14 @@
     overflow: hidden;
     background: #FAFAF9;
   }
-  /* Inner wrapper around the carousel so it can be padded + centered without
-     the wrap (which is aspect-locked) being stretched by flex parent. */
+  /* Inner wrapper — no padding so the photo fills edge-to-edge */
   #carousel-area {
     flex: 1;
     min-height: 0;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
-    padding: 14px 16px 16px;
+    padding: 0;
   }
 
   /* ─── ROOM TOPBAR ─── */
@@ -288,7 +287,7 @@
   #room-select:hover { background-color: #FAFAF9; border-color: #A8A29E; }
   #room-select:focus-visible { outline: 2px solid #6366F1; outline-offset: -2px; }
 
-  /* ─── PHOTO CAROUSEL ─── */
+  /* ─── PHOTO DISPLAY ─── */
   #carousel-wrap {
     /* All room photos are 2220×1472 (aspect 1.508). Lock the wrap to that aspect
        so the image fills edge-to-edge — no letterbox, no leftover dark band. */
@@ -298,7 +297,7 @@
     max-height: 100%;
     margin: 0 auto;
     overflow: hidden;
-    border-radius: 12px;
+    border-radius: 0;
     background: #1C1917; /* fallback only — visible briefly during image load */
   }
   #carousel {
@@ -328,40 +327,6 @@
     letter-spacing: 0.03em;
     text-align: center;
   }
-  .carousel-arrow {
-    -webkit-appearance: none;
-    appearance: none;
-    position: absolute;
-    top: 50%; transform: translateY(-50%);
-    width: 40px; height: 40px; border-radius: 50%;
-    background: rgba(0,0,0,0.45);
-    border: 1px solid rgba(255,255,255,0.3);
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer;
-    z-index: 30;
-    padding: 0;
-    transition: background 0.15s;
-  }
-  .carousel-arrow:hover { background: rgba(0,0,0,0.65); }
-  .carousel-arrow.hidden { display: none !important; }
-  #arrow-prev { left: 12px; }
-  #arrow-next { right: 12px; }
-  .carousel-counter {
-    position: absolute; top: 10px; right: 10px;
-    font-size: 10px; color: rgba(255,255,255,0.6);
-    background: rgba(0,0,0,0.4); border-radius: 10px; padding: 3px 8px;
-    z-index: 10;
-  }
-  .carousel-dots {
-    position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
-    display: flex; gap: 6px; z-index: 10;
-  }
-  .carousel-dot {
-    width: 7px; height: 7px; border-radius: 50%;
-    background: rgba(255,255,255,0.3); cursor: pointer;
-    transition: background 0.15s;
-  }
-  .carousel-dot.active { background: rgba(255,255,255,0.85); }
 
   /* ─── DETAIL PANEL ─── */
   #detail-panel {
@@ -1178,11 +1143,8 @@
       min-height: 36px;
     }
     #room-name-label { font-size: 12px; }
-    #carousel-area { padding: 10px 12px 12px; }
+    #carousel-area { padding: 0; }
     #carousel-wrap { aspect-ratio: 2220 / 1472; max-height: none; }
-    .carousel-arrow { width: 36px; height: 36px; }
-    #arrow-prev { left: 8px; }
-    #arrow-next { right: 8px; }
 
     /* Detail panel — full width below carousel */
     #detail-panel {
@@ -2522,18 +2484,8 @@
           <div id="carousel">
             <img id="carousel-img" alt="">
             <div id="photo-icon-layer"></div>
-            <div class="carousel-placeholder" id="carousel-placeholder">
-              <span class="carousel-placeholder-label" id="carousel-label">Photo 1 of 1</span>
-            </div>
-            <div class="carousel-counter" id="carousel-counter">1 / 1</div>
-            <div class="carousel-dots" id="carousel-dots"></div>
+            <div class="carousel-placeholder" id="carousel-placeholder"></div>
           </div>
-          <button class="carousel-arrow" id="arrow-prev">
-            <svg width="10" height="16" viewBox="0 0 10 16" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="8,2 2,8 8,14"/></svg>
-          </button>
-          <button class="carousel-arrow" id="arrow-next">
-            <svg width="10" height="16" viewBox="0 0 10 16" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,2 8,8 2,14"/></svg>
-          </button>
         </div>
       </div>
     </div>
@@ -3966,9 +3918,6 @@ function getHazardPosition(key, slideIdx) {
 
 let currentFloor = 1;
 let currentRoom = null;
-let carouselIndex = 0;
-let carouselPhotos = [];
-let carouselImagesLoaded = {};
 
 // ─── ELEMENTS ────────────────────────────────────────────────────────────────
 
@@ -3987,13 +3936,8 @@ const panelRoomName    = document.getElementById('panel-room-name');
 const panelRiskMeta    = document.getElementById('panel-risk-meta');
 const panelHazards     = document.getElementById('panel-hazards');
 
-const carousel          = document.getElementById('carousel');
+const carousel            = document.getElementById('carousel');
 const carouselPlaceholder = document.getElementById('carousel-placeholder');
-const carouselLabel     = document.getElementById('carousel-label');
-const carouselCounter   = document.getElementById('carousel-counter');
-const carouselDotsEl    = document.getElementById('carousel-dots');
-const arrowPrev         = document.getElementById('arrow-prev');
-const arrowNext         = document.getElementById('arrow-next');
 
 // ─── FLOOR RENDERING ─────────────────────────────────────────────────────────
 
@@ -4074,8 +4018,7 @@ function openRoom(roomId) {
   if (!roomInfo) return;
 
   currentRoom = roomId;
-  carouselPhotos = zoneData.photos || [];
-  carouselImagesLoaded = {};
+  const roomPhotos = zoneData.photos || [];
 
   // Sync the in-detail switcher to match the room being opened
   populateRoomSwitcher(currentFloor, roomId);
@@ -4091,11 +4034,11 @@ function openRoom(roomId) {
   // Render hazard accordion cards
   renderHazards(roomId, roomInfo);
 
-  // Render hazard icons for slide 0 (will become visible once photo loads)
+  // Render hazard icons for the first photo
   renderHazardIcons(roomId, roomInfo, 0);
 
-  // Setup carousel
-  setupCarousel(roomId, carouselPhotos);
+  // Show the first (and only) room photo
+  showRoomPhoto(roomPhotos);
 
   // Switch state
   overview.classList.add('hidden');
@@ -4110,7 +4053,6 @@ function closeRoom() {
   currentRoom = null;
   carouselImg.classList.remove('visible');
   carouselImg.src = '';
-  carouselImagesLoaded = {};
   const iconLayer = document.getElementById('photo-icon-layer');
   if (iconLayer) iconLayer.innerHTML = '';
 }
@@ -4247,19 +4189,6 @@ function toggleAccordionCard(hazardId, forceOpen) {
   }
 }
 
-// Returns the slide indices on which a given hazard's pin is visible.
-// Empty array = no pin on any slide (e.g. tampering, heat tracking, anything
-// without a HAZARD_META entry, or with all slides explicitly null in overrides).
-function getSlidesWithPin(hazardId) {
-  if (!HAZARD_META[hazardId]) return [];
-  const total = (carouselPhotos && carouselPhotos.length) || 1;
-  const slides = [];
-  for (let i = 0; i < total; i++) {
-    if (getHazardPosition(hazardId, i) != null) slides.push(i);
-  }
-  return slides;
-}
-
 function focusHazardCard(hazardId) {
   const card = panelHazards.querySelector(`[data-hazard-id="${hazardId}"]`);
   if (!card) return;
@@ -4268,13 +4197,6 @@ function focusHazardCard(hazardId) {
   if (card.classList.contains('open')) {
     toggleAccordionCard(hazardId, false);
     return;
-  }
-
-  // If the hazard's pin lives on a different slide, navigate there first.
-  // (Pins with no slides at all — tampering, heat tracking — just open the card.)
-  const slidesWithPin = getSlidesWithPin(hazardId);
-  if (slidesWithPin.length > 0 && !slidesWithPin.includes(carouselIndex)) {
-    goToSlide(slidesWithPin[0]);
   }
 
   toggleAccordionCard(hazardId, true);
@@ -4298,80 +4220,34 @@ viewToggleBtns.forEach(btn => {
   });
 });
 
-// ─── CAROUSEL ────────────────────────────────────────────────────────────────
+// ─── PHOTO DISPLAY ───────────────────────────────────────────────────────────
 
 const carouselImg  = document.getElementById('carousel-img');
 
-function setupCarousel(roomId, photos) {
-  carouselIndex = 0;
-  carouselImagesLoaded = {};
+function showRoomPhoto(photos) {
+  const src = photos && photos.length ? photos[0] : null;
 
-  // Show/hide arrows based on photo count
-  const singlePhoto = photos.length <= 1;
-  arrowPrev.classList.toggle('hidden', singlePhoto);
-  arrowNext.classList.toggle('hidden', singlePhoto);
+  if (!src) {
+    carouselImg.classList.remove('visible');
+    carouselPlaceholder.style.display = 'flex';
+    return;
+  }
 
-  // Build dots
-  carouselDotsEl.innerHTML = '';
-  photos.forEach((_, i) => {
-    const dot = document.createElement('div');
-    dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
-    dot.addEventListener('click', () => goToSlide(i));
-    carouselDotsEl.appendChild(dot);
-  });
+  carouselImg.classList.remove('visible');
+  carouselPlaceholder.style.display = 'flex';
 
-  updateCarouselDisplay();
-}
-
-function updateCarouselDisplay() {
-  const total = carouselPhotos.length;
-  const src   = carouselPhotos[carouselIndex];
-
-  const roomInfo = ROOM_DATA[currentRoom];
-  const roomName = roomInfo ? roomInfo.name : '';
-  const labelText = roomName ? `${roomName} — Photo ${carouselIndex + 1} of ${total}` : `Photo ${carouselIndex + 1} of ${total}`;
-  carouselLabel.textContent   = labelText;
-  carouselCounter.textContent = `${carouselIndex + 1} / ${total}`;
-
-  if (carouselImagesLoaded[carouselIndex] === true) {
-    carouselPlaceholder.style.display = 'none';
-    carouselImg.classList.add('visible');
+  const probe = new Image();
+  probe.onload = () => {
     carouselImg.src = src;
-  } else if (carouselImagesLoaded[carouselIndex] === false) {
+    carouselImg.classList.add('visible');
+    carouselPlaceholder.style.display = 'none';
+  };
+  probe.onerror = () => {
     carouselImg.classList.remove('visible');
     carouselPlaceholder.style.display = 'flex';
-  } else {
-    carouselImg.classList.remove('visible');
-    carouselPlaceholder.style.display = 'flex';
-    const probe = new Image();
-    probe.onload = () => {
-      carouselImagesLoaded[carouselIndex] = true;
-      if (carouselPhotos[carouselIndex] === src) updateCarouselDisplay();
-    };
-    probe.onerror = () => {
-      carouselImagesLoaded[carouselIndex] = false;
-      if (carouselPhotos[carouselIndex] === src) updateCarouselDisplay();
-    };
-    probe.src = src;
-  }
-
-  carouselDotsEl.querySelectorAll('.carousel-dot').forEach((dot, i) => {
-    dot.classList.toggle('active', i === carouselIndex);
-  });
+  };
+  probe.src = src;
 }
-
-function goToSlide(index) {
-  const total = carouselPhotos.length;
-  carouselIndex = (index + total) % total;
-  updateCarouselDisplay();
-  // Re-render pins for the new slide so per-slide positions take effect
-  if (currentRoom && ROOM_DATA[currentRoom]) {
-    renderHazardIcons(currentRoom, ROOM_DATA[currentRoom], carouselIndex);
-  }
-}
-
-arrowPrev.addEventListener('click', () => goToSlide(carouselIndex - 1));
-arrowNext.addEventListener('click', () => goToSlide(carouselIndex + 1));
 
 // ─── FLOOR TABS ──────────────────────────────────────────────────────────────
 
