@@ -2651,7 +2651,7 @@ const FLOORS = {
         id: 'bathroom', name: 'Bathroom', floor: 2,
         style: { left:'38.3%', top:'52.6%', width:'23.1%', height:'29.0%' },
         badge: { color:'#E11D48', count:4 }, zIndex: 1,
-        photos: ['images/bathroom_1.jpg','images/bathroom_2.jpg','images/bathroom_3.jpg']
+        photos: ['images/bathroom_3.jpg']
       },
       {
         id: 'elis-bedroom', name: "Eli's Bedroom", floor: 2,
@@ -3453,7 +3453,7 @@ const ROOM_DATA = {
             desc: 'Eli intentionally floods bathrooms by clogging toilets with foreign objects. This is part of the same pleasure-driven destruction pattern as bathtub flooding.',
             solution: 'Install a clog-resistant toilet insert (the spiral RV-style insert mentioned in earlier project discussions) that physically prevents large objects from being flushed. Pair with an Aqara Water Leak Sensor on the bathroom floor connected to Home Assistant. HA automation: "If water detected on bathroom floor, send immediate alert to caregiver, turn on bathroom camera notification, and trigger automatic water shutoff valve to the bathroom supply line."',
             price: 'Approximate cost: $40 to $80 for the spiral insert, $20 for the leak sensor, $80 to $150 for the shutoff valve',
-            links: [{ text: 'View Aqara Water Leak Sensor on Amazon', url: 'https://www.amazon.com/Aqara-Detector-Sensitive-Notifications-Required/dp/B07D384YRN' }]
+            links: [{ text: 'View Aqara Water Leak Sensor on Amazon', url: 'https://www.amazon.com/Aqara-11LM-SJCGQ-Water-Sensor/dp/B07D39MSZS?th=1' }]
           }
         ]
       },
@@ -3772,18 +3772,18 @@ const HAZARD_META = {
   'dining_2_1': { icon: 'megaphone',       top: '45%', left: '78%' }, // NEW: comm panel (dup)
   'dining_2_2': { icon: 'package',         top: '40%', left: '90%' }, // NEW: pantry raiding canned goods (moved from kitchen)
   // Bathroom — image 1: top-down — bathtub bottom center, toilet + sink right, doorway left
-  'bathroom_0_0': { icon: 'mirror',        top: '45%', left: '60%' }, // best guess — no clear mirror in top-down view; near sink
-  'bathroom_0_1': { icon: 'droplets',      top: '70%', left: '50%' }, // bathtub overflow
-  'bathroom_0_2': { icon: 'lightbulb',     top: '40%', left: '50%' }, // ceiling light fixture
-  'bathroom_0_3': { icon: 'door-locked',   top: '52%', left: '32%' }, // bathroom door
-  'bathroom_0_4': { icon: 'plug',          top: '50%', left: '65%' }, // NEW: outlets near sink (dup)
-  'bathroom_0_5': { icon: 'toilet',        top: '55%', left: '60%' }, // NEW: toilet flooding via clogging
-  'bathroom_1_0': { icon: 'pill',          top: '48%', left: '63%' }, // medication — sink/vanity
-  'bathroom_1_1': { icon: 'shower',        top: '72%', left: '54%' }, // washing — bathtub (offset from overflow)
-  'bathroom_1_2': { icon: 'list-checks',   top: '40%', left: '40%' }, // NEW: task completion (dup)
-  'bathroom_1_3': { icon: 'activity',      top: '60%', left: '38%' }, // anxiety (dup)
-  'bathroom_1_4': { icon: 'thermometer',   top: '18%', left: '8%'  }, // heat tracking (was 1_5 before tampering removed)
-  'bathroom_2_0': { icon: 'megaphone',     top: '30%', left: '50%' }, // NEW: comm panel (dup)
+  'bathroom_0_0': { icon: 'mirror',        top: '52.8%', left: '21.8%' }, // pinned for the single bathroom_3.jpg photo
+  'bathroom_0_1': { icon: 'droplets',      top: '58.4%', left: '46%'   }, // pinned for the single bathroom_3.jpg photo
+  'bathroom_0_2': { icon: 'lightbulb',     top: '17.8%', left: '47.6%' }, // pinned for the single bathroom_3.jpg photo
+  'bathroom_0_3': { icon: 'door-locked',   top: '79.1%', left: '17.3%' }, // pinned for the single bathroom_3.jpg photo
+  'bathroom_0_4': { icon: 'plug',          top: '65.9%', left: '12.6%' }, // pinned for the single bathroom_3.jpg photo
+  'bathroom_0_5': { icon: 'toilet',        top: '49.1%', left: '37%'   }, // pinned for the single bathroom_3.jpg photo
+  'bathroom_1_0': { icon: 'pill',          top: '45.3%', left: '27.6%' }, // pinned for the single bathroom_3.jpg photo
+  'bathroom_1_1': { icon: 'shower',        top: '35.2%', left: '77.7%' }, // pinned for the single bathroom_3.jpg photo
+  'bathroom_1_2': { icon: 'list-checks',   top: '40%', left: '40%' }, // unchanged (no slide-2 entry in framework_web overrides)
+  'bathroom_1_3': { icon: 'activity',      top: '79.1%', left: '46.7%' }, // pinned for the single bathroom_3.jpg photo
+  'bathroom_1_4': { icon: 'thermometer',   top: '22.8%', left: '13.6%' }, // pinned for the single bathroom_3.jpg photo
+  'bathroom_2_0': { icon: 'megaphone',     top: '30%', left: '50%' }, // unchanged (no slide-2 entry in framework_web overrides)
   // Eli's Bedroom — image 1: ceiling fan top, posters + TV left wall, window + bed right, desk left bottom
   'elis-bedroom_0_0': { icon: 'fan',       top: '25%', left: '52%' }, // ceiling fan
   'elis-bedroom_0_1': { icon: 'moon',      top: '74%', left: '64%' }, // staying up all night — bed
@@ -3879,18 +3879,7 @@ const HAZARD_SLIDE_OVERRIDES = {
   'bedroom2_2_0':    { 0: {top:'68.3%',left:'58.7%'}, 1: {top:'68.1%',left:'58%'} },   // gaming
   'bedroom2_2_1':    {                                1: {top:'45.7%',left:'48.6%'} }, // comm panel; slide 0 → META default
 
-  // Bathroom (3 slides)
-  'bathroom_0_0':    {                                1: {top:'41.1%',left:'71%'},   2: {top:'52.8%',left:'21.8%'} }, // slide 0 → META default
-  'bathroom_0_1':    { 0: {top:'61.1%',left:'53.7%'}, 1: {top:'76.9%',left:'63.3%'}, 2: {top:'58.4%',left:'46%'} },
-  'bathroom_0_2':    {                                1: {top:'19%',left:'53.5%'},   2: {top:'17.8%',left:'47.6%'} }, // slide 0 → META default
-  'bathroom_0_3':    { 0: {top:'46.3%',left:'45.6%'}, 1: {top:'47.7%',left:'50.8%'}, 2: {top:'79.1%',left:'17.3%'} },
-  'bathroom_0_4':    {                                1: {top:'38.8%',left:'57.9%'}, 2: {top:'65.9%',left:'12.6%'} }, // outlets; slide 0 → META default
-  'bathroom_0_5':    {                                1: {top:'66.9%',left:'73.4%'}, 2: {top:'49.1%',left:'37%'} },   // toilet flooding; slide 0 → META default
-  'bathroom_1_0':    { 0: {top:'64%',left:'63.6%'},                                  2: {top:'45.3%',left:'27.6%'} }, // slide 1 → META default
-  'bathroom_1_1':    { 0: {top:'66.2%',left:'37.3%'}, 1: {top:'47.4%',left:'13.1%'}, 2: {top:'35.2%',left:'77.7%'} },
-  'bathroom_1_2':    { 0: {top:'33.8%',left:'37.6%'}, 1: {top:'49.9%',left:'74.3%'}                                  }, // task completion; slide 2 → META default
-  'bathroom_1_3':    { 0: {top:'53.9%',left:'38%'},                                  2: {top:'79.1%',left:'46.7%'} }, // anxiety; slide 1 → META default
-  'bathroom_1_4':    { 0: {top:'25.5%',left:'62.6%'}, 1: {top:'23.6%',left:'34.1%'}, 2: {top:'22.8%',left:'13.6%'} }, // heat tracking
+  // Bathroom — per-slide overrides removed (only one photo, all positions live in HAZARD_META above).
 
   // Eli's Bedroom (3 slides)
   'elis-bedroom_0_0': { 0: {top:'19.2%',left:'55.6%'}, 1: {top:'21.4%',left:'48.6%'}, 2: {top:'21.5%',left:'32%'} },   // ceiling fan (slides 1,2 updated)
